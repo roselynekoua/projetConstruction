@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Gestion de projet construction  EICS</title>
+	<h:outputStylesheet library="css" name="main.css" />
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"
+		type="text/javascript"></script>
+	<!-- <link href="main.css" rel="stylesheet" type="text/css" media="screen" /> -->
+	<link rel="icon" type="image/x-icon" href="../../resources/images/favicon.ico" />
+</h:head>
+
+<h:body>
+
+	<p:ajaxStatus onstart="statusDialog.show();"
+		onsuccess="statusDialog.hide();" />
+
+	<p:dialog modal="true" widgetVar="statusDialog" header="Status"
+		draggable="false" closable="false" appendTo="@(body)"
+		showHeader="false" resizable="false">
+		<h:graphicImage value="../../../resources/images/ajax-loader.gif" />
+	</p:dialog>
+	<h:outputStylesheet library="css" name="style.css" />
+	<p:layout fullPage="true">
+		<!-- Le Header de la page -->
+
+		<p:layoutUnit id="top" position="north" size="85" style="">
+
+			<ui:insert name="top">
+				<div style=" font-family:verdana;padding:0px;border-radius:10px;border:1px solid green;background-color:#D6D6D6">
+			<h:panelGrid columns="5" columnClasses="non,eseLabel" style="width:100%;height:100%;padding:0px;">
+				<h:panelGrid columns="1">
+				
+					<h:graphicImage name="images/logoeics.png" style="margin:0px;"/>
+					
+					
+				</h:panelGrid>
+		
+				<div style="color:#40B3DF; font-size:18px; margin-left: 50%; margin-right: 20%;"> GESTION <span style="background-color:blue;color:#ffffff; font-size: 18px ">PARAMETRAGE</span></div>
+				
+					<h:outputText value=" Utilisateur:  #{managedConnexion.utilisateur.codeUtilisateur} #{managedConnexion.utilisateur.nomUtilisateur}  #{managedConnexion.utilisateur.prenomUtilisateur}"  style="margin-left: 18%;color:#F47333; font-size:18px"/>
+				</h:panelGrid>
+				</div>
+
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit id="bottom" position="south" size="70"
+			styleClass="myLayoutStyleClass">
+			<ui:insert name="bottom">
+				<h:panelGrid columns="2" columnClasses="non,eseLabel"
+					style="width:100%;height:100%;padding:0px;border-color:silver;background-color: threedlightshadow;">
+
+					
+					<a href="../../../../EicsConstruction/index.jsf" style="color: blue">Menu
+						Principal</a>
+					
+					<a href="../../../../EicsConstruction/Pages/gestionClient/indexgestion.jsf"
+						style="color: blue">Menu Gestion Client</a>
+						<a href="../../../../EicsConstruction/Pages/caisse/indexgestcaisse.jsf"
+						style="color: blue">Menu Gestion Caisse</a>
+					
+					
+						
+					<a href="../../EicsConstruction/logout.jsp"
+						style="color: red">Déconnecter</a>
+
+
+
+					
+					<br />
+					<h:outputText value="Copyright :  KMinfo"
+						style="float: right;font-size: 12px;" />
+
+				</h:panelGrid>
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit id="left" position="west" size="200" resizable="true"
+			closable="false" collapsible="true" header="Menu Principal"
+			minSize="100" style="border: ridge;	border-color:orange">
+			<ui:insert name="Menu">
+
+				<h:form>
+				
+				
+					<p:panelMenu style="width:208px">  
+                                   
+                                    <p:submenu label="Gestion Utilisateur ">  
+                                    	<p:menuitem value="Enregistrer Utilisateur"  outcome="/Pages/administrateur/parametrage/enregistrement_user"  global="false"/>
+                                    	<p:menuitem value="Enregistrement profil"   outcome="/Pages/administrateur/parametrage/ficheprofil" global="false"/>
+                                      
+                                        
+                                    </p:submenu>
+                                   
+                                    <p:submenu label="Parametrage">
+                                     <p:menuitem value="Enregistrer Sexe"   outcome="/Pages/administrateur/parametrage/fichesexe"  global="false"/>
+                                         
+                                        <p:menuitem value="Enregistrer Nationalité"  outcome="/Pages/administrateur/parametrage/fichenationalite"  global="false"/>  
+                                       	
+                                        
+                                        <p:menuitem value="Enregistrer Profession"   outcome="/Pages/administrateur/parametrage/ficheprofession"  global="false"/>
+                                         
+                                        <p:menuitem value="Enregistrer Pays"  outcome="/Pages/administrateur/parametrage/fichepays"  global="false"/>  
+                                       	
+                                        
+                                        <p:menuitem value="Enregistrer Ville"  outcome="/Pages/administrateur/parametrage/ficheville" global="false" />  
+                                        
+                                        <p:menuitem value="Enregistrer Commune"  outcome="/Pages/administrateur/parametrage/fichecommune" global="false" />  
+                                       
+                                       
+                                        <p:menuitem value="Enregistrer Batiment"  outcome="/Pages/administrateur/parametrage/fichebatiment"  global="false"/>  
+                                       	
+                                        
+                                        <p:menuitem value="Enregistrer Type Maison"  outcome="/Pages/administrateur/parametrage/fichetypemaison" global="false" />  
+                                        
+                                        <p:menuitem value="Enregistrer Type Client"  outcome="/Pages/administrateur/parametrage/fichetypeclient" global="false" />  
+                                       
+                                      <p:menuitem value="Ajouter photo Maison"  outcome="/Pages/administrateur/parametrage/ficheImagemaison" global="false" />  
+                                        
+                                        <p:menuitem value="Ajouter photo Prototype"  outcome="/Pages/administrateur/parametrage/ficheImageproto" global="false" />  
+                                       
+                                       
+                                    </p:submenu>
+                                    
+                                    
+                       
+                                    
+                                     <p:submenu label="Gestion des mises à jour ">  
+                                    	<p:menuitem value="Modification mot de passe"  outcome="/Pages/administrateur/parametrage/modifmotpasse"  global="false"/>
+                                    	<p:menuitem value="Mise à jour profil"   outcome="/Pages/administrateur/parametrage/majprofil" global="false"/>
+                                    
+                                    <p:menuitem value=" Mise à jour Nationalité"  outcome="/Pages/administrateur/parametrage/majnat"  global="false"/>  
+                                       	 <p:menuitem value=" Mise à jour Sexe"   outcome="/Pages/administrateur/parametrage/majsexe"  global="false"/>
+                                       <p:menuitem value=" Mise à jour Maison"   outcome="/Pages/administrateur/parametrage/majmaison"  global="false"/>
+                                       <p:menuitem value=" Mise à jour Type Maison"   outcome="/Pages/administrateur/parametrage/majtmaison"  global="false"/>
+                                        <p:menuitem value=" Mise à jour Prototype  Maison"   outcome="/Pages/administrateur/parametrage/prototypemaisonmaj"  global="false"/>
+                                       
+                                       <p:menuitem value=" Mise à jour Type Client"   outcome="/Pages/administrateur/parametrage/majtclient"  global="false"/>
+                                       
+                                       
+                                       <p:menuitem value="Modification Batiment"  outcome="/Pages/administrateur/parametrage/majbatiment"  global="false"/>
+                                    	<p:menuitem value="Mise à jour commune"   outcome="/Pages/administrateur/parametrage/majcomune" global="false"/>
+                                    
+                                    <p:menuitem value=" Mise à jour Ville"  outcome="/Pages/administrateur/parametrage/majville"  global="false"/>  
+                                       	 <p:menuitem value=" Mise à jour Pays"   outcome="/Pages/administrateur/parametrage/majpays"  global="false"/>
+                                       <p:menuitem value=" Mise à jour Profession"   outcome="/Pages/administrateur/parametrage/majprofession"  global="false"/>
+                                       
+                                       
+                                    
+                                    </p:submenu>
+                                    
+                                   <p:submenu label="Consulter Etat ">  
+                                    	<p:menuitem value="Consulter liste des utilisateurs"  outcome="/Pages/administrateur/etats/listeuser"  global="false"/>
+                                    	
+                                        
+                                    </p:submenu>
+                                   
+                                   
+                            </p:panelMenu>
+				</h:form>
+				
+			</ui:insert>
+		</p:layoutUnit>
+
+		<!-- <p:layoutUnit id="right" position="east" size="250" header="Gallery" resizable="true" closable="false" collapsible="true"
+                              style="text-align:center">
+
+              
+                    <p:commandButton id="basic" value="Show Dialog" onclick="dlg1.show();" type="button" style="margin-top:10px"/>
+
+                </p:layoutUnit> -->
+
+		<p:layoutUnit id="center" position="center">
+			<ui:insert name="content">
+
+			</ui:insert>
+		</p:layoutUnit>
+
+	</p:layout>
+
+	<p:dialog header="Basic Dialog" widgetVar="dlg1" modal="true">
+		<h:outputText value="Test Zeus UI Dialog Box" />
+	</p:dialog>
+
+	<!-- <script type="text/javascript">
+		jQuery().ready(function(){
+		 $("#top").css('background', 'red');
+	 }) 
+</script> 
+ -->
+	<!-- <script type="text/javascript">
+	 function handleChange(panel) {
+		 panel.css("color","red");
+	 }
+</script> -->
+	<script type="text/javascript">
+		$("a").click(
+				dlg1.show();
+				function() {
+					var th = $(this);
+					var tag = $(this).parent().parent().parent().parent();
+					tag.children().children().children().children("a").css(
+							"text-decoration", "none");
+					th.css("text-decoration", "overline");
+
+				});
+	</script>
+
+	<script>
+			PrimeFaces.locales['fr'] = {
+				closeText : 'Fermer',
+				prevText : 'Précédent',
+				nextText : 'Suivant',
+				monthNames : [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai',
+						'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre',
+						'Novembre', 'Décembre' ],
+				monthNamesShort : [ 'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun',
+						'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc' ],
+				dayNames : [ 'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi',
+						'Vendredi', 'Samedi' ],
+				dayNamesShort : [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven',
+						'Sam' ],
+				dayNamesMin : [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
+				weekHeader : 'Semaine',
+				firstDay : 1,
+				isRTL : false,
+				showMonthAfterYear : false,
+				yearSuffix : '',
+				timeOnlyTitle : 'Choisir l\'heure',
+				timeText : 'Heure',
+				hourText : 'Heures',
+				minuteText : 'Minutes',
+				secondText : 'Secondes',
+				currentText : 'Maintenant',
+				ampm : false,
+				month : 'Mois',
+				week : 'Semaine',
+				day : 'Jour',
+				allDayText : 'Toute la journée'
+			};
+		</script>
+
+
+</h:body>
+
+
+
+</html>

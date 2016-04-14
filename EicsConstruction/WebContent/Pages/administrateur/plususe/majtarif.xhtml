@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			<br />
+					<p:panel header="Mise à jour Tarif" styleClass="tableMarge">
+	
+							<br /><br />
+						
+						<fieldset id="resulat" class="fieldsetpara" >
+							<legend>Recapitulatif des enregistrements</legend>
+							<p:dataTable  value="#{managedtarif.listetarif}"
+								var="per" emptyMessage="Aucune Données"
+								scrollable="true"  scrollHeight="150" scrollWidth="900">
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Code tarif" />
+									</f:facet>
+									<h:outputText value="#{per.codeTarif}" />
+								</p:column>
+
+
+                                 <p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Cout ttc tarif" />
+									</f:facet>
+									<h:outputText value="#{per.coutTtcTarif}" />
+								</p:column>
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Cloture " />
+									</f:facet>
+									<h:outputText value="#{per.clotureFcfaTarif}" />
+								</p:column>
+   
+                                <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Cout total tarif " />
+									</f:facet>
+									<h:outputText value="#{per.coutTotalTarif}" />
+								</p:column>
+								
+								
+								
+							
+
+								<p:column style="width:70px">
+									<h:commandButton value=" MAJ " title="Modifier"  update=":frm,:frm:buttonadd,:frm:buttonupdate">
+										<f:setPropertyActionListener value="#{per}"
+											target="#{managedtarif.tarif}" />
+											
+									</h:commandButton>
+								</p:column>
+
+								<p:column style="width:100px">
+								
+									<p:commandButton value="Supprimer" title="Supprimer"  icon="ui-icon-close" action="#{managedtarif.delete}" update=":frm" > 
+										<p:confirm header="Confirmation"  message="Confirmez-vous la suppression ? "   icon="ui-icon-alert" />
+										<f:setPropertyActionListener value="#{per}"
+											target="#{managedtarif.tarif}"    />
+									</p:commandButton>
+								</p:column>
+
+							</p:dataTable>
+						</fieldset>
+
+					
+					
+					<fieldset style="border-radius:10px;" class="fieldsetpara">
+					<br />
+					
+						<legend>Formulaire de mise à jour</legend>
+						
+						<h:panelGrid columns="6">
+
+
+	    
+<h:outputText value="Cout ttc " ></h:outputText>
+<p:inputText id="cou" value="#{managedtarif.tarif.coutTtcTarif}" > <p:ajax event="change"  listener="#{managedtarif.calcul}"  update=":frm,:frm:buttonadd,:frm:buttonupdate" /></p:inputText>
+
+<h:outputText value="Cloture " ></h:outputText>
+<p:inputText id="pren" value="#{managedtarif.tarif.clotureFcfaTarif}"  > <p:ajax event="change"  listener="#{managedtarif.calcul}"  update=":frm"></p:ajax></p:inputText>
+
+<h:outputText value="Cout total " ></h:outputText>
+<p:inputText id="prof" value="#{managedtarif.coutTotalTarif}" readonly="true"  ></p:inputText>
+						                 
+				   
+
+					</h:panelGrid></fieldset>
+					<br />
+					<fieldset style="border-radius:10px;" class="fieldsetpara">
+					<br />
+					
+						<legend>Action</legend>
+					
+					
+					
+					<h:panelGrid columns="4" >
+					<p:commandButton id="buttonadd"  value="Modifier"  actionListener="#{managedtarif.update}"  disabled="#{managedtarif.etatBouton}" update="frm,:frm:buttonadd,:frm:buttonupdate"  style="width:110px;height:25px;font-size:13px;border-radius:10px; " >   
+						 <p:confirm header="Confirmation"  message="Confirmez-vous la modification ? "  icon="ui-icon-alert" /></p:commandButton>
+							
+						<p:commandButton id="buttonupdate" value="Annuler"  icon="ui-icon-arrowrefresh-1-n"  actionListener="#{managedtarif.vider}"  disabled="#{managedtarif.etatAnnuler}" update="frm,:frm:buttonadd,:frm:buttonupdate"    style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+							
+						<h:outputText    value="(*) champ obligatoire" style="color:red" /> 
+					</h:panelGrid></fieldset>
+				
+				<br />
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   height="30" width="250" >  
+				        
+				        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+				        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>   
+				            
+				    </p:confirmDialog> 
+				<br />
+					
+				     
+				
+				
+				</p:panel>	
+				</h:form>
+				
+			
+			
+	</ui:define>
+</ui:composition>
+</html>

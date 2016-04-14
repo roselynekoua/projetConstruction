@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			<br />
+					<p:panel header="Mise à jour Batiment" styleClass="tableMarge">
+	
+							<br /><br />
+						
+						<fieldset id="resulat"  class="fieldsetpara"  style="height:300px" >
+							<legend>Liste des batiments</legend>
+  <p:dataTable id="resul" value="#{managedbatimentmaj.listeBatiment}"
+								var="bat" emptyMessage="Aucune Données"
+								scrollable="true"  scrollHeight="250" scrollWidth="800">
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Code batiment" />
+									</f:facet>
+									<h:outputText value="#{bat.codeBat}" />
+								</p:column>
+
+
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Libellé batiment" />
+									</f:facet>
+									<h:outputText value="#{bat.libelleBat}" />
+								</p:column>
+
+<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Nombre d'appartement" />
+									</f:facet>
+									<h:outputText value="#{bat.nombreAppartement}" />
+								</p:column>
+
+
+
+								<p:column style="width:70px">
+									<h:commandButton value=" MAJ " title="Modifier"  actionListener="#{managedbatimentmaj.activer}"  update=":frm:buttonadd,:frm:buttonupdate,:frm:maj">
+										<f:setPropertyActionListener  value="#{bat}"
+											target="#{managedbatimentmaj.batiment}" />
+											
+	
+									</h:commandButton>
+								</p:column>
+
+								<p:column style="width:100px">
+								
+									<p:commandButton value="Supprimer" title="Supprimer" action="#{managedbatimentmaj.delete}"  icon="ui-icon-close" update=":frm" > 
+										<p:confirm header="Confirmation"  message="Confirmez-vous la suppression ? "   icon="ui-icon-alert" />
+										<f:setPropertyActionListener value="#{bat}"
+											target="#{managedbatimentmaj.batiment}"    />
+									</p:commandButton>
+								</p:column>
+
+							</p:dataTable> 
+						</fieldset>
+
+					
+					
+					<fieldset style="border-radius:10px;" class="fieldsetpara">
+					<br />
+					
+						<legend>Formulaire de mise à jour</legend>
+						
+						<h:panelGrid columns="4" id="maj" >
+
+					
+
+<h:outputText value="Code batiment *"  style="margin-left: 20px;"></h:outputText>
+<p:inputText value="#{managedbatimentmaj.batiment.codeBat}"  readonly="true"></p:inputText>
+
+<h:outputText value="Libellé batiment *"  style="margin-left: 40px;"></h:outputText>
+<p:inputText value="#{managedbatimentmaj.batiment.libelleBat}" ></p:inputText>
+<h:outputText value="Nombre d'appartement "  style="margin-left: 20px;"></h:outputText>
+<p:inputText value="#{managedbatimentmaj.batiment.nombreAppartement}"></p:inputText>
+
+
+
+<br />
+						                 
+				   
+
+					</h:panelGrid></fieldset>
+					<br />
+					<fieldset style="border-radius:10px;" class="fieldsetpara">
+					<br />
+					
+						<legend>Action</legend>
+					
+					
+					
+					<h:panelGrid columns="4" >
+					<p:commandButton id="buttonadd"  value="Modifier"  actionListener="#{managedbatimentmaj.update}"  disabled="#{managedbatimentmaj.etatBouton}" update="frm,:frm:buttonadd,:frm:buttonupdate"  style="width:110px;height:25px;font-size:13px;border-radius:10px; " >   
+						 <p:confirm header="Confirmation"  message="Confirmez-vous la modification ? "  icon="ui-icon-alert" /></p:commandButton>
+							
+						<p:commandButton id="buttonupdate" value="Annuler" actionListener="#{managedbatimentmaj.vider}"   icon="ui-icon-arrowrefresh-1-n" disabled="#{managedbatimentmaj.etatAnnuler}" update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+							
+						<h:outputText    value="(*) champ obligatoire" style="color:red" /> 
+					</h:panelGrid></fieldset>
+				
+				<br />
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   height="30" width="250" >  
+				        
+				        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+				        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>   
+				            
+				    </p:confirmDialog> 
+				<br />
+					
+				     
+				
+				
+				</p:panel>	
+				</h:form>
+				
+			
+			
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/templateGestclient.xhtml">
+
+	<ui:define name="content">
+		<h:form id="frm"   >
+	
+		
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+		
+		
+				
+				<p:panel header="Modification Contrat"  >
+					<fieldset  class="fieldset">
+					<br /><br />
+					
+					
+					
+				
+				
+				<table border="0" style="width:100%" >
+					<tr>
+						<td style="width:30%">
+							<fieldset
+								style=" border-radius: 3px; border: 1px solid #7A8A88;">
+								<legend>Recherche</legend>
+								<h:panelGrid id="grid_rech" columns="3" columnClasses="ReguLibel,ReguInp,ReguSpace">
+									<h:outputText value="Entrez le N° de contrat "/>
+									<p:inputText value="#{managedclientmajc.criteremjcontrat}" required="true" requiredMessage="Saisir le numero de contrat"/>
+									<p:commandButton value="OK" actionListener="#{managedclientmajc.retriveContrat}" icon="ui-icon-search"
+									 update=":frm:tab"/>
+								</h:panelGrid>							
+							</fieldset>
+						</td>
+						<td style="width:70%">
+							<fieldset
+								style=" border-radius: 3px; border: 1px solid #7A8A88;">
+								<legend>Contrat</legend>
+								<p:dataTable var="contr" emptyMessage="Aucune donnée"
+									value="#{managedclientmajc.listecontratmaj}"
+									 rowKey="#{contr.codeContrat}"
+									 id="tab"  selectionMode="single"
+							selection="#{managedclientmajc.contratselected}" >
+									<p:ajax event="rowSelect"
+								listener="#{managedclientmajc.editer}"
+								update=":frm:sousGrid, @this,:frm:buttonadd,:frm:buttonupdate,:frm:buttonrep"></p:ajax>
+								
+									<p:column headerText="code contrat">
+										<h:outputText value="#{contr.codeContrat}" />
+									</p:column>
+
+                                    <p:column headerText="Nom client">
+										<h:outputText value="#{contr.client.nomClt}" />
+									</p:column>
+
+									<p:column headerText="Prenoms client">
+										<h:outputText value="#{contr.client.prenomClt}" />
+									</p:column>
+									<p:column headerText="Date debut contrat">
+										<h:outputText value="#{contr.dateDebutContrat}" ><f:convertDateTime pattern="dd-MM-yyyy" /> </h:outputText>
+									</p:column>
+
+									<p:column headerText="Date fin contrat">
+										<h:outputText value="#{contr.dateFinContrat}" ><f:convertDateTime pattern="dd-MM-yyyy" /></h:outputText>
+									</p:column>
+									
+
+									<p:column headerText="Projet souscrit">
+										<h:outputText value="#{contr.maison.dsgMais}" />
+									</p:column>
+
+                                    
+
+
+								</p:dataTable>
+							</fieldset>
+						</td>
+					</tr>
+				</table>
+				
+
+	
+	<br></br>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+			
+											
+
+<legend>Contrat</legend>
+
+<h:panelGrid columns="6" id="sousGrid">
+
+
+
+
+
+  
+
+
+<h:outputText value="Date debut du contrat " style="margin-left: 20px;"></h:outputText>
+<p:inputText value="#{managedclientmajc.contrat.dateDebutContrat}"  >
+<f:convertDateTime pattern="dd-MM-yyyy" />  </p:inputText>
+
+<h:outputText value="Date fin du contrat " style="margin-left: 20px;"></h:outputText>
+<p:inputText value="#{managedclientmajc.contrat.dateFinContrat}" >
+<f:convertDateTime pattern="dd-MM-yyyy" />  </p:inputText>
+
+<h:outputText value="Quantité" style="margin-left: 20px;" ></h:outputText>
+  <p:inputText id="pjt" value="#{managedclientmajc.contrat.qteAcq}"  ></p:inputText>
+
+<h:outputText value="Etat contrat " style="margin-left: 20px;"></h:outputText>
+
+ <p:selectOneMenu id="typ"  value="#{managedclientmajc.contrat.etatContrat}"
+												 panelStyle="width:180px" style="width:160px"
+												 >
+												<f:selectItem itemLabel="Selectionner" itemValue=" " />
+												<f:selectItem itemLabel="Reservé" itemValue="Reservé" />
+												<f:selectItem itemLabel="Confirmé"  itemValue="Confirmé" />
+                                                <f:selectItem itemLabel="Soldé"  itemValue="Soldé" />
+											</p:selectOneMenu>
+
+
+</h:panelGrid> <br /></fieldset> <br />
+
+
+<br /> <br />	
+<br />
+	
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			<fieldset  class="fieldset">	       
+				       
+				<h:panelGrid columns="4" cellpadding="10" style="margin-left:80px">  
+				
+								<p:commandButton value="Modifier" id="buttonadd"
+						actionListener="#{managedclientmajc.update}" update="frm,:frm:grid,:frm:buttonadd,:frm:buttonupdate" disabled="#{managedclientmajc.etatBouton}"  process="@this"  ajax="false" icon="ui-icon-check" style="width:170px;height:40px ;font-size:13px;border-radius:10px;" />
+					<p:commandButton value="Reset" id="buttonupdate"
+						actionListener="#{managedclientmajc.vider}" update="frm,:frm:buttonadd,:frm:buttonupdate,:frm:buttonrep"  disabled="#{managedclientmajc.etatAnnuler}"  icon="ui-icon-refresh"  style="width:170px;height:40px ;font-size:13px;border-radius:10px;"/>
+						
+						<p:commandButton id="buttonrep" value="Supprimer" icon="ui-icon-close"
+										actionListener="#{managedclientmajc.deletecontrat}"  update=":frm:buttonrep,frm"    disabled="#{managedclientmajc.etatSup}"
+										style="width:170px;height:40px ;font-size:13px;border-radius:10px;" />
+						
+				</h:panelGrid>
+			</fieldset>
+			
+	</p:panel>  
+			<br />
+		</h:form>
+	</ui:define>
+	<p:layoutUnit id="center" position="center">
+		<ui:insert name="content">
+
+		</ui:insert>
+	</p:layoutUnit>
+</ui:composition>
+</html>

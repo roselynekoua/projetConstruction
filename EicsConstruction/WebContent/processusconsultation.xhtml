@@ -1,0 +1,759 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateGestpatient.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<p:breadCrumb>
+				<p:menuitem value="Home" action="/index?faces-redirect=true" />
+
+
+			</p:breadCrumb>
+		</h:form>
+
+		<h:form id="frm">
+			<p:messages id="growl" showDetail="true" sticky="false"
+				autoUpdate="true" />
+
+
+
+
+			<p:wizard id="wizar"
+				flowListener="#{processuconsultationMB.handleflow}" widgetVar="wiz"
+				nextLabel="Suivant" backLabel="Précedant" styleClass="wizardStyle"
+				style="width:99%">
+				<p:tab id="OngletRecherche" title="Recherche">
+
+
+
+					<p:panel header="Champs de recherche  ">
+						<fieldset style="height: 60px; border-radius: 10px;"
+							class="fieldset">
+							<legend>Champs de recherche</legend>
+
+							<h:panelGrid columns="4">
+								<h:outputText value="Recherche par :" />
+								<p:selectOneMenu value="#{processuconsultationMB.typeFiltre}"
+									style="width:100px">
+
+									<f:selectItem itemLabel="Matricule patient"
+										itemValue="matriculePat" />
+									<f:selectItem itemLabel="Nom patient" itemValue="nomPat" />
+								</p:selectOneMenu>
+								<p:inputText value="#{processuconsultationMB.filtre}"
+									style="height:14px !important" />
+
+								<p:commandButton action="#{processuconsultationMB.filtrer}"
+									update=":frm:tab" icon="ui-icon-search"
+									style="height:24px !important" />
+							</h:panelGrid>
+
+
+
+						</fieldset>
+
+					</p:panel>
+
+
+					<br></br>
+
+					<fieldset id="resulat" style="height: 200px; border-radius: 10px;"
+						class="fieldset">
+						<legend>Resultat de la recherche </legend>
+
+
+
+						<p:dataTable id="tab"
+							value="#{processuconsultationMB.listepatient}"
+							rowKey="#{pat.numPat}" selectionMode="single"
+							selection="#{processuconsultationMB.selectedPatient}" var="pat"
+							emptyMessage="Aucune donnees" scrollable="true"
+							scrollHeight="150" scrollWidth="1080">
+							<p:ajax event="rowSelect"
+								listener="#{processuconsultationMB.editerpatient}"
+								update=":frm:fpat, @this"></p:ajax>
+
+
+
+							<p:column headerText="Code patient">
+								<h:outputText value="#{pat.numPat}" />
+							</p:column>
+
+							<p:column headerText="Nom du patient ">
+								<h:outputText value="#{pat.nomPat}" />
+							</p:column>
+
+							<p:column headerText="Prenoms patient">
+								<h:outputText value="#{pat.prenomPat}" />
+							</p:column>
+
+							<p:column headerText="Matricule patient">
+								<h:outputText value="#{pat.matriculePat}" />
+							</p:column>
+
+
+
+							
+
+
+
+						</p:dataTable>
+					</fieldset>
+
+
+
+					<br />
+					<fieldset style="border-radius: 10px;" class="fieldset">
+						<legend>Informations Patients</legend>
+						<br />
+
+						<h:panelGrid id="fpat" columns="8">
+
+							<h:outputText value="Code patient" />
+							<p:inputText id="num"
+								value="#{processuconsultationMB.patient.numPat}" readonly="true"
+								style="margin-left: 0px; width: 120px">
+
+							</p:inputText>
+
+
+							<h:outputText value="Nom patient" style="margin-left: 20px;" />
+							<p:inputText id="nom"
+								value="#{processuconsultationMB.patient.nomPat}" readonly="true"
+								style="width:120px" />
+
+
+							<h:outputText value="Prenoms patient " style="margin-left: 20px;" />
+							<p:inputText id="pren"
+								value="#{processuconsultationMB.patient.prenomPat}"
+								readonly="true" style="width:130px" />
+
+
+							<h:outputText value="Type patient " style="margin-left: 30px;" />
+							<p:inputText id="typpat"
+								value="#{processuconsultationMB.patient.typePatient.statutTypepat}"
+								readonly="true" style="width:132px" />
+
+							<h:outputText value="Matricule patient "
+								style="margin-left: 0px;" />
+							<p:inputText id="matric"
+								value="#{processuconsultationMB.patient.matriculePat}"
+								readonly="true" style="width:120px" />
+
+
+							<h:outputText value="Profession " style="margin-left: 20px;" />
+							<p:inputText
+								value="#{processuconsultationMB.patient.profession.libelleProf}"
+								readonly="true" style="width:120px" />
+
+
+
+							<h:outputText value="Sexe  " style="margin-left: 20px;" />
+							<p:inputText
+								value="#{processuconsultationMB.patient.sexe.libelleSexe}"
+								readonly="true" style="width:130px" />
+
+							<h:outputText value="Boite postale  " style="margin-left: 30px;" />
+							<p:inputText
+								value="#{processuconsultationMB.patient.boitePostPatient}"
+								readonly="true" style="width:132px" />
+
+							<h:outputText value="Telephone  " style="margin-left: 0px;" />
+							<p:inputText
+								value="#{processuconsultationMB.patient.numtelPatient}"
+								readonly="true" style="width:120px" />
+
+							<h:outputText value="fax  " style="margin-left: 20px;" />
+							<p:inputText value="#{processuconsultationMB.patient.faxPatient}"
+								readonly="true" style="width:120px" />
+
+							<h:outputText value="Boite mail" style="margin-left: 20px;" />
+							<p:inputText
+								value="#{processuconsultationMB.patient.emailPatient}"
+								readonly="true" style="width:130px" />
+
+
+							<h:outputText value="Nationalité  " style="margin-left: 30px;" />
+							<p:inputText
+								value="#{processuconsultationMB.patient.nationalite.libelleNat}"
+								readonly="true" style="width:132px" />
+
+
+
+							<h:outputText value="Date naissance " style="margin-left: 0px;" />
+							<p:calendar id="dn"
+								value="#{processuconsultationMB.patient.datenaissPat}"
+								readonly="true" style="width:120px" />
+
+							<br />
+						</h:panelGrid>
+					</fieldset>
+					<br />
+					<p:commandButton id="butto" value="Voir les derniers traitements"
+						process=":frm2" update=":frm2" onclick="PF('editconsul').show()"
+						
+						style="width:170px;height:40px;font-size:13px;border-radius:10px;" />
+
+				</p:tab>
+
+
+				<br />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				<p:tab id="ongletConsultation" title="Consultation">
+
+					<p:panel header="Enregistrement consultation">
+						<fieldset style="border-radius: 10px;" class="fieldset">
+							<legend>Informations consultation </legend>
+							<br />
+							<h:panelGrid id="four" columns="6">
+
+								<h:outputText value="Numero consultation"
+									style="margin-left: 40px;width: 120px" />
+								<p:inputText value="#{processuconsultationMB.codecons}"
+									style="margin-left: 20px; width: 120px" readonly="true" />
+
+
+								<h:outputText value="Libellé consultation *"
+									style="margin-left: 40px;" />
+								<p:inputText
+									value="#{processuconsultationMB.consultation.libelleCons}"
+									style="margin-left: 20px; width: 120px" />
+
+
+
+
+
+								<h:outputText value="Personnel Medical* "
+									style="margin-left: 40px;" />
+								<p:selectOneMenu value="#{processuconsultationMB.idpers}"
+									style="margin-left: 20px; width: 120px" required="true"
+									requiredMessage="Choisir personnel médical">
+									<f:selectItem itemValue="Choisir" itemLabel="Choisir">
+									</f:selectItem>
+									<f:selectItems
+										value="#{processuconsultationMB.elementspersmed}" />
+									<p:ajax event="change"
+										listener="#{processuconsultationMB.Recuppersmed}">
+									</p:ajax>
+
+								</p:selectOneMenu>
+
+
+
+								<h:outputText value="Temperature patient"
+									style="margin-left: 40px;width: 120px" />
+								<p:inputText
+									value="#{processuconsultationMB.consultation.temperature}"
+									style="margin-left: 20px; width: 120px" />
+
+								<h:outputText value="Poids patient" style="margin-left: 40px;" />
+								<p:inputText
+									value="#{processuconsultationMB.consultation.poids}"
+									style="margin-left: 20px; width: 120px" />
+
+								<h:outputText value="Tension patient"
+									style="margin-left: 40px;width: 120px" />
+								<p:inputText
+									value="#{processuconsultationMB.consultation.tension}"
+									style="margin-left: 20px; width: 120px" />
+
+								<h:outputText value="Observation consultation"
+									style="margin-left: 40px;width: 120px" />
+								<h:inputTextarea
+									value="#{processuconsultationMB.consultation.observationCons}"
+									rows="5" cols="30" style="margin-left: 20px; " />
+
+								<h:outputText value="Date de la consultation"
+									style="margin-left: 40px;width: 120px" />
+								<p:calendar value="#{processuconsultationMB.datecons}"
+									style="margin-left: 20px; width: 120px" readonly="true" />
+
+
+								<h:outputText value="(*) champ obligatoire" style="color:red" />
+
+							</h:panelGrid>
+							<br />
+							<br /> <br /> <br />
+						</fieldset>
+
+						<br />
+
+					</p:panel>
+				</p:tab>
+
+
+
+
+
+				<p:tab id="ongletTraitement" title="Traitement">
+
+
+					<p:panel header="Enregistrement  Traitement">
+						<fieldset style="border-radius: 10px;" class="fieldset">
+							<br />
+							<h:panelGrid id="trai" columns="6">
+
+								<h:outputText value="Numero ordonance"
+									style="margin-left: 40px;width: 120px" />
+								<p:inputText value="#{processuconsultationMB.codeor}"
+									style="margin-left: 20px; width: 120px" readonly="true" />
+
+								<h:outputText value="Libellé ordonnance *"
+									style="margin-left: 40px;" />
+
+								<p:selectOneMenu id="libord"
+									value="#{processuconsultationMB.ordonance.libellleOrdo}"
+									required="true" requiredMessage="renseigner libellé"
+									style="margin-left: 20px; width: 120px"
+									panelStyle="width:180px">
+
+									<f:selectItem itemLabel="Selectionner" itemValue=" " />
+									<f:selectItem itemLabel="Interne" itemValue="INTERNE" />
+									<f:selectItem itemLabel="Externe" itemValue="EXTERNE" />
+
+
+									<p:ajax event="change"
+										listener="#{processuconsultationMB.activer}"
+										update=":frm:buttonadd,:frm:buttonan">
+									</p:ajax>
+								</p:selectOneMenu>
+
+
+								<h:outputText value="Date ordonance"
+									style="margin-left: 40px;width: 120px" />
+								<p:calendar value="#{processuconsultationMB.dateordo}"
+									style="margin-left: 20px; width: 120px" readonly="true" />
+
+
+
+
+							</h:panelGrid>
+							<br />
+							<br />
+
+
+							<fieldset class="fieldset">
+								<legend> Prescription medicaments </legend>
+			<br />
+			<h:panelGrid id="medocp" columns="8" >
+			
+	
+			
+											
+	<h:outputText value="Medicament*" />
+									<p:selectOneMenu id="med1"
+										value="#{processuconsultationMB.medicament1}"
+										converter="#{entityConverter}"
+										style="margin-left: 20px; width: 120px">
+										<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+										<f:selectItems
+											value="#{processuconsultationMB.listMedicaments}" var="tata"
+											itemLabel="#{tata.dsgMed}" itemValue="#{tata}" />
+										<p:ajax event="change"
+											listener="#{processuconsultationMB.testCombo1}" 
+											process="@this"></p:ajax>
+									</p:selectOneMenu>
+		          
+			<h:outputText value="Quantité  prescrite*"   for="minMax1"  style="margin-left: 40px;" />
+			 <p:spinner id="minMax1" value="#{processuconsultationMB.prescrire1.qtePrs}"  min="0" max="11"  	 required="true" requiredMessage="Champs obligatoire"   />
+				
+
+			<h:outputText value="Posologie*" style="margin-left: 40px;" />
+			<h:inputTextarea id="pos1" value="#{processuconsultationMB.prescrire1.posologieOr}" required="true" requiredMessage="Champs obligatoire"  rows="2" cols="12" 
+				style="width:120px" ></h:inputTextarea>	
+                 
+                   <h:outputText value="Durée du traitement* " style="margin-left: 40px;" />
+			<p:inputText id="dur1" value="#{processuconsultationMB.prescrire1.dureeTrait}"  required="true" requiredMessage="Champs obligatoire" 
+				style="width:120px" />
+						
+   	   <h:outputText value="Medicament*" />
+									<p:selectOneMenu id="med2"
+										value="#{processuconsultationMB.medicament2}"
+										converter="#{entityConverter}"
+										style="margin-left: 20px; width: 120px">
+										<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+										<f:selectItems
+											value="#{processuconsultationMB.listMedicaments}" var="tata"
+											itemLabel="#{tata.dsgMed}" itemValue="#{tata}" />
+										<p:ajax event="change"
+											listener="#{processuconsultationMB.testCombo2}"
+											process="@this"></p:ajax>
+									</p:selectOneMenu>
+													
+												<h:outputText value="Quantité  prescrite*" for="minMax2"  style="margin-left: 40px;" />
+												  <p:spinner id="minMax2" value="#{processuconsultationMB.prescrire2.qtePrs}"  min="0" max="11"  />	
+													
+				
+												<h:outputText value="Posologie*" style="margin-left: 40px;" />
+												<h:inputTextarea id="pos2" value="#{processuconsultationMB.prescrire2.posologieOr}"   cols="10"
+
+													style="width:120px" />
+												
+				                      
+						                      <h:outputText value="Durée du traitement* " style="margin-left: 40px;" />
+											  <p:inputText id="dur2" value="#{processuconsultationMB.prescrire2.dureeTrait}"  
+													style="width:120px" />
+        
+        
+        
+     <h:outputText value="Medicament*" />
+									<p:selectOneMenu id="med3"
+										value="#{processuconsultationMB.medicament3}"
+										converter="#{entityConverter}"
+										style="margin-left: 20px; width: 120px">
+										<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+										<f:selectItems
+											value="#{processuconsultationMB.listMedicaments}" var="tata"
+											itemLabel="#{tata.dsgMed}" itemValue="#{tata}" />
+										<p:ajax event="change"
+											listener="#{processuconsultationMB.testCombo3}"
+											process="@this"></p:ajax>
+									</p:selectOneMenu>
+													
+					
+												<h:outputText value="Quantité  prescrite*" for="minMax3"  style="margin-left: 40px;" />
+											
+												
+        <p:spinner id="minMax3" value="#{processuconsultationMB.prescrire3.qtePrs}"  min="0" max="11"  />	
+													
+													
+				
+												<h:outputText value="Posologie*" style="margin-left: 40px;" />
+												<h:inputTextarea id="pos3" value="#{processuconsultationMB.prescrire3.posologieOr}"  rows="2" cols="12"
+													style="width:120px" />
+												
+				                      
+						                      <h:outputText value="Durée du traitement *" style="margin-left: 40px;" />
+												<p:inputText id="dur3" value="#{processuconsultationMB.prescrire3.dureeTrait}"
+													style="width:120px" />
+													
+													<h:outputText value="Medicament*" />
+									<p:selectOneMenu id="med4"
+										value="#{processuconsultationMB.medicament4}"
+										converter="#{entityConverter}"
+										style="margin-left: 20px; width: 120px">
+										<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+										<f:selectItems
+											value="#{processuconsultationMB.listMedicaments}" var="tata"
+											itemLabel="#{tata.dsgMed}" itemValue="#{tata}" />
+										<p:ajax event="change"
+											listener="#{processuconsultationMB.testCombo4}"
+											process="@this"></p:ajax>
+									</p:selectOneMenu>
+													
+											
+											
+						
+												<h:outputText value="Quantité  prescrite*" style="margin-left: 40px;" />
+												
+												 <p:spinner id="minMax4" value="#{processuconsultationMB.prescrire4.qtePrs}"  min="0" max="11"  />	
+												 
+													
+				
+												<h:outputText value="Posologie*" style="margin-left: 40px;" />
+												<h:inputTextarea id="pos4" value="#{processuconsultationMB.prescrire4.posologieOr}"  rows="2" cols="12"
+													style="width:120px" />
+												
+				                      
+						                      <h:outputText value="Durée du traitement *" style="margin-left: 40px;" />
+												<p:inputText id="dur4" value="#{processuconsultationMB.prescrire4.dureeTrait}" 
+													style="width:120px" />
+													
+													
+													<h:outputText value="Medicament*" />
+									<p:selectOneMenu id="med5"
+										value="#{processuconsultationMB.medicament5}"
+										converter="#{entityConverter}"
+										style="margin-left: 20px; width: 120px">
+										<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+										<f:selectItems
+											value="#{processuconsultationMB.listMedicaments}" var="tata"
+											itemLabel="#{tata.dsgMed}" itemValue="#{tata}" />
+										<p:ajax event="change"
+											listener="#{processuconsultationMB.testcom}"
+											process="@this"></p:ajax>
+									</p:selectOneMenu>
+									
+												<h:outputText value="Quantité  prescrite*" for="minMax55" style="margin-left: 40px;" />
+												
+        <p:spinner id="minMax5" value="#{processuconsultationMB.prescrire5.qtePrs}"  min="0" max="11"  />
+												 
+													
+				
+												<h:outputText value="Posologie*" style="margin-left: 40px;" />
+											<h:inputTextarea id="pos5" value="#{processuconsultationMB.prescrire5.posologieOr}"  rows="2" cols="12"
+													style="width:120px" />
+												
+				                      
+						                      <h:outputText value="Durée du traitement* " style="margin-left: 40px;" />
+												<p:inputText id="dur5" value="#{processuconsultationMB.prescrire5.dureeTrait}" 
+													style="width:120px" />
+													
+  
+      </h:panelGrid>
+      	   <br /> <br />
+      
+   	 
+   	  
+
+							</fieldset>
+
+
+
+
+
+							<br /> <br />
+
+
+							<fieldset class="fieldset">
+
+
+								<h:panelGrid columns="3">
+									<p:commandButton id="buttonadd" value="Enregistrer"  icon="ui-icon-disk"
+										actionListener="#{processuconsultationMB.valider}"
+										disabled="#{processuconsultationMB.etatBouton}"
+										update=":frm,:frm:buttonadd,:frm:buttonrep"
+										style="width:150px;height:37px;font-size:13px;border-radius:10px;">
+										<p:confirm header="Confirmation"
+											message="Confirmez-vous l'enregistrement ? "
+											icon="ui-icon-alert" />
+									</p:commandButton>
+									<p:commandButton id="buttonan" value="Annuler" icon="ui-icon-arrowrefresh-1-n"
+										actionListener="#{processuconsultationMB.viderpro}"
+										disabled="#{processuconsultationMB.etatAnnuler}"
+										update=":frm,:frm:buttonadd,:frm:buttonan,:frm:buttonrep"
+										style="width:150px;height:37px ;font-size:13px;border-radius:10px;" />
+									<p:commandButton id="buttonrep" value="Ouvrir ordornance en pdf"
+										actionListener="#{etatorddesign.editer}" update=":frm:buttonrep,frm"  disabled="#{processuconsultationMB.etatrep}" 
+										style="width:170px;height:40px ;font-size:13px;border-radius:10px;" />
+
+
+									<h:outputText value="(*) champ obligatoire" style="color:red" />
+								</h:panelGrid>
+							</fieldset>
+
+							<br />
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="explode" height="30" width="250">
+
+								<p:commandButton value="Oui" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="Non" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+
+							</p:confirmDialog>
+							<br />
+						</fieldset>
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+
+<p:dialog modal="true" appendTo="@(body)"  header="Attention" widgetVar="test" showEffect="explode" hideEffect="bounce" height="100" >
+    <h:outputText value="Vous avez dejà choisi cet médicament, choississez un autre" />
+</p:dialog>
+
+		</h:form>
+
+
+
+
+
+
+
+		<p:dialog header="Consulter" widgetVar="editconsul" resizable="false"
+			id="editcon" width="1150" height="560" showEffect="fade"
+			hideEffect="explode" modal="true" appendTo="@(body)">
+			<h:form id="frm2">
+				<p:messages id="growl2" showDetail="true" sticky="false"
+					autoUpdate="true" />
+
+
+				<fieldset style="border-radius: 10px;" class="fieldset">
+					<legend>Informations Patients</legend>
+					<br />
+
+					<h:panelGrid id="fpat" columns="8">
+
+						<h:outputText value="Code patient" />
+						<p:inputText id="num" value="#{ancienconsMB.patient.numPat}"
+							readonly="true" style="margin-left: 0px; width: 120px">
+
+						</p:inputText>
+
+
+						<h:outputText value="Nom patient" style="margin-left: 20px;" />
+						<p:inputText id="nom" value="#{ancienconsMB.patient.nomPat}"
+							readonly="true" style="width:120px" />
+
+
+						<h:outputText value="Prenoms patient " style="margin-left: 20px;" />
+						<p:inputText id="pren" value="#{ancienconsMB.patient.prenomPat}"
+							readonly="true" style="width:120px" />
+
+
+
+						<h:outputText value="Matricule patient " style="margin-left: 0px;" />
+						<p:inputText id="matric"
+							value="#{ancienconsMB.patient.matriculePat}" readonly="true"
+							style="width:120px" />
+
+						<h:outputText value="Date naissance " style="margin-left: 0px;" />
+						<p:calendar id="dn" value="#{ancienconsMB.patient.datenaissPat}"
+							readonly="true" style="width:120px" />
+
+						<br />
+					</h:panelGrid>
+				</fieldset>
+
+				<br></br>
+
+
+
+
+				<br></br>
+				<fieldset style="height: 300px; border-radius: 10px;"
+					class="fieldset">
+					<legend>Information consultation</legend>
+
+					<p:dataTable id="tab2" selectionMode="single" var="pat2"
+						emptyMessage="Aucune donnees" value="#{ancienconsMB.listecons}"
+						selection="#{ancienconsMB.selectconsult}"
+						rowKey="#{pat2.numConsult}" rows="5" paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15">
+						<p:ajax event="rowSelect"
+							listener="#{ancienconsMB.selectionnerConsultation}"
+							update=":frm2:tab3"></p:ajax>
+
+
+						<p:column headerText="Code consultation">
+							<h:outputText value="#{pat2.numConsult}" />
+						</p:column>
+
+						<p:column headerText="libellé de la Consultation ">
+							<h:outputText value="#{pat2.libelleCons}" />
+						</p:column>
+
+						<p:column headerText="Date de la Consultation " sortBy="#{pat2.dateCons}" >
+							<h:outputText value="#{pat2.dateCons}"   >
+							<f:convertDateTime pattern="dd-MM-yyyy" />  </h:outputText>  
+						</p:column>
+
+						<p:column headerText="Nom patient">
+							<h:outputText value="#{pat2.patient.nomPat}" />
+						</p:column>
+
+						<p:column headerText="Prenoms patient">
+							<h:outputText value="#{pat2.patient.prenomPat}" />
+						</p:column>
+
+						<p:column headerText="Poids patient">
+							<h:outputText value="#{pat2.temperature}" />
+						</p:column>
+
+						<p:column headerText="Observation du patient">
+							<h:outputText value="#{pat2.observationCons}" />
+						</p:column>
+
+						<p:column headerText="Tension du patient">
+							<h:outputText value="#{pat2.tension}" />
+						</p:column>
+
+						<p:column headerText="Personnel Medical">
+							<h:outputText value="#{pat2.utilisateur.nomUtilisateur}" />
+						</p:column>
+
+
+
+
+
+
+
+
+					</p:dataTable>
+				</fieldset>
+
+
+
+				<br />
+
+
+
+				<fieldset style="height: 200px; border-radius: 10px;"
+					class="fieldset">
+
+					<legend>Information medicament prescris</legend>
+					<p:dataTable id="tab3" var="distr" emptyMessage="Aucune donnees"
+						value="#{ancienconsMB.listPrescrire}" scrollable="true"
+						scrollHeight="150" scrollWidth="1080">
+						<p:column headerText="Médicament"
+							style="font-size: 13px; font-weight:bold;margin-left: 60px;">
+							<h:outputText value="#{distr.medicament.dsgMed}" />
+						</p:column>
+						<p:column headerText="Quantité prescrite"
+							style="font-size: 13px; font-weight:bold;margin-left: 60px;">
+							<h:outputText value="#{distr.qtePrs}" />
+						</p:column>
+						<p:column headerText="Quantité distribuée"
+							style="font-size: 13px; font-weight:bold;margin-left: 60px;">
+							<h:outputText value="#{distr.qteDistr}" />
+						</p:column>
+
+						<p:column headerText="Posologie"
+							style="font-size: 13px; font-weight:bold;margin-left: 60px;">
+							<h:outputText value="#{distr.posologieOr}" />
+						</p:column>
+
+						<p:column headerText="Date de sortie"
+							style="font-size: 13px; font-weight:bold;margin-left: 60px;">
+							<h:outputText value="#{distr.dateSortie}" />
+						</p:column>
+
+						<p:column headerText="Durée du traitement"
+							style="font-size: 13px; font-weight:bold;margin-left: 60px;">
+							<h:outputText value="#{distr.dureeTrait}" />
+						</p:column>
+
+
+					</p:dataTable>
+				</fieldset>
+
+
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

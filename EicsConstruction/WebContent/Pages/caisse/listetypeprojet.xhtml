@@ -1,0 +1,73 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateGestclient.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			
+					<p:panel header="Liste projet"  styleClass="">
+					
+					<br />
+					
+		
+      <br></br>
+<fieldset id="resulat" class="fieldset" >
+							<legend>Recapitulatif des enregistrements</legend>
+							<p:dataTable  value="#{managedtypeprojet.listemaison}"
+								
+								var="per" emptyMessage="Aucune Données"
+								 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+								scrollable="true" rowsPerPageTemplate="5,10"   paginator="true" rows="10" scrollHeight="300" scrollWidth="1250"  style="height:400px;margin-bottom:20px">
+								
+								
+								
+     
+
+         <p:column headerText="Projet Maison" sortBy="#{per.dsgMais}" style="width:100px">
+            <h:outputText value="#{per.dsgMais}" />
+        </p:column>
+        
+         <p:column headerText="Type Maison" sortBy="#{per.typeMaison}" style="width:100px">
+            <h:outputText value="#{per.typeMaison}" />
+        </p:column>
+         <p:column headerText="Tarif  Maison" sortBy="#{per.coutTtcMais}" style="width:100px">
+            <h:outputText value="#{per.coutTotalMais}" />
+        </p:column>
+        
+       
+        
+       
+        
+        
+        
+        
+                      
+								
+								
+   
+ </p:dataTable>  
+ <h:panelGrid  columns="2">
+					     
+			
+        <p:graphicImage name="/images/index.png" width="28"/>
+        		</h:panelGrid>
+ 
+ 
+ 
+ </fieldset>  
+      
+      </p:panel>												
+     </h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,126 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateGestcaisse.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			
+					<p:panel header="Etat caisse"  styleClass="">
+					
+					<br />
+					
+		
+      <br></br>
+<fieldset id="resulat" class="fieldset" >
+							<legend>Recapitulatif des enregistrements</legend>
+							<p:dataTable  value="#{managedetatcaisse.listefacture}"
+								
+								var="fact" emptyMessage="Aucune Données"
+								 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+								scrollable="true" rowsfactPageTemplate="5,10"   paginator="true" rows="10" scrollHeight="300" scrollWidth="1250"  style="height:400px;margin-bottom:20px">
+								
+			
+			
+				
+			<p:column headerText="Numero Facture"  style="width:100px">
+            <h:outputText value="#{fact.codeFact}" />
+        </p:column>
+
+                    <p:column headerText="libellé facture" sortBy="#{fact.libelleFact}" filterBy="#{fact.libelleFact}" style="width:150px">
+            <h:outputText value="#{fact.libelleFact}" />
+        </p:column>
+        
+        
+           <p:column headerText="Nom client " sortBy="#{fact.client.nomClt}" filterBy="#{fact.client.nomClt}" style="width:150px">
+            <h:outputText value="#{fact.client.nomClt}" />
+        </p:column>
+        
+         <p:column headerText="Prenom client" sortBy="#{fact.client.prenomClt}" filterBy="#{fact.client.prenomClt}" style="width:150px">
+            <h:outputText value="#{fact.client.prenomClt}" />
+        </p:column>
+        
+         <p:column headerText="Date facture" sortBy="#{fact.dateFact}"  style="width:150px">
+            <h:outputText value="#{fact.dateFact}" />
+        </p:column>
+        
+        
+        <p:column headerText="Projet Maison" sortBy="#{fact.conrat.maison.dsgMais}" style="width:100px">
+            <h:outputText value="#{fact.contrat.maison.dsgMais}" />
+        </p:column>
+        
+         <p:column headerText="Type Maison" sortBy="#{fact.contrat.maison.typeMaison}" style="width:100px">
+            <h:outputText value="#{fact.contrat.maison.typeMaison}" />
+        </p:column>
+         <p:column headerText="Tarif  Maison" sortBy="#{fact.contrat.maison.coutTtcMais}" style="width:100px">
+            <h:outputText value="#{fact.contrat.maison.coutTotalMais}" />
+        </p:column>
+        
+        
+        
+         
+        
+         <p:column headerText="Apport initial " sortBy="#{fact.etatContrat}" style="width:100px">
+            <h:outputText value="#{fact.contrat.apportInitial}" />
+        </p:column>
+        
+         <p:column headerText="Montant payé" sortBy="#{fact.montantFact}" style="width:100px">
+            <h:outputText value="#{fact.montantFact}" />
+        </p:column>	
+				
+		<p:column headerText="Montant restant à payer" sortBy="#{fact.resteAPayerFact}" style="width:100px">
+            <h:outputText value="#{fact.resteAPayerFact}" />
+        </p:column>			
+				
+		
+		
+				
+				
+				
+				
+				
+				
+				
+								
+								
+      
+
+                 
+        
+        
+         
+        
+       
+        
+        
+        
+        
+                      
+								
+								
+   
+ </p:dataTable>  
+ <h:panelGrid  columns="2">
+					     
+			
+        <p:graphicImage name="/images/index.png" width="28"/>
+        		</h:panelGrid>
+ 
+ 
+ 
+ </fieldset>  
+      
+      </p:panel>												
+     </h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

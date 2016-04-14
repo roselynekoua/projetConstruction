@@ -1,0 +1,94 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+
+		<h:form id="frm">
+			<p:messages id="growl" showDetail="false" autoUpdate="true"
+				closable="true" />
+
+
+			<p:panel header="Enregistrement des Images" styleClass="tableMarge">
+				<fieldset class="fieldsetpara" id="chbat">
+					<br />
+
+
+
+					<legend>Afficher image</legend>
+
+					<h:panelGrid columns="4">
+
+
+<h:outputText value=" Prototype " style="margin-left:20px" />
+						<p:selectOneMenu id="prto" value="#{managedimage.prototype}"
+									converter="#{entityConverter}"
+									style="margin-left: 20px; width: 120px">
+									<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+									<f:selectItems value="#{managedimage.listeprototype}" var="tata"
+										itemLabel="#{tata.libellePrototype}" itemValue="#{tata}" />
+
+								</p:selectOneMenu>
+
+						<h:outputText value=" Désignation photo" style="margin-left:20px" />
+						<p:inputText value="#{managedimage.image.libelleImage}"
+							style="margin-left:15px" />
+
+
+
+						<p:panel header="#{image.libelleImage}" style="text-align:center ;">
+					            <h:panelGrid columns="1" style="width:100%">
+					               
+					                    <p:graphicImage value="/resources/images/auto.png" styleClass="imagePays" style="width:280px"/> 
+					                    
+					             
+					            </h:panelGrid>
+					        </p:panel>
+
+
+
+
+
+					</h:panelGrid>
+
+					<br />
+					<h:panelGrid columns="3">
+						<p:commandButton id="buttonadd" value="Enregistrer"
+							icon="ui-icon-disk"
+							actionListener="#{managedimage.enregistrer}" update="frm"
+							style="width:110px;height:25px;font-size:13px;border-radius:10px;" />
+
+						<p:commandButton id="buttonupdate" value="Annuler"
+							icon="ui-icon-arrowrefresh-1-n"
+							actionListener="#{managedimage.vider}" update="frm"
+							style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+
+						<h:outputText value="(*) champ obligatoire" style="color:red" />
+					</h:panelGrid>
+
+				</fieldset>
+
+				<br></br>
+
+
+
+
+
+
+
+			</p:panel>
+
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

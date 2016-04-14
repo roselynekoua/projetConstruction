@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/templateGestclient.xhtml">
+
+	<ui:define name="content">
+		<h:form id="frm"   enctype="multipart/form-data">
+	
+		
+		<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+		
+		<p:panel header="Modification compte client"  >
+		
+		<h:graphicImage name="images/login.png" style="margin-right: 0%; margin-left: 80%;"/>
+		
+		<br />
+		
+		
+					
+		
+              <fieldset style="height:50px;border-radius:10px;" class="fieldset">
+              <legend>Champs de recherche</legend>
+              
+              <h:panelGrid columns="4">
+								<h:outputText value="Recherche par :" />
+								<p:selectOneMenu value="#{managedclientmaj.typeFiltre}" style="width:100px">
+									
+									<f:selectItem itemLabel="Code client" itemValue="numClt"  />
+									<f:selectItem itemLabel="Nom Client"  itemValue="nomClt"  />
+									<f:selectItem itemLabel="Prenom Client"  itemValue="prenomClt"  />
+								</p:selectOneMenu>
+								<p:inputText value="#{managedclientmaj.filtre}"
+									style="height:14px !important"  />
+								
+								<p:commandButton action="#{managedclientmaj.filtrer}"
+									update=":frm:tab" icon="ui-icon-search"
+									style="height:24px !important"  />
+							</h:panelGrid>
+              
+          
+				
+		</fieldset>
+			
+		 
+							<fieldset class="fieldset"
+								style="border-radius: 3px;border: 1px solid #7A8A88;height: 230px;">
+								<legend>Client</legend>
+								<p:dataTable var="ctr" emptyMessage="Aucune donnée"
+									value="#{managedclientmaj.listeclient}"
+									selectionMode="single" rowKey="#{ctr.numClt}"
+									selection="#{managedclientmaj.clientselected}"
+									rows="5"
+						paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5"
+									 id="tab">
+									<p:ajax event="rowSelect"
+										listener="#{managedclientmaj.onRowSelectclt}" update=":frm:grid,:frm:infosupl,:frm:buttonsup,:frm:buttonadd,:frm:buttonupdate"/>
+								
+										
+									<p:column headerText="Code client">
+										<h:outputText value="#{ctr.numClt}" />
+									</p:column>
+
+
+                              <p:column headerText="Nom client">
+										<h:outputText value="#{ctr.nomClt}" />
+									</p:column>
+									<p:column headerText="Prenom client">
+										<h:outputText value="#{ctr.prenomClt}" />
+									</p:column>
+
+									
+									<p:column headerText="Matricule">
+										<h:outputText value="#{ctr.matriculeClt}" />
+									</p:column>
+                              <p:column headerText="Telephone">
+										<h:outputText value="#{ctr.numtelClt}" />
+									</p:column>
+									
+
+								</p:dataTable>
+							</fieldset>
+							
+							
+<br />		
+		
+		<fieldset class="fieldset">
+		<legend>Modifier Client</legend>
+					
+					
+					<br />	
+						
+						
+					<fieldset  id="Modification client"  class="fieldset">
+					<br /> 
+					
+		
+			
+				<legend>Informations client</legend>
+				
+				<h:panelGrid columns="6" id="grid">
+					<h:outputText value=" Nom client" style="margin-left:20px" />
+					<p:inputText id="nom" value="#{managedclientmaj.client.nomClt}" style="margin-left:15px"
+						 /> 
+					
+
+					<h:outputText value=" Prenoms client*" style="margin-left:20px" />
+					<p:inputText id="prenomclt" value="#{managedclientmaj.client.prenomClt}" style="margin-left:15px"
+						 />
+					
+					
+					<h:outputText value=" Civilité*" style="margin-left:20px;margin-right:0px" />
+					
+					 <p:selectOneMenu id="civ" value="#{managedclientmaj.client.civiliteClt}"
+												 panelStyle="width:180px" style="width:160px;margin-left: 15px;"
+												 >
+												<f:selectItem itemLabel="Selectionner" itemValue=" " />
+												<f:selectItem itemLabel="Mr" itemValue="Mr" />
+												<f:selectItem itemLabel="Mme"  itemValue="Mme" />
+                                                <f:selectItem itemLabel="Mlle"  itemValue="Mlle" />
+											</p:selectOneMenu>
+					
+					<h:outputText value=" N° Pièce (CNI ou Passeport)*" style="margin-left:20px" />
+					<p:inputText id="matricule" value="#{managedclientmaj.client.matriculeClt}"  style="margin-left:15px"
+						 />
+					
+					
+					<h:outputText value=" Date naissance client*" style="margin-left:20px" />
+					<p:calendar id="daten" value="#{managedclientmaj.client.datenaissClt}" style="margin-left:15px"
+						 />
+					
+					<h:outputText value=" Email" style="margin-left:20px" />
+					<p:inputText id="mail" value="#{managedclientmaj.client.emailClt}"  style="margin-left:15px"
+					validatorMessage="Format émail incorrecte">
+					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"> </f:validateRegex> </p:inputText>
+					
+					
+					
+
+					<h:outputText value=" Numero telephone" style="margin-left:20px" />
+					<p:inputMask  value="#{managedclientmaj.client.numtelClt}"    mask="(999) 99-99-99-99"  style="margin-left:15px"/>
+						
+					
+					<h:outputText value=" Fax" style="margin-left:20px" />
+					<p:inputMask  value="#{managedclientmaj.client.faxClt}" mask="(999) 99-99-99-99" style="margin-left:15px"/>
+		
+					
+					
+			
+	
+		  
+											
+            <h:outputText value="(*) champ obligatoire" style="color:red ;margin-left:0px"/>
+           
+        
+       
+
+			</h:panelGrid>  </fieldset> 
+			
+			
+			
+			<br />
+			<fieldset   class="fieldset">
+			<legend>Informations complémentaires </legend>
+			<h:panelGrid  columns="6" id="infosupl">
+			
+					
+			<h:outputText value=" Numero domicile" style="margin-left:20px;" />
+					<p:inputText id="login" value="#{managedclientmaj.client.ndomicileClt}" style="margin-left:15px"
+						feedback="true" />
+					
+
+					<h:outputText value=" Quartier" style="margin-left:20px"/>
+					<p:inputText id="qrtier" value="#{managedclientmaj.client.quartierClt}"
+						feedback="true"   style="margin-left:15px"/>
+					
+
+					<h:outputText value=" Boite postale" style="margin-left:20px" />
+					<p:inputText value="#{managedclientmaj.client.boitePostClt}" style="margin-left:15px" />
+						  
+					
+			</h:panelGrid>
+			</fieldset>
+			
+			</fieldset>	
+			
+				<br />
+		
+				
+				
+			<fieldset  class="fieldset">	       
+				       
+				<h:panelGrid columns="4" cellpadding="10" style="margin-left:80px">  
+				
+								<p:commandButton value="Modifier" id="buttonadd"
+						actionListener="#{managedclientmaj.update}" update="frm,:frm:grid," disabled="#{managedclientmaj.etatBouton}"  process="@this"  ajax="false" icon="ui-icon-check" style="width:170px;height:40px ;font-size:13px;border-radius:10px;" />
+					<p:commandButton value="Reset" id="buttonupdate" style="width:170px;height:40px ;font-size:13px;border-radius:10px;"
+						actionListener="#{managedclientmaj.vider}" update="frm,:frm:buttonsup,:frm:buttonadd,:frm:buttonupdate"  disabled="#{managedclientmaj.etatAnnuler}"  icon="ui-icon-refresh" />
+						<p:commandButton id="buttonsup" value="Supprimer" icon="ui-icon-close"
+										actionListener="#{managedclientmaj.deleteclt}" update=":frm:buttonsup,frm"    disabled="#{managedclientmaj.etatSup}"
+										style="width:170px;height:40px ;font-size:13px;border-radius:10px;" />
+					
+						
+				</h:panelGrid>
+			</fieldset>
+			
+	</p:panel> 
+			<br />
+		</h:form>
+	</ui:define>
+	<p:layoutUnit id="center" position="center">
+		<ui:insert name="content">
+
+		</ui:insert>
+	</p:layoutUnit>
+</ui:composition>
+</html>

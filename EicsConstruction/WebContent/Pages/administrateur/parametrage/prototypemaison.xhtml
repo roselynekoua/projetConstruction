@@ -1,0 +1,131 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			
+					<p:panel header="Enregistrement Prototype Maison" styleClass="tableMarge">
+					<fieldset style="border-radius:10px;" class="fieldsetpara">
+					<br /><br />
+					<h:panelGrid id="proto" columns="6" >
+											
+												
+											
+						
+												<h:outputText value="Désignation prototype maison*" style="margin-left: 0px;" />
+												<p:inputText id="dsgm" value="#{managedprotomaison.maison.libellePrototype}" required="true" requiredMessage="Renseigner la désignation du prototype de la maison" 
+													style="width:120px"/>
+													
+											
+						
+												<h:outputText value="Superficie prototype" style="margin-left: 20px;" />
+												<p:inputText id="prenC" value="#{managedprotomaison.maison.superficiePrototype}"  required="true" requiredMessage="Renseigner la superficie de la maison "
+													style="width:120px" />
+												
+						                      
+												<h:outputText value="Localisation*  " style="margin-left: 20px;" />
+												<p:inputText id="mat1" value="#{managedprotomaison.maison.localisationPrototype}"  required="true" requiredMessage="Renseigner la localisation de la maison" 
+													style="width:120px"/>
+													
+						                      <h:outputText value="Quantité prototype * " style="margin-left: 0px;" />
+						                      <p:inputText id="qte1" value="#{managedprotomaison.maison.qteTotPrototype}"  required="true" requiredMessage="Renseigner la quantité de prototype de la maison" 
+													style="width:120px"/>
+						                      
+										
+						
+												
+						                      
+						                      <h:outputText value="Tarif  " style="margin-left: 20px;" />
+						                      <p:inputText id="tar" value="#{managedprotomaison.maison.coutTtcPrototype}"  required="true" requiredMessage="Renseigner le tarif du prototype de la maison" 
+													style="width:120px">
+												<p:ajax  event="change" listener="#{managedprotomaison.activer}"  update=":frm:buttonadd,:frm:buttonupdate"></p:ajax> </p:inputText>
+						                     
+												
+													
+						                      
+											
+												
+											</h:panelGrid> <br /><br />
+											
+							<h:panelGrid columns="3" >				
+						<p:commandButton id="buttonadd" value="Enregistrer" icon="ui-icon-disk" actionListener="#{managedprotomaison.enregistrer}"  disabled="#{managedprotomaison.etatBouton}" update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px;font-size:13px;border-radius:10px;" />
+							
+                         <p:commandButton id="buttonupdate" value="Annuler" icon="ui-icon-arrowrefresh-1-n" actionListener="#{managedprotomaison.vider}" disabled="#{managedprotomaison.etatAnnuler}" update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+							
+						<h:outputText value="(*) champ obligatoire" style="color:red" /></h:panelGrid>
+						
+						</fieldset>
+					
+					   
+					   <br />
+					   
+					   
+				
+<br></br>
+
+<fieldset id="resulat"  class="fieldsetpara" style="height:300px" >
+							<legend>Liste des enregistrements</legend>
+  <p:dataTable id="resul" value="#{managedprotomaison.listemaison}" 
+								var="mais" emptyMessage="Aucune Données"
+								scrollable="true"  scrollHeight="180" scrollWidth="880">
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Code prototype maison" />
+									</f:facet>
+									<h:outputText value="#{mais.codePrototype}" />
+								</p:column>
+
+
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Désignation prototype maison" />
+									</f:facet>
+									<h:outputText value="#{mais.libellePrototype}" />
+								</p:column>
+
+<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="superficie maison" />
+									</f:facet>
+									<h:outputText value="#{mais.superficiePrototype}" />
+								</p:column>
+
+
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Localisation maison" />
+									</f:facet>
+									<h:outputText value="#{mais.localisationPrototype}" />
+								</p:column>
+								
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Tarif maison" />
+									</f:facet>
+									<h:outputText value="#{mais.coutTtcPrototype}" />
+								</p:column>
+
+
+								
+								
+								
+							</p:dataTable>
+                       </fieldset>	   
+					  </p:panel>								
+			</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

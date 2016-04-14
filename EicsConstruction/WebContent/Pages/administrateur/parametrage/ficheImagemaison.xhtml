@@ -1,0 +1,95 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="false" autoUpdate="true" closable="true"/>
+			
+			
+					<br />
+					
+	<p:panel header="Enregistrement des Images" styleClass="tableMarge">
+				<fieldset class="fieldsetpara" id="chbat">
+					<br />
+
+
+
+					<legend>Ajouter image</legend>
+
+					<h:panelGrid columns="4">
+
+						<h:outputText value=" Désignation photo" style="margin-left:20px" />
+						<p:inputText value="#{managedimagemaison.image.libelleImage}" 
+							style="margin-left:15px" />
+
+<h:outputText value=" Choisir Maison " style="margin-left:20px" />
+						<p:selectOneMenu id="prto" value="#{managedimagemaison.maison}"
+									converter="#{entityConverter}"
+									style="margin-left: 20px; width: 120px">
+									<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+									<f:selectItems value="#{managedimagemaison.listemaison}" var="tata"
+										itemLabel="#{tata.dsgMais}" itemValue="#{tata}" />
+
+								</p:selectOneMenu>
+
+						<h:outputText value="Ajouter photo maison"
+							style="margin-left:20px;margin-right:20px" />
+						<p:fileUpload fileUploadListener="#{managedimagemaison.upload}"
+							messageTemplate="telecharger une seule photo" required="true"
+							mode="advanced" dragDropSupport="true"
+							fileLimitMessage="Vous pouvez telecharger une seule photo!"
+							multiple="true" sizeLimit="1000000" fileLimit="10"
+							update="growl" uploadLabel="telecharger" label="Parcourir"
+							cancelLabel="Annuler"
+							allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|docx)$/">
+
+						</p:fileUpload>
+
+
+
+
+
+					</h:panelGrid>
+
+					<br />
+					<h:panelGrid columns="3">
+						<p:commandButton id="buttonadd" value="Enregistrer"
+							icon="ui-icon-disk"
+							actionListener="#{managedimagemaison.enregistrer}" update=":frm"
+							style="width:110px;height:25px;font-size:13px;border-radius:10px;" />
+
+						<p:commandButton id="buttonupdate" value="Annuler"
+							icon="ui-icon-arrowrefresh-1-n"
+							actionListener="#{managedimagemaison.vider}" update="frm"
+							style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+
+						<h:outputText value="(*) champ obligatoire" style="color:red" />
+					</h:panelGrid>
+
+				</fieldset>
+
+				<br></br>
+
+
+
+
+
+
+
+			</p:panel>				
+											 
+											
+						     														
+			</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

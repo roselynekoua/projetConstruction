@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/templateparametrage.xhtml">
+
+	<ui:define name="content">
+		<h:form id="clientForm">
+	
+		
+		<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+		<h:graphicImage name="images/login.png" style="margin-right: 0%; margin-left: 80%;"/>
+		<p:panel header="Création compte client"  styleClass="tableMarge">
+		<br />
+		
+					<fieldset  id="Enregistrement Nouveau client" style="background:images/login.png" class="fieldsetpara">
+					<br /> 
+					
+		
+			
+				<legend>Informations client</legend>
+				
+				<h:panelGrid columns="6" id="grid">
+					<h:outputText value=" Nom client*" style="margin-left:10px" />
+					<p:inputText id="nom" value="#{managedclient.client.nomClt}" style="margin-left:15px"
+						required="true"  requiredMessage="Indiquez le nom" /> 
+					
+
+					<h:outputText value=" Prenom client*" style="margin-left:20px" />
+					<p:inputText id="prenom" value="#{managedclient.client.prenomClt}" style="margin-left:15px"
+						required="true" requiredMessage="Indiquez le prenom" />
+					
+					<h:outputText value=" Matricule client*" style="margin-left:20px" />
+					<p:inputText id="matricule" value="#{managedclient.client.matriculeClt}"  style="margin-left:15px"
+						required="true" requiredMessage="Indiquez le matricule" />
+					
+					
+					<h:outputText value=" Date naissance client*" style="margin-left:20px" />
+					<p:inputText id="prenom" value="#{managedclient.client.datenaissClt}" style="margin-left:15px"
+						required="true" requiredMessage="Indiquez le prenom" />
+					
+					<h:outputText value=" Email" style="margin-left:10px" />
+					<p:inputText id="mail" value="#{managedclient.client.emailClt}"  style="margin-left:15px"
+					validatorMessage="Format émail incorrecte">
+					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"> </f:validateRegex> </p:inputText>
+					
+					
+					<h:outputText value=" Numero domicile*" style="margin-left:20px" />
+					<p:inputText id="login" value="#{managedclient.client.ndomicile}" style="margin-left:15px"
+						feedback="true" required="true" requiredMessage="Indiquez le numero domicile"/>
+					
+
+					<h:outputText value=" Quartier*" style="margin-left:20px"/>
+					<p:inputText id="motPasse" value="#{managedclient.client.quartier}"
+						feedback="true" required="true" requiredMessage="Indiquez un quartier"  style="margin-left:15px"/>
+					
+
+					<h:outputText value=" Boite postale" style="margin-left:10px" />
+					<p:inputText value="#{managedclient.client.boitePostClt}" style="margin-left:15px" />
+						  
+					<h:outputText value=" Commune" style="margin-left:10px" />
+					<p:inputText value="#{managedclient.client.commune}" style="margin-left:15px" />
+
+					<h:outputText value=" Numero telephone" style="margin-left:20px" />
+					<p:inputMask  value="#{managedclient.client.numtelClt}"    mask="(999) 99-99-99-99"  style="margin-left:15px"/>
+						
+					
+					<h:outputText value=" Fax" style="margin-left:20px" />
+					<p:inputText  value="#{managedclient.client.faxClt}" style="margin-left:15px"/>
+		
+					
+					
+					
+					
+        
+        
+        <h:outputText value="Sexe*: " style="margin-left:20px"/>  
+						
+						
+	<p:selectOneMenu  value="#{managedclient.selectedsexe}" style="margin-left: 15px;width: 95px" required="true" requiredMessage="selectionner le sexe">
+		  <f:selectItem itemValue="Choisir" itemLabel="Choisir sexe"  style="margin-left:15px"> </f:selectItem>
+          <f:selectItems value="#{managedclient.elementsexe}"/>
+	       <p:ajax event="change"  listener="#{managedclient.recuperersexe}" > </p:ajax>
+		    </p:selectOneMenu>
+		    
+		    <h:outputText value="Nationalité*: " style="margin-left:20px"/>  
+						
+						
+						  <p:selectOneMenu  value="#{managedclient.selectednat}" style="margin-left: 15px;width: 95px" required="true" requiredMessage="selectionner un nationalité">
+		  <f:selectItem itemValue="Choisir" itemLabel="Choisir "  > </f:selectItem>
+          <f:selectItems value="#{managedclient.elementnat}"/>
+	       <p:ajax event="change"  listener="#{managedclient.recuperernat}" > </p:ajax>
+		    </p:selectOneMenu>
+		    
+		    <h:outputText value="Profession*: " style="margin-left:20px"/>  
+						
+						
+						  <p:selectOneMenu  value="#{managedclient.selectedpro}" style="margin-left: 15px;width: 95px" required="true" requiredMessage="selectionner un nationalité">
+		  <f:selectItem itemValue="Choisir" itemLabel="Choisir "  > </f:selectItem>
+          <f:selectItems value="#{managedclient.elementpro}"/>
+	       <p:ajax event="change"  listener="#{managedclient.recupererpro}" > </p:ajax>
+		    </p:selectOneMenu>
+        	
+        	
+        	  <h:outputText value="Type client* " style="margin-left: 20px;" />
+						                      
+						                      
+										
+						                      <p:selectOneMenu id="typ" value="#{managedclient.typeClient.statutTypeclt}"
+												 panelStyle="width:180px" style="width:160px"
+												 >
+												<f:selectItem itemLabel="Selectionner" itemValue=" " />
+												<f:selectItem itemLabel="local" itemValue="local" />
+												<f:selectItem itemLabel="diaspora"  itemValue="diaspora" />
+                                                
+											</p:selectOneMenu>
+            <h:outputText value="(*) champ obligatoire" style="color:red ;margin-left:10px"/>
+           
+        
+        
+
+			</h:panelGrid>
+				<br />
+				       <p:separator />
+				       
+				<h:panelGrid columns="4" cellpadding="10" style="margin-left:80px">  
+				
+								<p:commandButton value="Valider" id="enregistrer"
+						actionListener="#{managedclient.enregistrer}" update="grid" ajax="false" icon="ui-icon-check" />
+					<p:commandButton value="Reset" id="reset"
+						actionListener="#{managedclient.resetclient}" update="clientForm"   icon="ui-icon-refresh" />
+				</h:panelGrid>
+			</fieldset>
+			
+	</p:panel>
+			<br />
+		</h:form>
+	</ui:define>
+	<p:layoutUnit id="center" position="center">
+		<ui:insert name="content">
+
+		</ui:insert>
+	</p:layoutUnit>
+</ui:composition>
+</html>

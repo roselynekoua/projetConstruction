@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+
+	
+	
+	
+	
+	<security:http auto-config="true"  access-denied-page="/errordroit.jsf">
+		<security:intercept-url pattern="/Pages/administrateur/**" access="ROLE_ADMIN"/>
+		<security:intercept-url pattern="/Pages/gestionClient/**"  access="ROLE_GESTION"/>
+		<security:intercept-url pattern="/Pages/caisse/**" access="ROLE_CAISSIER"/>
+		
+		<!-- <security:form-login login-page="/login.jsp" authentication-failure-url="/login-failure.jsp" default-target-url="/index.jsp"/>
+  <security:logout logout-url="/logout.jsp" logout-success-url="/index.xhtml"/> -->
+  
+  
+  
+	    <security:form-login login-page="/login.jsp" authentication-failure-url="/login-failure.jsp"/>
+		<security:logout logout-url="/logout.jsp" logout-success-url="/index.xhtml"/>		
+
+	</security:http>
+	
+	
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:jdbc-user-service
+			data-source-ref="dataSource"
+			users-by-username-query="SELECT LOGIN_UTILISATEUR as 'username', MOT_PASSE as 'password', ACTIVITE as 'enabled' FROM utilisateur WHERE LOGIN_UTILISATEUR = ?" 
+			authorities-by-username-query="SELECT u.LOGIN_UTILISATEUR as username, p.LIBELLE_PROFIL as authority  
+                                                       FROM utilisateur u ,profil p  WHERE  u.CODE_PROFIL = p.CODE_PROFIL  and u.LOGIN_UTILISATEUR = ?"/>
+		</security:authentication-provider>
+	</security:authentication-manager> 
+	
+
+</beans>

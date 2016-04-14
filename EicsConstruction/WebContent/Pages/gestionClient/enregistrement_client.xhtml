@@ -1,0 +1,530 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/templateGestclient.xhtml">
+
+	<ui:define name="content">
+		<h:form id="frm" enctype="multipart/form-data">
+
+
+			<p:messages id="messages" showDetail="false" autoUpdate="true"
+				closable="true" />
+
+			<p:panel header="Création compte client">
+				<p:wizard id="wizar" flowListener="#{managedclient.handleflow}"
+					widgetVar="wiz" nextLabel="Suivant" backLabel="Précedant"
+					styleClass="wizardStyle" style="width:99%">
+
+					<p:tab id="OngletClient" title="Client">
+						<h:graphicImage name="images/login.png"
+							style="margin-right: 0%; margin-left: 80%;" />
+
+						<br />
+						<fieldset class="fieldset">
+
+							<h:outputText value="Date création  Client*"
+								style="margin-left: 358px;margin-right: 40px"></h:outputText>
+							<p:calendar value="#{managedclient.datecreaClt}"></p:calendar>
+							<br />
+						</fieldset>
+						<br />
+
+
+						<fieldset id="Enregistrement Nouveau client" class="fieldset">
+							<br />
+
+
+
+							<legend>Informations client</legend>
+
+							<h:panelGrid columns="6" id="grid">
+								<h:outputText value=" Nom client*" style="margin-left:20px" />
+								<p:inputText id="nom" value="#{managedclient.client.nomClt}"
+									style="margin-left:15px" required="true"
+									requiredMessage="Indiquez le nom" />
+
+
+								<h:outputText value=" Prenoms client*" style="margin-left:20px" />
+								<p:inputText id="prenomclt"
+									value="#{managedclient.client.prenomClt}"
+									style="margin-left:15px" required="true"
+									requiredMessage="Indiquez le prenom" />
+
+
+								<h:outputText value=" Civilité*"
+									style="margin-left:20px;margin-right:0px" />
+
+								<p:selectOneMenu id="civ"
+									value="#{managedclient.client.civiliteClt}"
+									panelStyle="width:180px" style="width:160px;margin-left: 15px;">
+									<f:selectItem itemLabel="Selectionner" itemValue=" " />
+									<f:selectItem itemLabel="Mr" itemValue="Mr" />
+									<f:selectItem itemLabel="Mme" itemValue="Mme" />
+									<f:selectItem itemLabel="Mlle" itemValue="Mlle" />
+								</p:selectOneMenu>
+
+								<h:outputText value=" N° Pièce (CNI ou Passeport)*"
+									style="margin-left:20px" />
+								<p:inputText id="matricule"
+									value="#{managedclient.client.matriculeClt}"
+									style="margin-left:15px" required="true"
+									requiredMessage="Indiquez le numero de la piece" />
+
+
+								<h:outputText value=" Date naissance client*"
+									style="margin-left:20px" />
+								<p:calendar id="daten"
+									value="#{managedclient.client.datenaissClt}"
+									style="margin-left:15px" />
+
+								<h:outputText value=" Email" style="margin-left:20px" />
+								<p:inputText id="mail" value="#{managedclient.client.emailClt}"
+									style="margin-left:15px"
+									validatorMessage="Format émail incorrecte">
+									<f:validateRegex
+										pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]">
+									</f:validateRegex>
+								</p:inputText>
+
+
+
+
+								<h:outputText value=" Numero telephone" style="margin-left:20px" />
+								<p:inputMask value="#{managedclient.client.numtelClt}"
+									mask="(999) 99-99-99-99" style="margin-left:15px" />
+
+
+								<h:outputText value=" Fax" style="margin-left:20px" />
+								<p:inputMask value="#{managedclient.client.faxClt}"
+									mask="(999) 99-99-99-99" style="margin-left:15px" />
+
+
+
+
+
+
+
+								<h:outputText value="Sexe*: " style="margin-left:20px" />
+								<p:selectOneMenu id="sexe" value="#{managedclient.sexe}"
+									converter="#{entityConverter}"
+									style="margin-left: 15px; width: 120px">
+									<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+									<f:selectItems value="#{managedclient.listesexe}" var="tata"
+										itemLabel="#{tata.libelleSexe}" itemValue="#{tata}" />
+
+								</p:selectOneMenu>
+
+
+								<h:outputText value="Nationalité*: " style="margin-left:20px" />
+
+								<p:selectOneMenu id="combo" value="#{managedclient.nationalite}"
+									converter="#{entityConverter}"
+									style="margin-left: 15px; width: 120px">
+									<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+									<f:selectItems value="#{managedclient.listenat}" var="tata"
+										itemLabel="#{tata.libelleNat}" itemValue="#{tata}" />
+
+								</p:selectOneMenu>
+
+								<h:outputText value="Profession*: " style="margin-left:20px" />
+								<p:selectOneMenu id="cbpf" value="#{managedclient.profession}"
+									converter="#{entityConverter}"
+									style="margin-left: 15px; width: 120px">
+									<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+									<f:selectItems value="#{managedclient.listeprof}" var="tata"
+										itemLabel="#{tata.libelleProfession}" itemValue="#{tata}" />
+
+								</p:selectOneMenu>
+
+
+
+								<h:outputText value="Type client* " style="margin-left: 20px;" />
+
+
+
+								<p:selectOneMenu id="tclt" value="#{managedclient.typeclient}"
+									converter="#{entityConverter}"
+									style="margin-left: 15px; width: 120px">
+									<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+									<f:selectItems value="#{managedclient.listetypeclient}"
+										var="tata" itemLabel="#{tata.libelleTypeclt}"
+										itemValue="#{tata}" />
+
+								</p:selectOneMenu>
+
+
+							</h:panelGrid>
+
+
+
+
+							<h:panelGrid columns="2">
+
+								<h:outputText value="Ajouter photo client" style="margin-left:15px" />
+								<p:fileUpload fileUploadListener="#{managedclient.upload}"
+									messageTemplate="telecharger une seule photo" required="true"
+									mode="advanced" dragDropSupport="true"
+									fileLimitMessage="Vous pouvez telecharger une seule photo!"
+									multiple="false" sizeLimit="1000000" fileLimit="1"
+									update="messages" uploadLabel="telecharger" label="Parcourir"
+									cancelLabel="Annuler"
+									allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|docx)$/">
+
+								</p:fileUpload>
+
+								<h:outputText value="(*) champ obligatoire"
+									style="color:red ;margin-left:0px" />
+							</h:panelGrid>
+						</fieldset>
+
+
+
+						<br />
+						<fieldset class="fieldset">
+							<legend>Informations complémentaires </legend>
+							<h:panelGrid columns="6">
+								<h:outputText value=" Pays client*"
+									style="margin-left:20px;margin-right:100px" />
+								<p:selectOneMenu id="pay" value="#{managedclient.pays}"
+									converter="#{entityConverter}"
+									style="margin-left: 15px; width: 120px">
+									<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+									<f:selectItems value="#{managedclient.listepays}" var="tata"
+										itemLabel="#{tata.libellePays}" itemValue="#{tata}" />
+
+								</p:selectOneMenu>
+
+
+
+								<h:outputText value=" Ville"
+									style="margin-left:20px;margin-right:108px" />
+								<p:selectOneMenu id="tvill" value="#{managedclient.ville}"
+									converter="#{entityConverter}"
+									style="margin-left: 15px; width: 120px">
+									<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+									<f:selectItems value="#{managedclient.listeville}" var="tata"
+										itemLabel="#{tata.libelleVille}" itemValue="#{tata}" />
+
+								</p:selectOneMenu>
+
+
+								<h:outputText value="Commune" style="margin-left:20px" />
+								<p:selectOneMenu id="tcom" value="#{managedclient.commune}"
+									converter="#{entityConverter}"
+									style="margin-left: 15px; width: 120px">
+									<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+									<f:selectItems value="#{managedclient.listecomune}" var="tata"
+										itemLabel="#{tata.libelleCommune}" itemValue="#{tata}" />
+
+								</p:selectOneMenu>
+								<h:outputText value=" Numero domicile*"
+									style="margin-left:20px;" />
+								<p:inputText id="login"
+									value="#{managedclient.client.ndomicileClt}"
+									style="margin-left:15px" feedback="true" required="true"
+									requiredMessage="Indiquez le numero domicile" />
+
+
+								<h:outputText value=" Quartier" style="margin-left:20px" />
+								<p:inputText id="qrtier"
+									value="#{managedclient.client.quartierClt}" feedback="true"
+									style="margin-left:15px" />
+
+
+								<h:outputText value=" Boite postale" style="margin-left:20px" />
+								<p:inputText value="#{managedclient.client.boitePostClt}"
+									style="margin-left:15px" />
+
+
+							</h:panelGrid>
+						</fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					</p:tab>
+					<br />
+
+
+					<p:tab id="OngletContrat" title="Contrat">
+						<p:panel header="Enregistrement Contrat">
+							<fieldset class="fieldset">
+								<br />
+								<br />
+
+
+
+								<legend>Contrat</legend>
+
+								<h:panelGrid columns="6">
+
+									<h:outputText value="Choisir projet prototype*"
+										style="margin-left: 20px;"></h:outputText>
+									<p:selectOneMenu id="tpro" value="#{managedclient.prototype}"
+										converter="#{entityConverter}"
+										style="margin-left: 0px; width: 120px">
+										<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+										<f:selectItems value="#{managedclient.listeproto}" var="tata"
+											itemLabel="#{tata.libellePrototype}" itemValue="#{tata}" />
+										<p:ajax event="change" update=":frm:sup,:frm:monttot,:frm:loc,:frm:qt,:frm:qtesoucr">
+										</p:ajax>
+									</p:selectOneMenu>
+
+									<h:outputText value="Superficie projet(m²)"
+										style="margin-left: 20px;"></h:outputText>
+									<p:inputText id="sup"
+										value="#{managedclient.prototype.superficiePrototype}" style="margin-left: 20px;"
+										readonly="true" />
+
+
+									<h:outputText value="Localisation " style="margin-left: 20px;"></h:outputText>
+									<p:inputText id="loc" style="margin-left: 20px; width: 120px"
+										value="#{managedclient.prototype.localisationPrototype}"
+										readonly="true">
+
+									</p:inputText>
+
+<h:outputText value="Montant projet"
+										style="margin-left: 20px;"></h:outputText>
+									<p:inputText id="monttot"
+										value="#{managedclient.prototype.coutTtcPrototype}"
+										readonly="true">
+										<f:convertNumber pattern="##,###.##"></f:convertNumber>
+									</p:inputText>
+
+									<h:outputText value="Quantité totale Maison *"
+										style="margin-left: 20px;"></h:outputText>
+									<p:inputText id="qt" 
+										value="#{managedclient.prototype.qteTotPrototype}" style="margin-left: 20px;"
+										readonly="true" />
+
+									<h:outputText value="Quantité souscrite*"
+										style="margin-left: 20px;"></h:outputText>
+									<p:inputText id="qtesoucr"
+										value="#{managedclient.prototype.qteSouscrPrototype}" style="margin-left: 20px"
+										
+										 />
+
+
+
+
+
+									<h:outputText value="Date debut du contrat "
+										style="margin-left: 20px;"></h:outputText>
+									<p:calendar value="#{managedclient.contrat.dateDebutContrat}">
+										
+									</p:calendar>
+
+									<h:outputText value="Date fin du contrat "
+										style="margin-left: 20px;"></h:outputText>
+									<p:calendar value="#{managedclient.contrat.dateFinContrat}" style="margin-left: 20px;"></p:calendar>
+
+<h:outputText value="Quantité commandée*"
+										style="margin-left: 20px;"></h:outputText>
+									<p:spinner id="qtecmd"
+										value="#{managedclient.contrat.qteAcq}"  min="0" max="2000" style="margin-left: 20px"
+										required="true" requiredMessage="Choisir quantité" 
+										 >
+<p:ajax event="blur" listener="#{managedclient.calculer}" update=":frm:monttotp,:frm:apor"></p:ajax></p:spinner>
+
+									<h:outputText value="Etat contrat " style="margin-left: 20px;"></h:outputText>
+
+									<p:selectOneMenu id="etc"
+										value="#{managedclient.contrat.etatContrat}"
+										 style="margin-left: 0px;">
+										<f:selectItem itemLabel="Selectionner" itemValue="" />
+										<f:selectItem itemLabel="Reservé" itemValue="Reserver" />
+										<f:selectItem itemLabel="Confirmé" itemValue="Confirmer" />
+										<f:selectItem itemLabel="Soldé" itemValue="Solder" />
+									</p:selectOneMenu>
+
+									<h:outputText value="MONTANT TOTAL PROJET"
+										style="margin-left: 20px;color:red"></h:outputText>
+									<p:inputText id="monttotp"
+										value="#{managedclient.coutTotal}"
+										readonly="true"  style="margin-left: 20px">
+										<f:convertNumber pattern="##,###.##"></f:convertNumber>
+									</p:inputText>
+
+								</h:panelGrid>
+								<br />
+							</fieldset>
+							<br />
+							<fieldset class="fieldset">
+								<br />
+								<br />
+
+
+
+								<legend>Informations Appartement</legend>
+
+								<h:panelGrid columns="6">
+
+
+<h:outputText value="Batiment Appartement"
+										style="margin-left:20px" />
+									<p:selectOneMenu id="bat" value="#{managedclient.batiment}"
+										converter="#{entityConverter}"
+										style="margin-left: 15px; width: 120px">
+										<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+										<f:selectItems value="#{managedclient.listebatiment}"
+											var="tata" itemLabel="#{tata.libelleBat}" itemValue="#{tata}" />
+										
+										
+										<p:ajax event="change" listener="#{managedclient.activer}"
+											update=":frm:buttonadd,:frm:buttonupdate">
+										</p:ajax>
+									</p:selectOneMenu>
+									<h:outputText value=" Numero Appartement"
+										style="margin-left:20px;" />
+									<p:inputText value="#{managedclient.maison.codeMais}"
+										style="margin-left:35px" />
+
+									<h:outputText value="Désignation Maison "
+										style="margin-left:25px" />
+									<p:inputText value="#{managedclient.maison.dsgMais}"
+										style="margin-left:25px" />
+									<h:outputText value="Type Appartement" style="margin-left:20px" />
+									<p:selectOneMenu id="tap" value="#{managedclient.typemaison}"
+										converter="#{entityConverter}"
+										style="margin-left: 15px; width: 120px">
+										<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+										<f:selectItems value="#{managedclient.listetmaison}"
+											var="tata" itemLabel="#{tata.libelleTypmaison}"
+											itemValue="#{tata}" />
+
+									</p:selectOneMenu>
+									
+
+								</h:panelGrid>
+							</fieldset>
+							<br />
+
+
+
+<fieldset class="fieldset">
+					<br />
+					<legend>Informations Facture</legend>
+<h:panelGrid columns="6">
+
+					
+<h:outputText value="Montant facture "
+							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
+						<p:inputText id="apor"
+							value="#{managedclient.coutTotal}"  readonly="true">
+							<f:convertNumber pattern="##,###.##"></f:convertNumber>
+						</p:inputText>
+<h:outputText value="Observation  "
+							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
+						<h:inputTextarea id="obs"
+							value="#{managedclient.facture.observationFact}" />
+							
+						
+
+
+						<h:outputText value="Apport Initial"
+							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
+						<p:inputText id="mtr" value="#{managedclient.facture.apportInitial}"
+							>
+							<f:convertNumber pattern="##,###.##"></f:convertNumber>
+						</p:inputText>
+
+					</h:panelGrid>
+					<br />
+				</fieldset>
+
+
+
+
+
+
+<br />
+
+
+
+
+
+
+							<fieldset class="fieldset">
+
+								<h:panelGrid columns="3" cellpadding="10"
+									style="margin-left:80px">
+
+									<p:commandButton value="Valider" id="buttonadd"
+										actionListener="#{managedclient.enregistrer}"
+										update=":frm:grid,:frm:wizar,:frm:buttonrep"
+										disabled="#{managedclient.etatBouton}" process="@this"
+										ajax="false" icon="ui-icon-check"
+										style="width:170px;height:30px ;font-size:13px;border-radius:10px;" />
+									<p:commandButton value="Reset" id="buttonupdate"
+										disabled="#managedclient.etatAnnuler}"
+										style="width:170px;height:30px ;font-size:13px;border-radius:10px;"
+										actionListener="#{managedclient.vider}" update="frm"
+										icon="ui-icon-refresh" />
+
+									<p:commandButton id="buttonrep" value="Ouvrir Contrat en pdf"
+										disabled="#{managedclient.etatImprimer}"
+										actionListener="#{etatcontrat.editer}"
+										update=":frm:buttonrep,frm"
+										style="width:170px;height:30px ;font-size:13px;border-radius:10px;" />
+</h:panelGrid>
+
+
+
+<h:panelGrid columns="3">
+<h:link   id="but" value="Revenir page principale"
+										outcome="indexgestion.xhtml"
+										
+										update=":frm:buttonrep,frm" style="margin-left:20px"
+										 />
+										<h:link   id="but2" value="Retour Onglet client"
+										
+										outcome="enregistrement_client.xhtml"
+										update=":frm:buttonrep,frm" style="margin-left:20px"
+										 />
+										
+								</h:panelGrid>
+
+
+
+
+
+
+
+
+							</fieldset>
+
+						</p:panel>
+					</p:tab>
+				</p:wizard>
+			</p:panel>
+			<br />
+		</h:form>
+	</ui:define>
+	<p:layoutUnit id="center" position="center">
+		<ui:insert name="content">
+
+		</ui:insert>
+	</p:layoutUnit>
+</ui:composition>
+</html>

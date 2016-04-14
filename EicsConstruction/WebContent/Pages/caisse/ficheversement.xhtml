@@ -1,0 +1,313 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateGestcaisse.xhtml">
+	<ui:define name="content">
+
+		<h:form id="frm"  target="_blank">
+			<p:messages id="growl" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+
+			<p:panel header="Enregistrement Versement">
+				<br />
+
+				<br />
+
+				<br />
+				<fieldset style="height: 50px; border-radius: 10px;"
+					class="fieldset">
+					<legend>Champs de recherche</legend>
+
+					<h:panelGrid columns="4">
+						<h:outputText value="Entrez le code du contrat :" />
+
+						<p:selectOneMenu value="#{managedversement.typeFiltre}"
+							style="width:100px">
+
+							<f:selectItem itemLabel="CODE CONTRAT " itemValue="codeContrat" />
+
+						</p:selectOneMenu>
+						<p:inputText value="#{managedversement.filtre}"
+							style="height:14px !important" />
+
+						<p:commandButton action="#{managedversement.filtrer}" update="tab"
+							icon="ui-icon-search" style="height:24px !important" />
+					</h:panelGrid>
+
+
+
+				</fieldset>
+
+
+
+				<br></br>
+
+				<fieldset id="resulat" style="height: 350px; border-radius: 10px;"
+					class="fieldset">
+					<legend>Resultat de la recherche </legend>
+
+
+
+					<p:dataTable id="tab" value="#{managedversement.listecontrat}"
+						rowKey="#{pat.codeContrat}" selectionMode="single"
+						selection="#{managedversement.selectcontrat}" var="pat"
+						emptyMessage="Aucune données" scrollable="true" rows="5"
+						paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10">
+						<p:ajax event="rowSelect"
+							listener="#{managedversement.onRowSelect}"
+							update=":frm:clt,:frm:cltp,:frm:verspanel, @this"></p:ajax>
+
+						<p:column headerText="Code contrat">
+							<h:outputText value="#{pat.codeContrat}" />
+						</p:column>
+
+						<p:column headerText="Code client">
+							<h:outputText value="#{pat.client.numClt}" />
+						</p:column>
+
+						<p:column headerText="Nom du client ">
+							<h:outputText value="#{pat.client.nomClt}" />
+						</p:column>
+
+						<p:column headerText="Prenoms client">
+							<h:outputText value="#{pat.client.prenomClt}" />
+						</p:column>
+
+						<p:column headerText="CNI client">
+							<h:outputText value="#{pat.client.matriculeClt}" />
+						</p:column>
+
+						<p:column headerText="Sexe client">
+							<h:outputText value="#{pat.client.sexe.libelleSexe}" />
+						</p:column>
+
+						
+						<p:column headerText="Cout projet ">
+							<h:outputText value="#{coutTotal}">
+								<f:convertNumber pattern="##,###.##"></f:convertNumber>
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</fieldset>
+				<br />
+				<fieldset class="fieldset">
+					<legend>Versement</legend>
+
+					<h:panelGrid columns="6" id="verspanel">
+
+
+						<h:outputText value="Nom Client "
+							style="margin-left: 20px;margin-right: 40px;"></h:outputText>
+						<p:inputText id="clt" value="#{managedversement.client.nomClt}"></p:inputText>
+
+						<h:outputText value="Prenom Client " style="margin-left: 20px;"></h:outputText>
+						<p:inputText id="cltp"
+							value="#{managedversement.client.prenomClt}"></p:inputText>
+
+
+
+						<h:outputText value="Montant versement* "
+							style="margin-left: 20px;"></h:outputText>
+						<p:inputText id="mvers"
+							value="#{managedversement.versement.montantVers}">
+							<f:convertNumber pattern="##,###.##"></f:convertNumber> 
+							<p:ajax event="change" listener="#{managedversement.miseajr}"
+								update=":frm:buttonadd,:frm:buttonupdate,:frm:panel">
+							</p:ajax></p:inputText>
+						
+
+
+						<h:outputText value="Type Versement " style="margin-left: 20px;"></h:outputText>
+						<p:selectOneMenu id="typver" value="#{managedversement.typeVers}"
+							panelStyle="width:180px" style="width:160px;margin-left: 0px;"
+							required="true"
+							requiredMessage="Veuillez choisir le type de reglement"> >
+												<f:selectItem itemLabel="Selectionner" itemValue=" " />
+							<f:selectItem itemLabel="Cheque" itemValue="Cheque" />
+							<f:selectItem itemLabel="Virement" itemValue="Virement" />
+							<f:selectItem itemLabel="Espece" itemValue="Espece" />
+
+
+							<p:ajax event="valueChange"
+								listener="#{managedversement.activerCheque}"
+								update=":frm:verspanel,@this" process="typver"></p:ajax>
+						</p:selectOneMenu>
+
+
+
+
+
+
+
+
+						<h:outputText for="num_cheq" value="Chèque "
+							style="margin-left: 20px;"></h:outputText>
+
+						<p:fileUpload id="num_cheq"
+							fileUploadListener="#{managedversement.upload}"
+							messageTemplate="telecharger une seule photo"
+							binding="#{managedversement.checqueInput2}" disabled="true"
+							required="true" mode="advanced" dragDropSupport="true"
+							fileLimitMessage="Vous pouvez telecharger une seule photo!"
+							multiple="false" sizeLimit="1000000" fileLimit="1" update="growl"
+							uploadLabel="telecharger" label="Parcourir photo"
+							cancelLabel="Annuler"
+							allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|docx)$/">
+
+						</p:fileUpload>
+
+<h:outputText value="Numero bordereau virement " style="margin-left: 20px;"></h:outputText>
+						<p:inputText  id="numvir" value="#{managedversement.versement.numborderoVers}" />
+
+						<h:outputText value="Etat versement " style="margin-left: 20px;"></h:outputText>
+						<p:selectOneMenu id="typ"
+							value="#{managedversement.versement.etatVers}"
+							panelStyle="width:180px" style="width:160px">
+							<f:selectItem itemLabel="Selectionner" itemValue=" " />
+							<f:selectItem itemLabel="Partial" itemValue="Partial" />
+							<f:selectItem itemLabel="Total" itemValue="Total" />
+
+						</p:selectOneMenu>
+
+
+
+						<h:outputText value="Date versement " style="margin-left: 20px;"></h:outputText>
+						<p:calendar id="date" value="#{managedversement.date}"></p:calendar>
+
+
+
+					</h:panelGrid>
+					<br />
+				</fieldset>
+				<br />
+				<fieldset class="fieldset">
+					<br />
+					<legend>Aperçu Facture</legend>
+
+
+					<h:panelGrid columns="6" id="panel">
+						<h:outputText value="Libellé facture"
+							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
+						<p:selectOneMenu id="libfact"
+							value="#{managedversement.facture.libelleFact}"
+							panelStyle="width:180px" style="width:160px">
+							<f:selectItem itemLabel="Selectionner" itemValue=" " />
+							<f:selectItem itemLabel="APPORT INITIAL"
+								itemValue="APPORT INITIAL" />
+							<f:selectItem itemLabel="VERSEMENT PARTIEL"
+								itemValue="VERSEMENT PARTIEL" />
+							<f:selectItem itemLabel="VERSEMENT FINAL"
+								itemValue="VERSEMENT FINAL" />
+						</p:selectOneMenu>
+
+						<h:outputText value="Montant total Tarif maison"
+							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
+						<p:inputText id="mtotarifpay"
+							value="#{managedversement.coutTotal}" readonly="true">
+							<f:convertNumber pattern="##,###.##"></f:convertNumber>
+						</p:inputText>
+
+
+
+						<h:outputText value="Frais de dossier "
+							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
+						<p:inputText id="fd"
+							value="#{managedversement.facture.fraisDossier}" >
+							<f:convertNumber pattern="##,###.##"></f:convertNumber>
+						</p:inputText>
+
+<h:outputText value="Montant facture payé "
+							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
+						<p:inputText id="apor"
+							value="#{managedversement.montantFact}"  readonly="true">
+							<f:convertNumber pattern="##,###.##"></f:convertNumber>
+						</p:inputText>
+<h:outputText value="Observation  "
+							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
+						<h:inputTextarea id="obs"
+							value="#{managedversement.facture.observationFact}" />
+							
+						
+
+<h:outputText value="Montant projet"
+							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
+						<p:inputText id="mtpr"
+							value="#{managedversement.facture.montantTtcFact}" readonly="true">
+							<f:convertNumber pattern="##,###.##"></f:convertNumber>
+						</p:inputText>
+
+
+						<h:outputText value="Montant restant à payer avant"
+							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
+						<p:inputText id="mtreavt"
+							value="#{managedversement.contrat.coutMtRestant}" readonly="true">
+							<f:convertNumber pattern="##,###.##"></f:convertNumber>
+						</p:inputText>
+
+						
+
+
+
+						<h:outputText value="Montant restant "
+							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
+						<p:inputText id="mtr" value="#{managedversement.resteAPayerFact}"
+							readonly="true">
+							<f:convertNumber pattern="##,###.##"></f:convertNumber>
+						</p:inputText>
+
+					</h:panelGrid>
+					<br />
+				</fieldset>
+				<br />
+
+				<fieldset class="fieldset">
+					<br />
+					<h:panelGrid columns="3">
+						<p:commandButton id="buttonadd" value="Enregistrer"
+							action="#{managedversement.enregistrer}"
+							disabled="#{managedversement.etatBouton}"
+							update="frm,:frm:buttonadd,:frm:buttonupdate,:frm:buttonimp"
+							style="width:110px;height:25px;font-size:13px;border-radius:10px;" />
+
+						<p:commandButton id="buttonupdate"
+							actionListener="#{managedversement.vider}" value="Annuler"
+							disabled="#{managedversement.etatAnnuler}"
+							update="frm,:frm:buttonadd,:frm:buttonupdate,:frm:buttonimp"
+							style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+
+
+
+
+						<p:commandButton id="buttonimp"
+							actionListener="#{etatfacture.editer}" value="Imprimer"  ajax="false" type="submit"
+							update="frm,:frm:buttonadd,:frm:buttonupdate,:frm:buttonimp"
+							disabled="#{managedversement.etatimprimer}"
+							style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+
+
+						<h:outputText value="(*) champ obligatoire" style="color:red" />
+					</h:panelGrid>
+					<br />
+				</fieldset>
+
+
+
+
+				<br></br>
+
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

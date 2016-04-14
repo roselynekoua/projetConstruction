@@ -1,0 +1,75 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			
+					<p:panel header="Enregistrement pays"  styleClass="tableMarge">
+					<fieldset  class="fieldsetpara">
+					<br />
+					
+											
+
+<legend>Pays</legend>
+
+<h:panelGrid columns="2">
+<h:outputText value="Libellé pays *"></h:outputText>
+<p:inputText value="#{managedpays.pays.libellePays}" required="true" requiredMessage="Renseigner libellé pays"></p:inputText>
+</h:panelGrid>
+
+<br />
+<h:panelGrid columns="3" >				
+						<p:commandButton id="buttonadd" value="Enregistrer" icon="ui-icon-disk" actionListener="#{managedpays.enregistrer}" update="frm"  style="width:110px;height:25px;font-size:13px;border-radius:10px;" />
+							
+                         <p:commandButton id="buttonupdate" value="Annuler" icon="ui-icon-arrowrefresh-1-n"  actionListener="#{managedpays.vider}" update="frm"   style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+							
+						<h:outputText value="(*) champ obligatoire" style="color:red" /></h:panelGrid>
+						
+	</fieldset>				
+
+<br></br>
+<br></br>
+
+<fieldset id="resulat"  class="fieldsetpara" >
+							<legend>Liste des pays</legend>
+  <p:dataTable id="resul" value="#{managedpays.listepays}"
+								var="prof" emptyMessage="Aucune Données"
+								scrollable="true"  scrollHeight="200" scrollWidth="800"  style="height:300px">
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Code pays" />
+									</f:facet>
+									<h:outputText value="#{prof.codePays}" />
+								</p:column>
+
+
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Libellé pays" />
+									</f:facet>
+									<h:outputText value="#{prof.libellePays}" />
+								</p:column>
+
+
+							</p:dataTable>
+                            </fieldset>
+																		
+											 
+							</p:panel>				
+						     														
+			</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

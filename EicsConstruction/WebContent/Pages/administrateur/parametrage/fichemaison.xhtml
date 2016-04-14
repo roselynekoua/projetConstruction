@@ -1,0 +1,167 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			
+					<p:panel header="Enregistrement Maison" styleClass="tableMarge">
+					<fieldset style="border-radius:10px;" class="fieldsetpara">
+					<br /><br />
+					<h:panelGrid id="fpat" columns="6" >
+											
+												
+											
+						
+												<h:outputText value="Désignation maison*" style="margin-left: 20px;" />
+												<p:inputText id="dsgm" value="#{managedmaison.maison.dsgMais}" required="true" requiredMessage="Renseigner la dsignation de la maison" 
+													style="width:120px"/>
+													
+											
+						
+												<h:outputText value="Superficie (m²)* " style="margin-left: 20px;" />
+												<p:inputText id="prenC" value="#{managedmaison.maison.superficie}"  required="true" requiredMessage="Renseigner la superficie de la maison "
+													style="width:120px" />
+												
+						                      
+												<h:outputText value="Localisation*  " style="margin-left: 20px;" />
+												<p:inputText id="mat1" value="#{managedmaison.maison.localisation}"  required="true" requiredMessage="Renseigner la localisation de la maison" 
+													style="width:120px"/>
+													
+						                      <h:outputText value="Type maison* " style="margin-left: 20px;" />
+						                      
+						                      <p:selectOneMenu id="typma" value="#{managedmaison.maison.typeMaison}"  required="true" requiredMessage="Renseigner le type de la maison"
+												 panelStyle="width:180px" style="width:160px"
+												 >
+												<f:selectItem itemLabel="Selectionner" itemValue=" " />
+												<f:selectItem itemLabel="4 pieces" itemValue="4 pieces" />
+												<f:selectItem itemLabel="5 pieces"  itemValue="5 pieces" />
+                                                <f:selectItem itemLabel="6 pieces"  itemValue="6 pieces" />
+											</p:selectOneMenu>  
+										
+														
+						                      <h:outputText value="Quantité Maison*  " style="margin-left: 20px;" />
+												<p:inputText id="qtem" value="#{managedmaison.maison.qteDpbMais}"  required="true" requiredMessage="Renseigner la quantité" 
+													style="width:120px"/>
+						                     
+												
+						                      
+						                      <h:outputText value="Tarif*  " style="margin-left: 20px;" />
+												<p:inputText id="tarif" value="#{managedmaison.coutTtcMais}"  required="true" requiredMessage="Renseigner le tarif" 
+													style="width:120px">
+													<p:ajax event="change"  listener="#{managedmaison.calcul}"  update=":frm:ctotal" > </p:ajax> 
+													<f:convertNumber pattern="##,###.##"></f:convertNumber></p:inputText>
+						                      
+													 <h:outputText value="Cout cloture* " style="margin-left: 20px;" />
+						                      <p:inputText id="couclo" value="#{managedmaison.clotureMais}"  required="true" requiredMessage="Renseigner le cout de la cloture" 
+													style="width:120px">
+													<p:ajax event="change"  listener="#{managedmaison.calcul}"  update=":frm:ctotal,:frm:buttonadd,:frm:buttonupdate" > </p:ajax>
+													<f:convertNumber pattern="##,###.##"></f:convertNumber></p:inputText>
+						                      
+						<h:outputText value="Cout total(F CFA) " style="margin-left: 20px;color:red" />
+												<p:inputText id="ctotal" value="#{managedmaison.coutTotalMais}"  
+													style="width:120px" readonly="true" >  <f:convertNumber pattern="##,###.##"></f:convertNumber></p:inputText>                   
+												
+											
+						                      
+													
+											
+												
+											</h:panelGrid> <br /><br />
+											
+							<h:panelGrid columns="3" >				
+						<p:commandButton id="buttonadd" value="Enregistrer" icon="ui-icon-disk" actionListener="#{managedmaison.enregistrer}"  disabled="#{managedmaison.etatBouton}" update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px;font-size:13px;border-radius:10px;" />
+							
+                         <p:commandButton id="buttonupdate" value="Annuler" icon="ui-icon-arrowrefresh-1-n" actionListener="#{managedmaison.vider}" disabled="#{managedmaison.etatAnnuler}" update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+							
+						<h:outputText value="(*) champ obligatoire" style="color:red" /></h:panelGrid>
+						
+						</fieldset>
+					
+					   
+					   <br />
+					   
+					   
+				
+<br></br>
+
+<fieldset id="resulat"  class="fieldsetpara" style="height:300px" >
+							<legend>Liste des enregistrements</legend>
+  <p:dataTable id="resul" value="#{managedmaison.listemaison}" 
+								var="mais" emptyMessage="Aucune Données"
+								scrollable="true"  scrollHeight="180" scrollWidth="880">
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Code maison" />
+									</f:facet>
+									<h:outputText value="#{mais.codeMais}" />
+								</p:column>
+
+
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Désignation maison" />
+									</f:facet>
+									<h:outputText value="#{mais.dsgMais}" />
+								</p:column>
+
+<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="superficie maison" />
+									</f:facet>
+									<h:outputText value="#{mais.superficie}" />
+								</p:column>
+
+
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Localisation maison" />
+									</f:facet>
+									<h:outputText value="#{mais.localisation}" />
+								</p:column>
+								
+								
+								
+
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Type maison" />
+									</f:facet>
+									<h:outputText value="#{mais.typeMaison}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Quantité maison" />
+									</f:facet>
+									<h:outputText value="#{mais.qteDpbMais}" />
+								</p:column>
+								
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Coût total(FCFA)" />
+									</f:facet>
+									<h:outputText value="#{mais.coutTotalMais}" >
+									
+									<f:convertNumber pattern="##,###.##"></f:convertNumber></h:outputText>
+								</p:column>
+								
+							</p:dataTable>
+                       </fieldset>	   
+					  </p:panel>								
+			</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

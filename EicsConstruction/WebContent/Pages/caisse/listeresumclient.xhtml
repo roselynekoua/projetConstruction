@@ -1,0 +1,306 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateGestcaisse.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			
+					<p:panel header="Liste des Clients "  styleClass="">
+					
+					<br />
+					
+              <fieldset style="height:50px;border-radius:10px;" class="fieldset">
+              <legend>Champs de recherche</legend>
+              
+              <h:panelGrid columns="4">
+								<h:outputText value="Recherche par :" />
+								<p:selectOneMenu value="#{managedresumclientliste.typeFiltre}" style="width:100px">
+									
+									<f:selectItem itemLabel="Code client" itemValue="numClt"  />
+									<f:selectItem itemLabel="Nom Client"  itemValue="nomClt"  />
+									
+								</p:selectOneMenu>
+								<p:inputText value="#{managedresumclientliste.filtre}"
+									style="height:14px !important"  />
+								
+								<p:commandButton action="#{managedresumclientliste.filtrer}"
+									update=":frm:tab" icon="ui-icon-search"
+									style="height:24px !important"  />
+							</h:panelGrid>
+              
+          
+				
+		</fieldset>
+		
+      <br></br>
+<fieldset id="resulat" class="fieldset" >
+							<legend>Recapitulatif des enregistrements</legend>
+							<p:dataTable  value="#{managedresumclientliste.listeclient}"
+								id="tab" rowKey="#{per.numClt}"   selectionMode="single" 
+									selection="#{managedresumclientliste.clientselected}"
+									var="per" emptyMessage="Aucune Données"
+								 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+								scrollable="true" rowsPerPageTemplate="5,10"   paginator="true" rows="15" scrollHeight="300" scrollWidth="1250"  style="height:400px;margin-bottom:20px">
+								
+								
+								
+								
+								<p:ajax event="rowSelect"
+										listener="#{managedresumclientliste.onRowSelectclt}" update=":frm:grild1,:frm:grild2" />
+								
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Numero Client" />
+									</f:facet>
+									<h:outputText value="#{per.numClt}" />
+								</p:column>
+
+
+                                 
+								<p:column style="width:150px">
+									<f:facet name="header" >
+										<h:outputText value="Nom Client "  />
+									</f:facet>
+									<h:outputText value="#{per.nomClt}"  />
+								</p:column>
+   
+                                <p:column style="width:150px">
+									<f:facet name="header" >
+										<h:outputText value="Prenom Client " sortBy="#{per.prenomClt}" />
+									</f:facet>
+									<h:outputText value="#{per.prenomClt}"  />
+								</p:column>
+								
+								 <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Sexe Client " />
+									</f:facet>
+									<h:outputText value="#{per.sexe.libelleSexe}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="CNI/passeport Client " />
+									</f:facet>
+									<h:outputText value="#{per.matriculeClt}" />
+								</p:column>
+   
+                                <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Nationalité Client " />
+									</f:facet>
+									<h:outputText value="#{per.nationalite.libelleNat}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Profession Client " />
+									</f:facet>
+									<h:outputText value="#{per.profClt}" />
+								</p:column>
+						
+						
+						
+						
+								 <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Date creation Client "  sortBy="#{per.datecreaClt}"/>
+									</f:facet>
+									<h:outputText value="#{per.datecreaClt}" >
+									<f:convertDateTime pattern="dd-MM-yyyy" />   </h:outputText>
+								</p:column>
+						
+						
+								 <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Telephone Client " />
+									</f:facet>
+									<h:outputText value="#{per.numtelClt}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Mail Client " />
+									</f:facet>
+									<h:outputText value="#{per.emailClt}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Fax Client " />
+									</f:facet>
+									<h:outputText value="#{per.faxClt}" />
+								</p:column>
+								
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Pays Client "  sortBy="#{per.paysClt}"/>
+									</f:facet>
+									<h:outputText value="#{per.paysClt}" />
+								</p:column>
+								
+								
+   
+ </p:dataTable>  </fieldset>
+ 
+     <br></br>
+<fieldset id="resulat" class="fieldset" >
+							<legend>Contrat</legend>
+							<p:dataTable  value="#{managedresumclientliste.listecontrat}"
+								id="grild1"
+								var="per" emptyMessage="Aucune Données"
+								 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+								scrollable="true" rowsPerPageTemplate="5,10"   paginator="true" rows="10" scrollHeight="300" scrollWidth="1250"  style="height:400px;margin-bottom:20px">
+								
+								
+								
+        <p:column headerText="Numero Contrat"  style="width:100px">
+            <h:outputText value="#{per.codeContrat}" />
+        </p:column>
+
+              <p:column headerText="Nom client" sortBy="#{per.client.nomClt}" filterBy="#{per.client.nomClt}" style="width:150px">
+            <h:outputText value="#{per.client.nomClt}" />
+        </p:column>
+        
+         <p:column headerText="Prenom client" sortBy="#{per.client.prenomClt}" filterBy="#{per.client.prenomClt}" style="width:150px">
+            <h:outputText value="#{per.client.prenomClt}" />
+        </p:column>      
+       
+         <p:column headerText="Projet Maison" sortBy="#{per.maison.dsgMais}" style="width:100px">
+            <h:outputText value="#{per.maison.dsgMais}" />
+        </p:column>
+        
+         <p:column headerText="Type Maison" sortBy="#{per.maison.typeMaison}" style="width:100px">
+            <h:outputText value="#{per.maison.typeMaison}" />
+        </p:column>
+         <p:column headerText="Tarif  Maison" sortBy="#{per.maison.coutTtcMais}" style="width:100px">
+            <h:outputText value="#{per.maison.coutTotalMais}" />
+        </p:column>
+        
+         <p:column headerText="Apport initial " sortBy="#{per.etatContrat}" style="width:100px">
+            <h:outputText value="#{per.apportInitial}" />
+        </p:column>
+        
+         <p:column headerText="Etat  Contrat" sortBy="#{per.etatContrat}" style="width:100px">
+            <h:outputText value="#{per.etatContrat}" />
+        </p:column>
+        
+       
+        
+ </p:dataTable>
+ </fieldset>
+ 		
+      <br></br>
+<fieldset id="resulat" class="fieldset" >
+							<legend>Recapitulatif des enregistrements</legend>
+							<p:dataTable  value="#{managedresumclientliste.lisFacture}"
+								id="grild2"
+								var="fact" emptyMessage="Aucune Données"
+								 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+								scrollable="true" rowsfactPageTemplate="5,10"   paginator="true" rows="10" scrollHeight="300" scrollWidth="1250"  style="height:400px;margin-bottom:20px">
+								
+			
+			
+				
+			<p:column headerText="Numero Facture"  style="width:100px">
+            <h:outputText value="#{fact.codeFact}" />
+        </p:column>
+
+                    <p:column headerText="libellé facture" sortBy="#{fact.libelleFact}" filterBy="#{fact.libelleFact}" style="width:150px">
+            <h:outputText value="#{fact.libelleFact}" />
+        </p:column>
+        
+        
+           <p:column headerText="Nom client " sortBy="#{fact.client.nomClt}" filterBy="#{fact.client.nomClt}" style="width:150px">
+            <h:outputText value="#{fact.client.nomClt}" />
+        </p:column>
+        
+         <p:column headerText="Prenom client" sortBy="#{fact.client.prenomClt}" filterBy="#{fact.client.prenomClt}" style="width:150px">
+            <h:outputText value="#{fact.client.prenomClt}" />
+        </p:column>
+        
+         
+        
+       
+        
+         <p:column headerText="Montant versement" sortBy="#{fact.montantFact}" style="width:100px">
+            <h:outputText value="#{fact.montantFact}" />
+        </p:column>	
+				
+		<p:column headerText="Montant restant à payer" sortBy="#{fact.resteAPayerFact}" style="width:100px">
+            <h:outputText value="#{fact.resteAPayerFact}" />
+        </p:column>			
+				
+		<p:column headerText="Etat versement"  sortBy="#{fact.versement.etatVers}" style="width:100px">
+            <h:outputText value="#{fact.versement.etatVers} "  />
+        </p:column>			
+		
+		<p:column headerText="Date versement" sortBy="#{fact.versement.dateVers}" style="width:100px">
+            <h:outputText value="#{fact.versement.dateVers}" >
+            <f:convertDateTime pattern="dd-MM-yyyy" />   </h:outputText>
+        </p:column>			
+		
+		<p:column headerText="Date facture" sortBy="#{fact.dateFact}"  style="width:150px">
+            <h:outputText value="#{fact.dateFact}" >
+            <f:convertDateTime pattern="dd-MM-yyyy" />   </h:outputText>
+        </p:column>
+        		
+		<p:column headerText="Type versement"  style="width:100px">
+            <h:outputText value="#{fact.versement.typeVers}"  />
+        </p:column>				
+		
+		<p:column headerText="Caissier"  style="width:100px">
+            <h:outputText value="#{fact.utilisateur.nomUtilisateur}"  />
+        </p:column>			
+				
+				
+				
+				
+				
+				
+								
+								
+      
+
+                 
+        
+        
+         
+        
+       
+        
+        
+        
+        
+                      
+								
+								
+   
+ </p:dataTable>  </fieldset>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   
+      
+      </p:panel>												
+     </h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,107 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			
+					<p:panel header="Enregistrement Tarif"  styleClass="tableMarge">
+					<fieldset  class="fieldsetpara">
+					<br />
+					
+											
+
+<legend>Tarif</legend>
+
+<h:panelGrid columns="6">
+
+
+	    
+<h:outputText value="Cout ttc " style="margin-left: 20px;"></h:outputText>
+<p:inputText id="cou" value="#{managedtarif.tarif.coutTtcTarif}" ><p:ajax event="change"  listener="#{managedtarif.activer}"  update=":frm:buttonadd,:frm:buttonupdate" > </p:ajax></p:inputText>
+
+<h:outputText value="Cloture " style="margin-left: 20px;" ></h:outputText>
+<p:inputText id="pren" value="#{managedtarif.tarif.clotureFcfaTarif}"  ></p:inputText>
+
+<h:outputText value="Cout total " style="margin-left: 20px;"></h:outputText>
+<p:inputText id="prof" value="#{managedtarif.tarif.coutTotalTarif}"  ></p:inputText>
+
+
+
+
+
+
+</h:panelGrid>
+
+<br />
+<h:panelGrid columns="3" >				
+						<p:commandButton id="buttonadd" value="Enregistrer" actionListener="#{managedtarif.enregistrer}" disabled="#{managedtarif.etatBouton}" update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px;font-size:13px;border-radius:10px;" />
+							
+                         <p:commandButton id="buttonupdate" actionListener="#{managedtarif.vider}" value="Annuler"  disabled="#{managedtarif.etatAnnuler}" update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+							
+						<h:outputText value="(*) champ obligatoire" style="color:red" /></h:panelGrid>
+						
+	</fieldset>				
+
+
+      
+      
+      <br></br>
+<fieldset id="resulat" class="fieldsetpara" >
+							<legend>Recapitulatif des enregistrements</legend>
+							<p:dataTable  value="#{managedtarif.listetarif}"
+								var="per" emptyMessage="Aucune Données"
+								scrollable="true"  scrollHeight="150" scrollWidth="800">
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Code tarif" />
+									</f:facet>
+									<h:outputText value="#{per.codeTarif}" />
+								</p:column>
+
+
+                                 <p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Cout ttc tarif" />
+									</f:facet>
+									<h:outputText value="#{per.coutTtcTarif}" />
+								</p:column>
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Cloture " />
+									</f:facet>
+									<h:outputText value="#{per.clotureFcfaTarif}" />
+								</p:column>
+   
+                                <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Cout total tarif " />
+									</f:facet>
+									<h:outputText value="#{per.coutTotalTarif}" />
+								</p:column>
+								
+								
+								
+								
+								
+								
+								
+   
+ </p:dataTable></fieldset>  
+      
+      </p:panel>												
+     </h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

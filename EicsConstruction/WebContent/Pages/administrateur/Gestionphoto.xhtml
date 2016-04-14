@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateWebAuto.xhtml">
+	<ui:define name="content">
+	
+	
+	<p:ajaxStatus styleClass="ajaxStatut">  
+		<f:facet name="prestart">
+		<h:outputText value="Starting..." />
+		</f:facet>
+		
+	    <f:facet name="start">  
+	        <h:graphicImage value="../../resources/images/loader16.gif"/>  
+	    </f:facet>  
+	      
+	    <f:facet name="complete">  
+	        <h:outputText value="" />  
+	    </f:facet>  
+	</p:ajaxStatus> 
+	<h:form id="gnl">
+	
+	<p:messages id="pmessage" showDetail="true" autoUpdate="true" sticky="true" closable="true"/>
+	
+	<p:tab id="ongletpays" title="Pays">
+		<p:panel>
+					<br />
+			<f:facet name="header">
+	           		<span style="color:black;font-size: 2em;font-weight: bold;line-height:30px">&nbsp;Choisissez Votre Pays</span>
+	        </f:facet>
+			<fieldset>
+					<p:dataGrid var="pays" value="#{MBimage.garantiesCompagnies.paysEuropedata}" columns="3" rows="9" id="paysEurope" paginator="true">
+					 
+					        <f:facet name="header">
+					           		<span style="color:black;font-size: 2em;font-weight: bold;line-height:30px">&nbsp;Europe</span>
+					        </f:facet>
+					 
+					        <p:panel header="#{pays.libellePays}" style="text-align:center ;">
+					            <h:panelGrid columns="1" style="width:100%">
+					                <p:commandLink   title="#{pays.libellePays}" action="#{MBimage.garantiesCompagnies.verifCompagnie}"
+					              process="@this"  >
+					                    <p:graphicImage value="/resources/images/#{pays.codePays}.jpg" styleClass="imagePays" style="width:280px"/> 
+					                    <f:setPropertyActionListener value="#{pays}" target="#{MBimage.garantiesCompagnies.selectedPays}" />
+					                </p:commandLink>
+					            </h:panelGrid>
+					        </p:panel>
+					</p:dataGrid>		
+									
+		
+				</fieldset>
+	        </p:panel> 
+		</p:tab>	
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

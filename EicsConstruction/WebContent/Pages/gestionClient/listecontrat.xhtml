@@ -1,0 +1,93 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateGestclient.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm"  target="_blank">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			
+					<p:panel header="Liste des Contrats"  styleClass="">
+					
+					<br />
+					
+		
+      <br></br>
+<fieldset id="resulat" class="fieldset" >
+							<legend>Recapitulatif des enregistrements</legend>
+							<p:dataTable  value="#{managedclientliste.listecontrat}"
+								
+								var="per" emptyMessage="Aucune Données"
+								 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+								scrollable="true" rowsPerPageTemplate="5,10"   paginator="true" rows="10" scrollHeight="300" scrollWidth="1250"  style="height:400px;margin-bottom:20px">
+								
+								
+								
+        <p:column headerText="Numero Contrat"  style="width:100px">
+            <h:outputText value="#{per.codeContrat}" />
+        </p:column>
+
+                    <p:column headerText="Nom client" sortBy="#{per.client.nomClt}" filterBy="#{per.client.nomClt}" style="width:150px">
+            <h:outputText value="#{per.client.nomClt}" />
+        </p:column>
+        
+         <p:column headerText="Prenom client" sortBy="#{per.client.prenomClt}" filterBy="#{per.client.prenomClt}" style="width:150px">
+            <h:outputText value="#{per.client.prenomClt}" />
+        </p:column>
+        
+          <p:column headerText="Profession client" sortBy="#{per.client.profession.libelleProfession}" style="width:100px">
+            <h:outputText value="#{per.client.profession.libelleProfession}" />
+        </p:column>
+         <p:column headerText="Projet Maison" sortBy="#{per.prototypeMaison.libellePrototype}" style="width:100px">
+            <h:outputText value="#{per.prototypeMaison.libellePrototype}" />
+        </p:column>
+        
+         <p:column headerText="Type Maison" sortBy="#{per.maison.typeMaison.libelleTypmaison}" style="width:100px">
+            <h:outputText value="#{per.maison.typeMaison.libelleTypmaison}" />
+        </p:column>
+         <p:column headerText="Tarif  Projet" sortBy="#{per.prototypeMaison.coutTtcPrototype}" style="width:100px">
+            <h:outputText value="#{per.prototypeMaison.coutTtcPrototype}" />
+        </p:column>
+        
+        
+        
+         <p:column headerText="Etat  Contrat" sortBy="#{per.etatContrat}" style="width:100px">
+            <h:outputText value="#{per.etatContrat}" />
+        </p:column>
+        
+       
+        
+        
+        
+        
+                      
+								
+								
+   
+ </p:dataTable>  
+ <h:panelGrid  columns="2">
+					     
+			
+        <p:graphicImage name="/images/index.png" width="28" />
+        <p:commandButton id="buttonrep" value="Ouvrir liste en pdf"
+										actionListener="#{listecontradesign.editer}"    
+										style="width:170px;height:40px ;font-size:13px;border-radius:10px;"   ajax="false" type="submit"/>
+						
+        		</h:panelGrid>
+ 
+ 
+ </fieldset>  
+      
+      </p:panel>												
+     </h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

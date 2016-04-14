@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+	<p:panel header="Profil Utilisateur" styleClass="tableMarge">
+	<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+				<h:form id="frm">
+					<fieldset id="Profilfiel" class="fieldsetpara">
+					<br />
+						<legend>Profil </legend>
+						<h:panelGrid columns="4" style="margin-bottom:30px"
+							cellpadding="6">
+
+							<h:outputText value="Code Profil * " />
+							<p:inputText value="#{managedProfil.id}"  readonly="true"   >
+								
+							</p:inputText>
+							
+
+							<h:outputText value="libellé profil * " />
+							<p:inputText value="#{managedProfil.libelleProfil}"  required="true"  requiredMessage="entrez le libellé du profil ">
+							<p:ajax event="change"  listener="#{managedProfil.activer}"  update=":frm:buttonadd,:frm:buttonupdate"> </p:ajax></p:inputText>
+							
+							<h:outputText value="Date de creation du Profil" />
+							<p:calendar value="#{managedProfil.dateProfil}">
+							</p:calendar>
+				
+
+
+						</h:panelGrid><br />
+
+						<p:commandButton id="buttonadd" value="Ajouter" disabled="#{managedProfil.etatBouton}" icon="ui-icon-check"  update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px;font-size:13px;border-radius:10px;"
+							
+							actionListener="#{managedProfil.addProfil}" />
+						
+				<p:commandButton id="buttonupdate" value="Annuler" disabled="#{managedProfil.etatAnnuler}"  icon="ui-icon-arrowrefresh-1-n"  update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px;font-size:13px;border-radius:10px;"
+							
+							actionListener="#{managedProfil.reset}" />
+
+						<h:outputText value="(*) champ obligatoire" style="color:red" />
+
+					</fieldset>
+
+
+			</h:form></p:panel>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:of="http://omnifaces.org/functions">
+
+
+<h:head>
+	<title>Gestion de projet construction EICS</title>
+	<h:outputStylesheet library="css" name="main.css" />
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"
+		type="text/javascript"></script>
+	<!-- <link href="main.css" rel="stylesheet" type="text/css" media="screen" /> -->
+	<link rel="icon" type="image/x-icon" href="../../resources/images/favicon.ico" />
+</h:head>
+
+
+<h:body>
+	
+<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+<h:outputScript library="omnifaces" name="fixviewstate.js" target="head" />
+	
+	<p:layout fullPage="true">
+		<!-- Le Header de la page -->
+
+		<p:layoutUnit id="top" position="north" size="85" style="">
+
+			<ui:insert name="top">
+				<div style=" font-family:verdana;padding:0px;border-radius:10px;border:1px solid green;background-color:#D6D6D6">
+			<h:panelGrid columns="5" columnClasses="non,eseLabel" style="width:100%;height:100%;padding:0px;">
+				<h:panelGrid columns="1">
+				
+					<h:graphicImage name="images/logoeics.png" style="margin:0px; border-radius:10px;width:130%"/>
+					
+					
+				</h:panelGrid>
+		
+				<div style="color:#40B3DF; font-size:18px; margin-left: 50%; margin-right: 20%;"> GESTION <span style="background-color:blue;color:#ffffff; font-size: 18px ">ERREUR</span>
+				
+					<div style="color:#40B3DF; font-size:18px; margin-left: 3%; margin-right: 20%;"> Erreur d'execution</div>	
+						<h:outputText value=" Utilisateur:  #{managedConnexion.utilisateur.nomUtilisateur}  #{managedConnexion.utilisateur.prenomUtilisateur}"  style="margin-left: 25%;color:#F47333; font-size:18px"/>
+					 </div>
+				</h:panelGrid>
+				</div>
+
+			</ui:insert>
+		</p:layoutUnit>
+
+
+
+
+
+
+
+
+
+
+		<p:layoutUnit id="bottom" position="south" size="70"
+			styleClass="myLayoutStyleClass">
+			<ui:insert name="bottom">
+				<h:panelGrid columns="2" columnClasses="non,eseLabel"
+					style="width:100%;height:100%;padding:0px;border-color:silver;background-color: threedlightshadow;">
+
+
+					<a href="../../../../EicsConstruction/index.jsf" style="color: blue">Menu
+						Principal</a>
+					
+					<a href="../../../../EicsConstruction/Pages/gestionClient/indexgestion.jsf"
+						style="color: blue">Menu Gestion Maison</a>
+						
+					<a href="../../../../EicsConstruction/Pages/caisse/indexgestcaisse.jsf"
+						style="color: blue">Menu Gestion Caisse</a>
+					
+						
+					<a href="../../EicsConstruction/logout.jsp"
+						style="color: red">Déconnecter</a>
+
+
+
+					
+					<br />
+					<h:outputText value="Copyright :  KMinfo"
+						style="float: right;font-size: 12px;" />
+
+				</h:panelGrid>
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit id="center" position="center">
+		
+			<p:panelGrid columns="1" style="width:100%;">
+			<f:facet name="header">
+				<ui:insert name="contentTitle">Error</ui:insert>
+			</f:facet>
+			
+			<ui:insert name="errorContent">
+			<ul>
+				
+				<li>User agent: #{header['user-agent']}</li>
+				<li>User IP: #{empty header['x-forwarded-for'] ? request.remoteAddr : fn:split(header['x-forwarded-for'], ',')[0]}</li>
+				<li>Request URI: <a href="#{requestScope['javax.servlet.error.request_uri']}">#{requestScope['javax.servlet.error.request_uri']}</a></li>
+				<li>Ajax request: #{facesContext.partialViewContext.ajaxRequest ? 'Yes' : 'No'}</li>
+				<li>Status code: #{requestScope['javax.servlet.error.status_code']}</li>
+				<li>Exception type: #{requestScope['javax.servlet.error.exception_type']}</li>
+				<li>Exception message: #{requestScope['javax.servlet.error.message']}</li>
+				
+			</ul>
+		</ui:insert>
+				
+				<h:outputScript rendered="#{facesContext.partialViewContext.ajaxRequest}">scrollTo(0, 0);</h:outputScript>
+			
+			<f:facet name="footer">
+				<h:panelGrid columns="3" cellpadding="3">
+				<h:form id="frm">
+					<p:commandButton value="Reprendre le processus" action="#{managedErrorPages.toPrevious}"  />
+					
+					<p:commandButton value="Retour à la page d'acceuil" action="#{managedErrorPages.toHome}" />
+					
+					
+					
+					<h:panelGroup>
+						<h:outputText value="Envoyer un notification à l'équipe de développement: " />
+	        			<p:selectBooleanCheckbox value="#{managedErrorPages.reportBug}" />
+	        			
+	        			
+        			</h:panelGroup>
+					
+				</h:form>
+				</h:panelGrid>
+			</f:facet>
+			
+			
+			</p:panelGrid>
+			
+		</p:layoutUnit>
+		
+		
+
+	</p:layout>
+
+
+       <p:dialog header="ACTION" widgetVar="act" resizable="true"
+			id="action" width="400" showEffect="fade" hideEffect="explode"
+			modal="true" appendTo="@(body)">
+			<h:form >
+				<h:panelGrid>
+					<h:outputText
+						value="Try Something"/>
+					<h:commandButton value="test" action="#{managedErrorPages.toPrevious}"
+						 />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+	
+
+
+</h:body>
+
+
+
+</html>

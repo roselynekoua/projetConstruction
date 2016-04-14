@@ -1,0 +1,147 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateGestclient.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm"  target="_blank">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			
+					<p:panel header="Liste des Clients "  styleClass="">
+					
+					<br />
+					
+		
+      <br></br>
+<fieldset id="resulat" class="fieldset" >
+							<legend>Recapitulatif des enregistrements</legend>
+							<p:dataTable  value="#{managedclientliste.listeclient}"
+								
+								var="per" emptyMessage="Aucune Données"
+								 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+								scrollable="true" rowsPerPageTemplate="5,10"   paginator="true" rows="10" scrollHeight="300" scrollWidth="1250"  style="height:400px;margin-bottom:20px">
+								
+								
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Numero Client" />
+									</f:facet>
+									<h:outputText value="#{per.numClt}" />
+								</p:column>
+
+
+                                 
+								<p:column style="width:150px">
+									<f:facet name="header" >
+										<h:outputText value="Nom Client "  />
+									</f:facet>
+									<h:outputText value="#{per.nomClt}"  />
+								</p:column>
+   
+                                <p:column style="width:150px">
+									<f:facet name="header" >
+										<h:outputText value="Prenom Client " sortBy="#{per.prenomClt}" />
+									</f:facet>
+									<h:outputText value="#{per.prenomClt}"  />
+								</p:column>
+								
+								 <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Sexe Client " />
+									</f:facet>
+									<h:outputText value="#{per.sexe.libelleSexe}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="CNI/passeport Client " />
+									</f:facet>
+									<h:outputText value="#{per.matriculeClt}" />
+								</p:column>
+   
+                                <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Nationalité Client " />
+									</f:facet>
+									<h:outputText value="#{per.nationalite.libelleNat}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Profession Client " />
+									</f:facet>
+									<h:outputText value="#{per.profession.libelleProfession}" />
+								</p:column>
+						
+						
+						
+						
+								 <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Date creation Client "  sortBy="#{per.datecreaClt}"/>
+									</f:facet>
+									<h:outputText value="#{per.datecreaClt}" >
+									<f:convertDateTime pattern="dd-MM-yyyy" />   </h:outputText>
+								</p:column>
+						
+						
+								 <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Telephone Client " />
+									</f:facet>
+									<h:outputText value="#{per.numtelClt}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Mail Client " />
+									</f:facet>
+									<h:outputText value="#{per.emailClt}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Fax Client " />
+									</f:facet>
+									<h:outputText value="#{per.faxClt}" />
+								</p:column>
+								
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Pays Client "  sortBy="#{per.paysClt}"/>
+									</f:facet>
+									<h:outputText value="#{per.pays.libellePays}" />
+								</p:column>
+								
+								
+   
+ </p:dataTable>  
+ <h:panelGrid  columns="2">
+					     
+			
+        <p:graphicImage name="/images/index.png" width="28" />
+        <p:commandButton id="buttonrep" value="Ouvrir liste en pdf" ajax="false" type="submit"
+										actionListener="#{listeclientdesign.editer}" update=":frm:buttonrep,frm"   
+										style="width:170px;height:40px ;font-size:13px;border-radius:10px;" />
+						
+        		</h:panelGrid>
+ 
+ 
+ 
+ </fieldset>  
+      
+      </p:panel>												
+     </h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

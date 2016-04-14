@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+
+	
+	<ui:composition template="/template/templateaccueil.xhtml">
+	<ui:define name="content">
+	
+	<h:form>
+	<fieldset style="text-align: center;width:100%;  margin-top: 100px ;
+background: #f4f4f4;font-family: Monaco, Menlo, Consolas ">
+	<h1  style="text-align: center; margin-top:100px;margin-bottom: 100px">UTILISATEUR MEDECIN</h1>
+	
+	
+	<h:panelGrid  columns="3" >	
+	<p:commandLink value="Gestion Commande" id="addContrats1"  action="redirection1"  style="width:150px;height:50px; margin-left:300px;font-size:25px;border-radius:20px;" />
+    <p:commandLink value="Gestion Stock" id="addContrats2"     action="redirection2"   style="width:150px;height:50px; margin-left: 50px;font-size:25px;border-radius:20px;"/>
+    <p:commandLink value="Gestion Patients" id="addContrats3"   action="redirection3"   style="width:150px;height:50px; margin-left: 50px;font-size:25px;border-radius:20px;"/>
+                                                                              
+	 </h:panelGrid>
+	</fieldset> 
+	</h:form>
+	</ui:define>
+	</ui:composition>
+	
+</body> 
+</html>

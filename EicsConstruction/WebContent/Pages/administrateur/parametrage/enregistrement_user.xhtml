@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/templateparametrage.xhtml">
+
+	<ui:define name="content">
+		<h:form id="utilisateurForm">
+	
+		
+		<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+		<h:graphicImage name="images/login.png" style="margin-right: 0%; margin-left: 80%;"/>
+		<p:panel header="Création compte utilisateur"  styleClass="tableMarge">
+		<br />
+		
+					<fieldset  id="Enregistrement Nouveau utilisateur" style="background:images/login.png" class="fieldsetpara">
+					<br /> 
+					
+		
+			
+				<legend>Informations utilisateur</legend>
+				
+				<h:panelGrid columns="6" id="grid">
+					<h:outputText value=" Nom*" style="margin-left:10px" />
+					<p:inputText id="nom" value="#{managedUtilisateur.utilisateur.nomUtilisateur}" style="margin-left:15px"
+						required="true"  requiredMessage="Indiquez le nom" /> 
+					
+
+					<h:outputText value=" Prenom*" style="margin-left:20px" />
+					<p:inputText id="prenom" value="#{managedUtilisateur.utilisateur.prenomUtilisateur}" style="margin-left:15px"
+						required="true" requiredMessage="Indiquez le prenom" />
+					
+					<h:outputText value=" Matricule*" style="margin-left:20px" />
+					<p:inputText id="matricule" value="#{managedUtilisateur.utilisateur.matricule}"  style="margin-left:15px"
+						required="true" requiredMessage="Indiquez le matricule" />
+					
+					
+					<h:outputText value=" Email" style="margin-left:10px" />
+					<p:inputText id="mail" value="#{managedUtilisateur.utilisateur.mailUtilisateur}"  style="margin-left:15px"
+					validatorMessage="Format émail incorrecte">
+					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"> </f:validateRegex> </p:inputText>
+					
+					
+					<h:outputText value=" Login*" style="margin-left:20px" />
+					<p:inputText id="login" value="#{managedUtilisateur.utilisateur.loginUtilisateur}" style="margin-left:15px"
+						feedback="true" required="true" requiredMessage="Indiquez le login"/>
+					
+
+					<h:outputText value=" Mot de Passe*" style="margin-left:20px"/>
+					<p:inputText id="motPasse" value="#{managedUtilisateur.utilisateur.motPasse}"
+						feedback="true" required="true" requiredMessage="Indiquez un mot de passe"  style="margin-left:15px"/>
+					
+
+					<h:outputText value=" Boite postale" style="margin-left:10px" />
+					<p:inputText value="#{managedUtilisateur.utilisateur.boitePostUt}" style="margin-left:15px" />
+						  
+					
+
+					<h:outputText value=" Numero telephone" style="margin-left:20px" />
+					<p:inputMask  value="#{managedUtilisateur.utilisateur.numtelUt}"    mask="(999) 99-99-99-99"  style="margin-left:15px"/>
+						
+					
+					<h:outputText value=" Fax" style="margin-left:20px" />
+					<p:inputText  value="#{managedUtilisateur.utilisateur.faxUt}" mask="(999) 99-99-99-99"   style="margin-left:15px"/>
+		
+					
+					
+					
+						
+						<h:outputText value="Profil*: " style="margin-left:10px"/>  
+						
+						  <p:selectOneMenu  value="#{managedUtilisateur.selectedProfil}" style="margin-left: 15px;width: 95px" required="true" requiredMessage="selectionner un profil">
+		  <f:selectItem itemValue="Choisir" itemLabel="Choisir profil"  > </f:selectItem>
+          <f:selectItems value="#{managedUtilisateur.elementprofil}"/>
+	       <p:ajax event="change"  listener="#{managedUtilisateur.recupererProfile}" > </p:ajax>
+		    </p:selectOneMenu>
+        
+        
+        <h:outputText value="Sexe*: " style="margin-left:20px"/>  
+						
+						
+	<p:selectOneMenu  value="#{managedUtilisateur.selectedsexe}" style="margin-left: 15px;width: 95px" required="true" requiredMessage="selectionner le sexe">
+		  <f:selectItem itemValue="Choisir" itemLabel="Choisir sexe"  style="margin-left:15px"> </f:selectItem>
+          <f:selectItems value="#{managedUtilisateur.elementsexe}"/>
+	       <p:ajax event="change"  listener="#{managedUtilisateur.recuperersexe}" > </p:ajax>
+		    </p:selectOneMenu>
+		    
+		    <h:outputText value="Nationalité*: " style="margin-left:20px"/>  
+						
+						
+						  <p:selectOneMenu  value="#{managedUtilisateur.selectednat}" style="margin-left: 15px;width: 95px" required="true" requiredMessage="selectionner un nationalité">
+		  <f:selectItem itemValue="Choisir" itemLabel="Choisir "  > </f:selectItem>
+          <f:selectItems value="#{managedUtilisateur.elementnat}"/>
+	       <p:ajax event="change"  listener="#{managedUtilisateur.recuperernat}" > </p:ajax>
+		    </p:selectOneMenu>
+		    
+		  
+		    
+		    
+        	
+            <h:outputText value="(*) champ obligatoire" style="color:red ;margin-left:10px"/>
+           
+        
+        
+
+			</h:panelGrid>
+				<br />
+				  <p:fileUpload fileUploadListener="#{managedUtilisateur.upload}" messageTemplate="telecharger une seule photo"
+                        required="true" mode="advanced" dragDropSupport="true" fileLimitMessage="Vous pouvez telecharger une seule photo!"
+                        multiple="false" sizeLimit="1000000" fileLimit="1" update="messages" uploadLabel="telecharger" label="Parcourir photo" cancelLabel="Annuler" 
+                        allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|docx)$/">
+                       
+                    </p:fileUpload>
+				       <p:separator />
+				       
+				<h:panelGrid columns="4" cellpadding="10" style="margin-left:80px">  
+				
+				 <p:selectManyCheckbox value="#{managedUtilisateur.selectedActive}" style="color:#3333ff" >
+            <f:selectItem itemLabel="Activation automatique" itemValue="1"  />
+            </p:selectManyCheckbox>
+					<p:commandButton value="Valider" id="enregistrer"
+						actionListener="#{managedUtilisateur.addUtilisateur}" update="grid" ajax="false" icon="ui-icon-check" />
+					<p:commandButton value="Reset" id="reset"
+						actionListener="#{managedUtilisateur.resetUtilisateur}" update="utilisateurForm"   icon="ui-icon-refresh" />
+				</h:panelGrid>
+			</fieldset>
+			
+	</p:panel>
+			<br />
+		</h:form>
+	</ui:define>
+	<p:layoutUnit id="center" position="center">
+		<ui:insert name="content">
+
+		</ui:insert>
+	</p:layoutUnit>
+</ui:composition>
+</html>

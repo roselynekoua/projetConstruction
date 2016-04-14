@@ -1,0 +1,74 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			
+					<p:panel header="Enregistrement des types des clients"  styleClass="tableMarge">
+					<fieldset  class="fieldsetpara">
+					<br />
+					
+											
+
+<legend>Type des clients</legend>
+
+<h:panelGrid columns="4">
+<h:outputText value="libellé type client *"></h:outputText>
+<p:inputText value="#{managedtypeclt.type.libelleTypeclt}" required="true" style="margin-left: 20px" requiredMessage="Champs obligatoire"></p:inputText>
+</h:panelGrid>
+
+<br />
+<h:panelGrid columns="3" >				
+						<p:commandButton id="buttonadd" value="Enregistrer"  icon="ui-icon-disk" actionListener="#{managedtypeclt.enregistrer}" style="width:110px;height:25px;font-size:13px;border-radius:10px;"  update="frm"/>
+							
+                         <p:commandButton id="buttonupdate" value="Annuler"  icon="ui-icon-arrowrefresh-1-n" actionListener="#{managedtypeclt.vider}" style="width:110px;height:25px ;font-size:13px;border-radius:10px;" update="frm"/>
+							
+						<h:outputText value="(*) champ obligatoire" style="color:red" /></h:panelGrid>
+						
+	</fieldset>				
+
+<br></br>
+<fieldset id="resulat"  class="fieldsetpara" style="height:300px;">
+							<legend>Recapitulatif</legend>
+  <p:dataTable id="resul" value="#{managedtypeclt.listetypm}"
+								var="type" emptyMessage="Aucune Données"
+								scrollable="true"  scrollHeight="130" scrollWidth="800">
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Code type client" />
+									</f:facet>
+									<h:outputText value="#{type.codeTypeclt}" />
+								</p:column>
+
+
+<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Libellé type client" />
+									</f:facet>
+									<h:outputText value="#{type.libelleTypeclt}" />
+								</p:column>
+								
+
+
+							</p:dataTable>
+                       </fieldset>
+</p:panel>												
+											 
+											
+						     														
+			</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

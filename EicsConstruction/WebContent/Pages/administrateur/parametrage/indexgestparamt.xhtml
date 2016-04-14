@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		<p:tabView id="tabView">
+		</p:tabView>
+		<h:form id="frm" onsubmit="return initialize();">
+			<fieldset id="welcome">
+				<br></br> <br></br> <br></br> <br></br>
+
+
+				<p style="text-align: center; font-size: 40px;">Gestion du centre medical de la GESTOCI </p>
+
+				<p style="text-align: center; font-size: 30px;">Gestion parametrage</p>
+
+				
+
+			<h:panelGrid columns="2" cellspacing="10" style="margin: 0 auto;">
+				<h:link  class="Production"/>
+				<h:link class="Sinistre" />
+				
+				
+			</h:panelGrid>
+	
+
+				<br></br> <br></br> <br></br> <br></br>
+
+			</fieldset>
+		</h:form>
+		<br></br>
+		<br></br>
+
+
+	</ui:define>
+</ui:composition>
+</html>

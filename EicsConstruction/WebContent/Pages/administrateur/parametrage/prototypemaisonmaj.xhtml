@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			<br />
+					<p:panel header="Mise à jour prototype" styleClass="tableMarge">
+	
+							<br /><br />
+						<fieldset id="resulat"  class="fieldsetpara"  style="height:300px" >
+					
+  <legend>Liste des enregistrements</legend>
+  <p:dataTable id="resul" value="#{managedprotomaisonmaj.listemaison}" 
+								var="mais" emptyMessage="Aucune Données"
+								scrollable="true"  scrollHeight="220" scrollWidth="800">
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Code prototype maison" />
+									</f:facet>
+									<h:outputText value="#{mais.codePrototype}" />
+								</p:column>
+
+
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Désignation prototype maison" />
+									</f:facet>
+									<h:outputText value="#{mais.libellePrototype}" />
+								</p:column>
+
+<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="superficie maison" />
+									</f:facet>
+									<h:outputText value="#{mais.superficiePrototype}" />
+								</p:column>
+
+
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Localisation " />
+									</f:facet>
+									<h:outputText value="#{mais.localisationPrototype}" />
+								</p:column>
+								
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Tarif maison" />
+									</f:facet>
+									<h:outputText value="#{mais.coutTtcPrototype}" ><f:convertNumber pattern="##,###.##"></f:convertNumber></h:outputText>
+								</p:column>
+
+<p:column style="width:70px">
+									<h:commandButton value=" MAJ " title="Modifier"  action="#{managedprotomaisonmaj.activer}" update=":frm,:frm:buttonadd,:frm:buttonupdate">
+										<f:setPropertyActionListener value="#{mais}"
+											target="#{managedprotomaisonmaj.maison}" />
+											
+									</h:commandButton>
+								</p:column>
+
+								<p:column style="width:100px">
+								
+									<p:commandButton value="Supprimer" title="Supprimer"  icon="ui-icon-close" action="#{managedprotomaisonmaj.delete}" update=":frm" > 
+										<p:confirm header="Confirmation"  message="Confirmez-vous la suppression ? "   icon="ui-icon-alert" />
+										<f:setPropertyActionListener value="#{mais}"
+											target="#{managedprotomaisonmaj.maison}"    />
+									</p:commandButton>
+								</p:column>
+
+							</p:dataTable>
+						</fieldset>
+
+					
+					
+					<fieldset style="border-radius:10px;" class="fieldsetpara">
+					<br />
+					
+						<legend>Formulaire de mise à jour</legend>
+						
+						<h:panelGrid columns="6" id="maj" >
+
+<h:outputText value="Code prototype"></h:outputText>
+<p:inputText value="#{managedprotomaisonmaj.maison.codePrototype}" readonly="true"></p:inputText>
+<h:outputText value="Désignation " style="margin-left: 40px;" />
+												<p:inputText id="dsgm" value="#{managedprotomaisonmaj.maison.libellePrototype}"  
+													style="width:120px"/>
+													
+											
+						
+												<h:outputText value="Superficie " style="margin-left: 40px;" />
+												<p:inputText id="prenC" value="#{managedprotomaisonmaj.maison.superficiePrototype}"  
+													style="width:120px" />
+												
+						                      
+												<h:outputText value="Localisation " style="margin-left: 0px;" />
+												<p:inputText id="mat1" value="#{managedprotomaisonmaj.maison.localisationPrototype}"   
+													style="width:120px"/>
+													
+						                      <h:outputText value="Quantité  " style="margin-left: 40px;" />
+						                      <p:inputText id="qte1" value="#{managedprotomaisonmaj.maison.qteTotPrototype}"   
+													style="width:120px"/>
+						                      
+										
+						
+												
+						                      
+						                      <h:outputText value="Tarif  " style="margin-left: 40px;" />
+						                      <p:inputText id="tar" value="#{managedprotomaisonmaj.maison.coutTtcPrototype}"   
+													style="width:120px"><f:convertNumber pattern="##,###.##"></f:convertNumber></p:inputText>
+												
+												
+</h:panelGrid>
+						                 
+				  </fieldset>
+					<br />
+					<fieldset style="border-radius:10px;" class="fieldsetpara">
+					<br />
+					
+						<legend>Action</legend>
+					
+					
+					
+					<h:panelGrid columns="4" >
+					<p:commandButton id="buttonadd"  value="Modifier"  actionListener="#{managedprotomaisonmaj.update}"    disabled="#{managedprotomaisonmaj.etatBouton}" update="frm,:frm:buttonadd,:frm:buttonupdate"  style="width:110px;height:25px;font-size:13px;border-radius:10px; " >   
+						 <p:confirm header="Confirmation"  message="Confirmez-vous la modification ? "  icon="ui-icon-alert" /></p:commandButton>
+							
+						<p:commandButton id="buttonupdate" value="Annuler"  icon="ui-icon-arrowrefresh-1-n" actionListener="#{managedprotomaisonmaj.vider}"   disabled="#{managedprotomaisonmaj.etatAnnuler}" update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+							
+						<h:outputText    value="(*) champ obligatoire" style="color:red" /> 
+					</h:panelGrid></fieldset>
+				
+				<br />
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   height="30" width="250" >  
+				        
+				        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+				        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>   
+				            
+				    </p:confirmDialog> 
+				<br />
+					
+				     
+				
+				
+				</p:panel>	
+				</h:form>
+				
+			
+			
+	</ui:define>
+</ui:composition>
+</html>

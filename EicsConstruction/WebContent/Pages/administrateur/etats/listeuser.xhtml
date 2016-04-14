@@ -1,0 +1,148 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm"  enctype="multipart/form-data"  target="_blank">   
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			
+					<p:panel header="Liste des Utilisateurs"  styleClass="">
+					
+					<br />
+					
+		
+      <br></br>
+<fieldset id="resulat" class="fieldset" >
+							<legend>Recapitulatif des enregistrements</legend>
+							<p:dataTable  value="#{managedUtilisateur.listeUser}" 
+								var="per" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+								scrollable="true" rowsPerPageTemplate="5,10"   paginator="true" rows="10" scrollHeight="300" scrollWidth="1250"  style="height:400px;margin-bottom:20px">
+								
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Numero Utilisateur" />
+									</f:facet>
+									<h:outputText value="#{per.codeUtilisateur}" />
+								</p:column>
+
+
+                                 
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Nom Utilisateur " />
+									</f:facet>
+									<h:outputText value="#{per.nomUtilisateur}" />
+								</p:column>
+   
+                                <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Prenom Utilisateur " />
+									</f:facet>
+									<h:outputText value="#{per.prenomUtilisateur}" />
+								</p:column>
+								
+								 <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Sexe Utilisateur " />
+									</f:facet>
+									<h:outputText value="#{per.sexe.libelleSexe}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Matricule Utilisateur " />
+									</f:facet>
+									<h:outputText value="#{per.matricule}" />
+								</p:column>
+   
+                                <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Nationalité Utilisateur " />
+									</f:facet>
+									<h:outputText value="#{per.nationalite.libelleNat}" />
+								</p:column>
+								
+							
+						
+						
+						<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Login Utilisateur " />
+									</f:facet>
+									<h:outputText value="#{per.loginUtilisateur}" />
+								</p:column>
+						
+								 <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Date creation Utilisateur " />
+									</f:facet>
+									<h:outputText value="#{per.dateCreationUtilisateur}" >
+									<f:convertDateTime pattern="dd-MM-yyyy" />   </h:outputText>
+								</p:column>
+						
+						
+								 <p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Telephone Utilisateur " />
+									</f:facet>
+									<h:outputText value="#{per.numtelUt}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Mail Utilisateur " />
+									</f:facet>
+									<h:outputText value="#{per.mailUtilisateur}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Fax Utilisateur " />
+									</f:facet>
+									<h:outputText value="#{per.faxUt}" />
+								</p:column>
+								
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Profil Utilisateur " />
+									</f:facet>
+									<h:outputText value="#{per.profil.libelleProfil}" />
+								</p:column>
+								
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Photo Utilisateur " />
+									</f:facet>
+									<h:outputText value="#{per.photoUt}" />
+								</p:column>
+   
+ </p:dataTable>  
+ <h:panelGrid  columns="2">
+			
+        <p:graphicImage name="/images/index.png" width="28"/>
+        
+        <p:commandButton id="buttonrep" value="Ouvrir liste en pdf"
+										actionListener="#{listeUsersdesign.editer}" update=":frm:buttonrep,frm"   
+										style="width:170px;height:40px ;font-size:13px;border-radius:10px;"  ajax="false" type="submit" />
+        		</h:panelGrid>
+ 
+ 
+ 
+ </fieldset>  
+      
+      </p:panel>												
+     </h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,75 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			
+					<p:panel header="Enregistrement des communes"  styleClass="tableMarge">
+					<fieldset  class="fieldsetpara">
+					<br />
+					
+											
+
+<legend>Commune</legend>
+
+<h:panelGrid columns="2">
+<h:outputText value="Libellé commnune *"></h:outputText>
+<p:inputText value="#{managedcommune.comune.libelleCommune}" required="true" requiredMessage="Renseigner libellé commune"></p:inputText>
+</h:panelGrid>
+
+<br />
+<h:panelGrid columns="3" >				
+						<p:commandButton id="buttonadd" value="Enregistrer" icon="ui-icon-disk" actionListener="#{managedcommune.enregistrer}" update=":frm"  style="width:110px;height:25px;font-size:13px;border-radius:10px;" />
+							
+                         <p:commandButton id="buttonupdate" value="Annuler" icon="ui-icon-arrowrefresh-1-n"  actionListener="#{managedcommune.vider}" update=":frm"   style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+							
+						<h:outputText value="(*) champ obligatoire" style="color:red" /></h:panelGrid>
+						
+	</fieldset>				
+
+<br></br>
+<br></br>
+
+<fieldset id="resulat"  class="fieldsetpara" >
+							<legend>Liste des communes</legend>
+  <p:dataTable id="resul" value="#{managedcommune.listecomune}"
+								var="liste" emptyMessage="Aucune Données"
+								scrollable="true"  scrollHeight="200" scrollWidth="800"  style="height:300px">
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Code commune" />
+									</f:facet>
+									<h:outputText value="#{liste.codeCommune}" />
+								</p:column>
+
+
+								<p:column style="width:150px">
+									<f:facet name="header">
+										<h:outputText value="Libellé commune" />
+									</f:facet>
+									<h:outputText value="#{liste.libelleCommune}" />
+								</p:column>
+
+
+							</p:dataTable>
+                            </fieldset>
+																		
+											 
+							</p:panel>				
+						     														
+			</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

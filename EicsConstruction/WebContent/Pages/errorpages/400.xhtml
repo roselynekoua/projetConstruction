@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+<ui:composition template="/template/errorpage.xhtml">
+	<ui:define name="contentTitle">Wrong params?</ui:define>
+	<ui:define name="errorContent">
+		<p>
+			This was a bad request.
+			The server couldn't understand it.
+			Please verify if the request parameters are in the right format.
+			Alternatively, start at the left menu to find all available resources.
+		</p>
+		<ui:fragment rendered="#{not empty requestScope['javax.servlet.error.message']}">
+			<p>
+				The specific error message is: <code>#{requestScope['javax.servlet.error.message']}</code>
+			</p>
+		</ui:fragment>
+	</ui:define>
+</ui:composition>
+</h:body>
+</html>

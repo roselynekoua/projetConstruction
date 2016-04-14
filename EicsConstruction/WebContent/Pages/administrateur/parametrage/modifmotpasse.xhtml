@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+		
+		<h:form id="frm">
+	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+			
+			<br />
+					<p:panel header="Modifier Mot de passe" styleClass="tableMarge">
+	
+							<br /><br />
+						
+						<fieldset id="resulat" class="fieldsetpara" >
+							<legend>Résultats de la recherche</legend>
+							<p:dataTable id="nat_id" value="#{managedUtilisateur.listeUser}"
+								var="mot" emptyMessage="Aucune Données"
+								scrollable="true"  scrollHeight="250" scrollWidth="800"  style="height:300px;width:600px">
+								
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Code utilisateur" />
+									</f:facet>
+									<h:outputText value="#{mot.codeUtilisateur}" />
+								</p:column>
+
+
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Nom utilisateur" />
+									</f:facet>
+									<h:outputText value="#{mot.nomUtilisateur}" />
+								</p:column>
+
+
+<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Prenom utilisateur" />
+									</f:facet>
+									<h:outputText value="#{mot.prenomUtilisateur}" />
+								</p:column>
+
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="login utilisateur" />
+									</f:facet>
+									<h:outputText value="#{mot.loginUtilisateur}" />
+								</p:column>
+
+
+								<p:column style="width:100px">
+									<f:facet name="header">
+										<h:outputText value="Mot de passe " />
+									</f:facet>
+									<h:outputText value="#{mot.motPasse}" />
+								</p:column>
+
+								<p:column style="width:90px">
+									<h:commandButton value=" MAJ " title="Modifier">
+										<f:setPropertyActionListener value="#{mot}"
+											target="#{managedUtilisateur.utilisateur}"    actionListener="#{managedUtilisateur.activer}"  update=":frm:buttonadd,:frm:buttonupdate"/>
+									</h:commandButton>
+								</p:column>
+
+								<p:column style="width:100px">
+								
+									<p:commandButton value="Supprimer" title="Supprimer" action="#{managedUtilisateur.delete}"  icon="ui-icon-close" update=":frm" > 
+										<p:confirm header="Confirmation"  message="Confirmez-vous la suppression ? "   icon="ui-icon-alert" />
+										<f:setPropertyActionListener value="#{mot}"
+											target="#{managedUtilisateur.utilisateur}"    />
+									</p:commandButton>
+								</p:column>
+
+							</p:dataTable>
+						</fieldset>
+
+					
+					
+					<fieldset style="border-radius:10px;" class="fieldsetpara">
+					<br />
+					
+						<legend>Formulaire de mise à jour</legend>
+						
+						<h:panelGrid columns="8" id="maj" >
+
+											
+												<h:outputText value="login"  />
+												<p:inputText value="#{managedUtilisateur.utilisateur.loginUtilisateur}"   style="margin-left: 0px; width: 120px"/> 
+												
+						
+												<h:outputText value="Mot de passe" style="margin-left: 20px;" />
+												<p:inputText value="#{managedUtilisateur.utilisateur.motPasse}"  style="margin-left: 0px; width: 120px">
+												<p:ajax event="blur"  listener="#{managedUtilisateur.activer}" update=":frm:buttonadd,:frm:buttonupdate" ></p:ajax> </p:inputText>
+										
+						                 
+				   
+
+					</h:panelGrid></fieldset>
+					<br />
+					<fieldset style="border-radius:10px;" class="fieldsetpara">
+					<br />
+					
+						<legend>Action</legend>
+					
+					
+					
+					<h:panelGrid columns="4" >
+					<p:commandButton id="buttonadd"  value="Modifier"  actionListener="#{managedUtilisateur.update}"  update="frm,:frm:buttonadd,:frm:buttonupdate"  style="width:110px;height:25px;font-size:13px;border-radius:10px; " >   
+						 <p:confirm header="Confirmation"  message="Confirmez-vous la modification ? "  icon="ui-icon-alert" /></p:commandButton>
+							
+						<p:commandButton id="buttonupdate" value="Annuler"  actionListener="#{managedUtilisateur.reset}" icon="ui-icon-arrowrefresh-1-n" update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
+							
+						<h:outputText    value="(*) champ obligatoire" style="color:red" /> 
+					</h:panelGrid></fieldset>				
+				<br />
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   height="30" width="250" >  
+				        
+				        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+				        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>   
+				            
+				    </p:confirmDialog> 
+				<br />
+					
+				     
+				
+				
+				</p:panel>	
+				</h:form>
+				
+			
+			
+	</ui:define>
+</ui:composition>
+</html>

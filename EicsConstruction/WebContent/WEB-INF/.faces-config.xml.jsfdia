@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="redirectiongestion::#Pages#gestionClient#indexgestion.xhtml"
+    NAME="output" PATH="/Pages/gestionClient/indexgestion.xhtml"
+    TARGET="rules:#Pages#gestionClient#indexgestion.xhtml"
+    TITLE="redirectiongestion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="redirectioncaisse::#Pages#caisse#indexgestcaisse.xhtml"
+    NAME="output1" PATH="/Pages/caisse/indexgestcaisse.xhtml"
+    TARGET="rules:#Pages#caisse#indexgestcaisse.xhtml"
+    TITLE="redirectioncaisse" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="redirectionadmin::#Pages#administrateur#indexgestionadmin.xhtml"
+    NAME="output2" PATH="/Pages/administrateur/indexgestionadmin.xhtml"
+    TARGET="rules:#Pages#administrateur#indexgestionadmin.xhtml"
+    TITLE="redirectionadmin" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#Pages#administrateur#indexgestionadmin.xhtml"
+  PATH="/Pages/administrateur/indexgestionadmin.xhtml"
+  SHAPE="272,321,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#Pages#gestionClient#indexgestion.xhtml"
+  PATH="/Pages/gestionClient/indexgestion.xhtml" SHAPE="272,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#Pages#caisse#indexgestcaisse.xhtml"
+  PATH="/Pages/caisse/indexgestcaisse.xhtml" SHAPE="272,209,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
+  SHAPE="32,417,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#index.xhtml:0" NAME="item"
+   PATH="/index.xhtml" model-entity="JSFProcessItem"/>
+ </PROCESS-ITEM>
+</PROCESS>
