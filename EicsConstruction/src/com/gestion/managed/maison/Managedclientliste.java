@@ -1,5 +1,9 @@
 package com.gestion.managed.maison;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -17,6 +21,8 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -698,6 +704,36 @@ public void deletecontrat() {
 			
 		}
 
+	
+	
+	
+	 StreamedContent content=new DefaultStreamedContent() ;
+		
+		public StreamedContent getContent() {
+			 try {
+				 for (int j = 0; j < listeclient.size(); j++) {
+					
+					
+				
+				InputStream is = new FileInputStream("C:/Users/rosyj3a/Dossierphoto/"+getListeclient().get(j).getPhotoClt());
+				is.close();  
+				content	=new DefaultStreamedContent(is);
+				 }
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
+			return content;
+		}
+		public void setContent(StreamedContent content) {
+			this.content = content;
+		}
+	
+	
 	
 
 	public java.lang.Integer getActivite() {

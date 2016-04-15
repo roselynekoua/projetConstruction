@@ -70,7 +70,8 @@ public class Listeclientdesign implements Serializable {
 	// "https://www.certification.tn/cgi-bin/pub/crl/cacrl.crl";
 	// URL myurl = new URL(httpsURL);
 	public static final String RESOURCE = "http://localhost:8080/EicsConstruction/resources/images/logoeics.png";
-
+	public static final String RESOURCE3 = "http://localhost:8080/EicsConstruction/resources/images/";
+	public static final String RESOURCE2 = "C:/Users/rosyj3a/Dossierphoto/";
 	// Pour la mise en forme
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 28,
 			Font.BOLD);
@@ -201,11 +202,11 @@ public class Listeclientdesign implements Serializable {
 		document.add(titreDocument);
 	}
 
-	private void crercontenu(Document document) throws DocumentException {
+	private void crercontenu(Document document) throws DocumentException, MalformedURLException, IOException {
 		// Info
-
-		PdfPTable tabSous = new PdfPTable(9);
-		tabSous.setWidths(new int[] { 28, 35, 30, 30, 30, 35, 35, 35, 42 });
+		
+		PdfPTable tabSous = new PdfPTable(10);
+		tabSous.setWidths(new int[] { 28, 35, 30, 30, 30, 35, 35, 35, 42,42 });
 
 		// tabSous.getDefaultCell().setBorder(Cell.NO_BORDER);
 		PdfPCell cell1;
@@ -230,6 +231,7 @@ public class Listeclientdesign implements Serializable {
 		tabSous.addCell(new Phrase("Date creation ", normalTitle));
 	
 		tabSous.addCell(new Phrase("Mail ", normalTitle));
+		tabSous.addCell(new Phrase("photo", normalTitle));
 	
 listeclient = getManagedclient().getListeclient();
 		
@@ -253,7 +255,19 @@ listeclient = getManagedclient().getListeclient();
 					.getDatecreaClt()), smallText));
 			tabSous.addCell(new Phrase(listeclient.get(i)
 					.getEmailClt(), smallText));
-			
+			// Ajout de logo
+			Image logo2 = Image.getInstance(new URL(RESOURCE3+listeclient.get(i).getPhotoClt()));
+			logo2.scalePercent(100f);
+			 tabSous.addCell(logo2);
+			//tabSous.addCell(new URL(RESOURCE2+listeclient.get(i).getPhotoClt());
+			//tabSous.addCell(new Phrase(RESOURCE2+listeclient.get(i).getPhotoClt(), smallText));
+			/* Image logo = Image.getInstance(new String(RESOURCE2));
+			 
+			 
+			  Image logo = Image.getInstance(new URL(RESOURCE));
+		 logo.scalePercent(100f);
+		 document.add(logo);
+			 document.add(logo);*/
 
 		}
 		document.add(tabSous);
