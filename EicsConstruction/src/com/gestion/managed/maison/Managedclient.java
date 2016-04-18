@@ -128,6 +128,10 @@ public class Managedclient implements Serializable {
 	private BigDecimal montantProjet = new BigDecimal(0);
 	private BigDecimal fraisdossier = new BigDecimal(0);
 	private BigDecimal coutTotal = new BigDecimal(0);
+	
+	private BigDecimal resteapayer = new BigDecimal(0);
+	private BigDecimal montantdejapaye = new BigDecimal(0);
+	
 	private Integer nbreacquise = new Integer(0);
 	private SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -306,6 +310,7 @@ public	class Payment {
 	public void calculer() {
 		// coutTotal = new BigDecimal(0);
 		//setCoutTotal(prototype.getCoutTtcPrototype());
+		//setMontantdejapaye(getRequeteUtilisateur().sommevers(facture));
 		setCoutTotal(prototype.getCoutTtcPrototype().multiply(new BigDecimal(contrat.getQteAcq())));
 		// setCoutTotal(prototype.getCoutTtcPrototype().multiply(getPrototype().getQteSouscrPrototype()));
 	}
@@ -385,6 +390,8 @@ public	class Payment {
 			//eregistremet facture
 			facture.setCodeFact(getIdGenerateur().getIdfacture());
 			facture.setMontantTtcFact(coutTotal);
+			facture.setRemiseFact(new BigDecimal(0));
+			facture.setDateFact(Calendar.getInstance().getTime());
 			facture.setUtilisateur(getManagedConnexion().getUtilisateur());
 			facture.setContrat(contrat);
 			getObjectService().addObject(facture);
@@ -1233,6 +1240,22 @@ prototype= new PrototypeMaison();
 
 	public void setNbreacquise(Integer nbreacquise) {
 		this.nbreacquise = nbreacquise;
+	}
+
+	public BigDecimal getResteapayer() {
+		return resteapayer;
+	}
+
+	public void setResteapayer(BigDecimal resteapayer) {
+		this.resteapayer = resteapayer;
+	}
+
+	public BigDecimal getMontantdejapaye() {
+		return montantdejapaye;
+	}
+
+	public void setMontantdejapaye(BigDecimal montantdejapaye) {
+		this.montantdejapaye = montantdejapaye;
 	}
 
 }

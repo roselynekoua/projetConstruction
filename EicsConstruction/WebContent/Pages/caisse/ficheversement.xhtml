@@ -33,6 +33,8 @@
 							style="width:100px">
 
 							<f:selectItem itemLabel="CODE CONTRAT " itemValue="codeContrat" />
+							<f:selectItem itemLabel="CODE FACTURE " itemValue="codeFact" />
+<f:selectItem itemLabel="CODE CLIENT " itemValue="numClt" />
 
 						</p:selectOneMenu>
 						<p:inputText value="#{managedversement.filtre}"
@@ -93,7 +95,7 @@
 
 						
 						<p:column headerText="Cout projet ">
-							<h:outputText value="#{coutTotal}">
+							<h:outputText value="#{pat.facture.montantTtcFact}">
 								<f:convertNumber pattern="##,###.##"></f:convertNumber>
 							</h:outputText>
 						</p:column>
@@ -113,6 +115,9 @@
 						<h:outputText value="Prenom Client " style="margin-left: 20px;"></h:outputText>
 						<p:inputText id="cltp"
 							value="#{managedversement.client.prenomClt}"></p:inputText>
+
+
+
 
 
 
@@ -210,25 +215,20 @@
 								itemValue="VERSEMENT FINAL" />
 						</p:selectOneMenu>
 
-						<h:outputText value="Montant total Tarif maison"
-							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
-						<p:inputText id="mtotarifpay"
-							value="#{managedversement.coutTotal}" readonly="true">
-							<f:convertNumber pattern="##,###.##"></f:convertNumber>
-						</p:inputText>
+						
 
 
 
 						<h:outputText value="Frais de dossier "
 							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
 						<p:inputText id="fd"
-							value="#{managedversement.facture.fraisDossier}" >
+							value="#{managedversement.facture.fraisDossier}"  >
 							<f:convertNumber pattern="##,###.##"></f:convertNumber>
 						</p:inputText>
 
 <h:outputText value="Montant facture payé "
 							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
-						<p:inputText id="apor"
+						<p:inputText id="montp"
 							value="#{managedversement.montantFact}"  readonly="true">
 							<f:convertNumber pattern="##,###.##"></f:convertNumber>
 						</p:inputText>
@@ -247,23 +247,29 @@
 						</p:inputText>
 
 
-						<h:outputText value="Montant restant à payer avant"
+						<h:outputText value="Total versement précedent"
 							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
-						<p:inputText id="mtreavt"
-							value="#{managedversement.contrat.coutMtRestant}" readonly="true">
+						<p:inputText id="mpayeavt" value="#{managedversement.montantdejapaye}"
+							>
 							<f:convertNumber pattern="##,###.##"></f:convertNumber>
 						</p:inputText>
-
 						
-
-
-
-						<h:outputText value="Montant restant "
+						
+						<h:outputText value="Reste à payer"
 							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
-						<p:inputText id="mtr" value="#{managedversement.resteAPayerFact}"
-							readonly="true">
+						<p:inputText id="resteapay" value="#{managedversement.resteAPayerFact}"
+							>
 							<f:convertNumber pattern="##,###.##"></f:convertNumber>
 						</p:inputText>
+
+
+<h:outputText value="MONTANT RESTANT"
+							style="margin-left: 20px;margin-right: 0px;color:red"></h:outputText>
+						<p:inputText id="rest" value="#{managedversement.reste}"
+							>
+							<f:convertNumber pattern="##,###.##"></f:convertNumber>
+						</p:inputText>
+						
 
 					</h:panelGrid>
 					<br />
@@ -277,7 +283,8 @@
 							action="#{managedversement.enregistrer}"
 							disabled="#{managedversement.etatBouton}"
 							update="frm,:frm:buttonadd,:frm:buttonupdate,:frm:buttonimp"
-							style="width:110px;height:25px;font-size:13px;border-radius:10px;" />
+							style="width:110px;height:25px;font-size:13px;border-radius:10px;" >
+							<p:confirm header="Confirmation" message="Confirmez-vous ce versement ?" icon="ui-icon-alert" /></p:commandButton>
 
 						<p:commandButton id="buttonupdate"
 							actionListener="#{managedversement.vider}" value="Annuler"
@@ -306,6 +313,38 @@
 				<br></br>
 
 			</p:panel>
+			
+			
+			
+			
+			<p:dialog id="modalDialog" appendTo="@(body)"
+					header="Paiement quittance" severity="alert"
+					widgetVar="paie_deja_ok" modal="true" height="150" width="250">
+					<h:outputText
+						value="Facture N°#{managedversement.contrat.facture.codeFact} déjà soldée" />
+					<p:separator></p:separator>
+					<p:commandButton id="decline" value="Ok"
+						onclick="paie_deja_ok.hide()" type="button" />
+				</p:dialog>
+
+				<p:dialog id="modalDialog_not_quit" appendTo="@(body)"
+					header="Paiement facture" widgetVar="not_facture" modal="true"
+					height="100">
+					<h:outputText value="Règlement impossible. Facture inexistante" />
+				</p:dialog>
+				
+				
+				
+				
+				<!-- Boîte de confirmation -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Confirmer" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Annuler" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+				
 		</h:form>
 
 	</ui:define>

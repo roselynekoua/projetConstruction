@@ -26,6 +26,7 @@ import com.gestion.utilitaires.IdGenerateur;
 
 
 
+
 @Component
 public class Managedimage implements Serializable {
 	
@@ -51,6 +52,10 @@ public class Managedimage implements Serializable {
     private UploadedFile file;
     private List<Image> listeimagemaison = new ArrayList<Image>();
 
+    /*private List<Image> paysdata = new ArrayList<Pays>();
+    private List<Pays> paysAfriquedata = new ArrayList<Pays>();
+    private List<Pays> paysEuropedata = new ArrayList<Pays>();*/
+    
    	private String destination = "C:/Users/rosyj3a/Dossierphoto/PhotoPrototype/PROTO";
 
    	public void upload(FileUploadEvent event) {
@@ -98,8 +103,18 @@ public class Managedimage implements Serializable {
     
     
     
-    
-    
+    public void chargerimage(){
+   	if(listeimagemaison.isEmpty()){
+		for(PrototypeMaison pa:listeprototype){
+		
+			for(Image img:listeimagemaison){
+				
+				listeimagemaison.add(img);
+		}
+			
+				
+			}
+   	}}
     
     
     
@@ -125,7 +140,10 @@ public class Managedimage implements Serializable {
 	}
 	}
 	
-	
+	public void charger(){
+		
+		
+	}
 	public void chargerliste(){
 		getObjectService().getojects(image);
 		
@@ -281,6 +299,19 @@ public void update() {
 	}
 
 	public List<Image> getListeimagemaison() {
+		
+		
+		/*if(listeimagemaison.isEmpty()){
+			for(PrototypeMaison pa:listeprototype){
+			
+				for(Image img:listeimagemaison){
+					
+					listeimagemaison.add(img);
+			}
+				
+					
+				}
+			}*/
 		return listeimagemaison;
 	}
 

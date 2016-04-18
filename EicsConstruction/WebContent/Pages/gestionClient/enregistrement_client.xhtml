@@ -11,6 +11,20 @@
 <ui:composition template="/template/templateGestclient.xhtml">
 
 	<ui:define name="content">
+	
+	<p:ajaxStatus styleClass="ajaxStatut">
+			<f:facet name="prestart">
+				<h:outputText value="Starting..." />
+			</f:facet>
+
+			<f:facet name="start">
+				<h:graphicImage value="../../resources/images/loader16.gif" />
+			</f:facet>
+
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
 		<h:form id="frm" enctype="multipart/form-data">
 
 
@@ -376,12 +390,12 @@
 
 
 
-								<legend>Informations Appartement</legend>
+								<legend>Informations Maison</legend>
 
 								<h:panelGrid columns="6">
 
 
-<h:outputText value="Batiment Appartement"
+<h:outputText value="Batiment "
 										style="margin-left:20px" />
 									<p:selectOneMenu id="bat" value="#{managedclient.batiment}"
 										converter="#{entityConverter}"
@@ -395,7 +409,7 @@
 											update=":frm:buttonadd,:frm:buttonupdate">
 										</p:ajax>
 									</p:selectOneMenu>
-									<h:outputText value=" Numero Appartement"
+									<h:outputText value=" Numero Maison"
 										style="margin-left:20px;" />
 									<p:inputText value="#{managedclient.maison.codeMais}"
 										style="margin-left:35px" />
@@ -427,8 +441,9 @@
 					<legend>Informations Facture</legend>
 <h:panelGrid columns="6">
 
+
 					
-<h:outputText value="Montant facture "
+<h:outputText value="Montant  facture "
 							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
 						<p:inputText id="apor"
 							value="#{managedclient.coutTotal}"  readonly="true">
@@ -440,14 +455,17 @@
 							value="#{managedclient.facture.observationFact}" />
 							
 						
-
-
 						<h:outputText value="Apport Initial"
 							style="margin-left: 20px;margin-right: 20px;"></h:outputText>
 						<p:inputText id="mtr" value="#{managedclient.facture.apportInitial}"
 							>
 							<f:convertNumber pattern="##,###.##"></f:convertNumber>
 						</p:inputText>
+						
+						
+
+
+						
 
 					</h:panelGrid>
 					<br />
@@ -475,7 +493,12 @@
 										update=":frm:grid,:frm:wizar,:frm:buttonrep"
 										disabled="#{managedclient.etatBouton}" process="@this"
 										ajax="false" icon="ui-icon-check"
-										style="width:170px;height:30px ;font-size:13px;border-radius:10px;" />
+										style="width:170px;height:30px ;font-size:13px;border-radius:10px;" >
+										
+						<p:confirm header="Confirmation"  message="Confirmez-vous cet enregistrement ? "   icon="ui-icon-alert" /></p:commandButton>
+							
+										
+										
 									<p:commandButton value="Reset" id="buttonupdate"
 										disabled="#managedclient.etatAnnuler}"
 										style="width:170px;height:30px ;font-size:13px;border-radius:10px;"
@@ -513,6 +536,14 @@
 
 
 							</fieldset>
+
+<p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   height="30" width="250" >  
+				        
+				        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+				        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>   
+				            
+				    </p:confirmDialog> 
+
 
 						</p:panel>
 					</p:tab>

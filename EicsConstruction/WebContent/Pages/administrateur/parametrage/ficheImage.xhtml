@@ -16,7 +16,7 @@
 				closable="true" />
 
 
-			<p:panel header="Enregistrement des Images" styleClass="tableMarge">
+			<p:panel header="Affichage des Images" styleClass="tableMarge">
 				<fieldset class="fieldsetpara" id="chbat">
 					<br />
 
@@ -24,7 +24,7 @@
 
 					<legend>Afficher image</legend>
 
-					<h:panelGrid columns="4">
+					<h:panelGrid columns="6">
 
 
 <h:outputText value=" Prototype " style="margin-left:20px" />
@@ -34,42 +34,58 @@
 									<f:selectItem itemLabel="Sélectionnez" itemValue="" />
 									<f:selectItems value="#{managedimage.listeprototype}" var="tata"
 										itemLabel="#{tata.libellePrototype}" itemValue="#{tata}" />
-
+<p:ajax  event="change"   listener="#{managedimage.chargerimage}"
+						  		 update="loc,sup,photo" />
 								</p:selectOneMenu>
-
-						<h:outputText value=" Désignation photo" style="margin-left:20px" />
-						<p:inputText value="#{managedimage.image.libelleImage}"
+								
+								<h:outputText value=" Localisation " style="margin-left:20px" />
+						<p:inputText id="loc" value="#{managedimage.prototype.localisationPrototype}"
 							style="margin-left:15px" />
 
+						<h:outputText  value=" Superficie" style="margin-left:20px" />
+						<p:inputText id="sup"  value="#{managedimage.prototype.superficiePrototype}"
+							style="margin-left:15px" />
 
+</h:panelGrid>
 
-						<p:panel header="#{image.libelleImage}" style="text-align:center ;">
-					            <h:panelGrid columns="1" style="width:100%">
+					<br />	<br />
+					<p:panel >
+					<legend> Photo</legend>
+					<br />	<br />
+					            <h:panelGrid id="photo" columns="3" style="width:100%;height:300px">
 					               
-					                    <p:graphicImage value="/resources/images/auto.png" styleClass="imagePays" style="width:280px"/> 
+					                    <p:graphicImage  value="/resources/images/4.jpg" styleClass="imagePays" style="width:280px"/> 
 					                    
-					             
+					              <p:graphicImage  value="/resources/images/PhotoMaisonimages.jpg" styleClass="imagePays" style="width:280px"/> 
+					                     <p:graphicImage  value="/resources/images/photocltslide5.jpg" styleClass="imagePays" style="width:280px"/> 
+					                  
+					                  
+					                   <p:graphicImage  value="/resources/images/PhotoMaisonmm.jpg" styleClass="imagePays" style="width:280px"/> 
+					                    
+					              <p:graphicImage  value="/resources/images/photouser4.jpg" styleClass="imagePays" style="width:280px"/> 
+					                     <p:graphicImage  value="/resources/images/photoclt2.jpg" styleClass="imagePays" style="width:280px"/>
+					                  
+					                  
+					                    
 					            </h:panelGrid>
-					        </p:panel>
+					        
+</p:panel>
 
 
 
 
-
-					</h:panelGrid>
+					
 
 					<br />
 					<h:panelGrid columns="3">
-						<p:commandButton id="buttonadd" value="Enregistrer"
-							icon="ui-icon-disk"
-							actionListener="#{managedimage.enregistrer}" update="frm"
-							style="width:110px;height:25px;font-size:13px;border-radius:10px;" />
-
-						<p:commandButton id="buttonupdate" value="Annuler"
+						
+						<p:commandButton id="buttonupdate" value="Reinitialiser"
 							icon="ui-icon-arrowrefresh-1-n"
 							actionListener="#{managedimage.vider}" update="frm"
-							style="width:110px;height:25px ;font-size:13px;border-radius:10px;" />
-
+							style="width:110px;height:25px ;font-size:13px;border-radius:10px;" >
+	
+					<p:confirm header="Confirmation"  message="Confirmez-vous cet enregistrement ? "   icon="ui-icon-alert" /></p:commandButton>
+					
 						<h:outputText value="(*) champ obligatoire" style="color:red" />
 					</h:panelGrid>
 
@@ -80,7 +96,16 @@
 
 
 
-
+						
+<br />
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   height="30" width="250" >  
+				        
+				        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+				        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>   
+				            
+				    </p:confirmDialog> 
+				<br />
+					
 
 
 			</p:panel>

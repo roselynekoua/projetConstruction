@@ -11,6 +11,20 @@
 <ui:composition template="/template/templateparametrage.xhtml">
 
 	<ui:define name="content">
+	
+	<p:ajaxStatus styleClass="ajaxStatut">
+			<f:facet name="prestart">
+				<h:outputText value="Starting..." />
+			</f:facet>
+
+			<f:facet name="start">
+				<h:graphicImage value="../../resources/images/loader16.gif" />
+			</f:facet>
+
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
 		<h:form id="utilisateurForm">
 	
 		
@@ -125,15 +139,31 @@
             <f:selectItem itemLabel="Activation automatique" itemValue="1"  />
             </p:selectManyCheckbox>
 					<p:commandButton value="Valider" id="enregistrer"
-						actionListener="#{managedUtilisateur.addUtilisateur}" update="grid" ajax="false" icon="ui-icon-check" />
+						actionListener="#{managedUtilisateur.addUtilisateur}" update="utilisateurForm" ajax="false" icon="ui-icon-check" type="submit" >
+						<p:confirm header="Confirmation"  message="Confirmez-vous cet enregistrement ? "  icon="ui-icon-alert" /></p:commandButton>
+						
 					<p:commandButton value="Reset" id="reset"
-						actionListener="#{managedUtilisateur.resetUtilisateur}" update="utilisateurForm"   icon="ui-icon-refresh" />
+						actionListener="#{managedUtilisateur.resetUtilisateur}" update="utilisateurForm"   icon="ui-icon-refresh" >
+				
+						</p:commandButton>
 				</h:panelGrid>
 			</fieldset>
 			
 	</p:panel>
 			<br />
-		</h:form>
+			
+			
+			
+		
+		
+		<!-- Boîte de confirmation -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Confirmer" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Annuler" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+</h:form>
 	</ui:define>
 	<p:layoutUnit id="center" position="center">
 		<ui:insert name="content">

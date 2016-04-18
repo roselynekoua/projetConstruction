@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.primefaces.component.fileupload.FileUpload;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
@@ -33,6 +34,7 @@ import com.gestion.model.Contrat;
 import com.gestion.model.Facture;
 import com.gestion.model.Maison;
 import com.gestion.model.Versement;
+import com.gestion.objetDao.RequeteUtilisateur;
 import com.gestion.objetService.ObjectService;
 import com.gestion.utilitaires.IdGenerateur;
 
@@ -48,6 +50,9 @@ public class Managedversement implements Serializable {
 	ManagedConnexion managedConnexion;
 	@Autowired
 	IdGenerateur idGenerateur;
+	
+	@Autowired
+	RequeteUtilisateur requeteUtilisateur;
 	
 	private static Logger logger = Logger.getLogger(Managedversement.class);
 	
@@ -72,6 +77,7 @@ public class Managedversement implements Serializable {
 	private Facture facture= new Facture();
 	private BigDecimal montantFact = new BigDecimal(0);
 	private BigDecimal resteAPayerFact = new BigDecimal(0);
+	private BigDecimal montantdejapaye = new BigDecimal(0);
 	private BigDecimal reste = new BigDecimal(0);
 	private BigDecimal remiseFact = new BigDecimal(0);
 	private BigDecimal montanttotal = new BigDecimal(0);
@@ -176,9 +182,14 @@ public class Managedversement implements Serializable {
 			
 			 setContrat(selectcontrat);
 			 setClient(getSelectcontrat().getClient());
-			setFacture(getSelectcontrat().getFacture());
+			//setFacture(getSelectcontrat().getFacture());
+				setFacture(getContrat().getFacture());
 				
-			
+				if (getContrat().getFacture().getEtatFact().startsWith("SOL")) {
+					RequestContext.getCurrentInstance().execute("paie_deja_ok.show();");
+					
+				}
+			calculer();
 	//FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"Une erreur s'est produite lors de traitement","ERREUR"));
 			
 			}
@@ -216,26 +227,54 @@ public class Managedversement implements Serializable {
 		}
 	}
 	
+	
+	
+	
 	public void calculer() {
+		setMontantdejapaye(new BigDecimal(0));
+		setMontantdejapaye(getRequeteUtilisateur().sommevers(getFacture().getCodeFact()));
 		
+		System.out.println("++++++++++++++++++++++++++++++++++montant deja paye++++++++++++"+montantdejapaye);
 		setCoutTotal(selectcontrat.getPrototypeMaison().getCoutTtcPrototype().multiply(new BigDecimal(selectcontrat.getQteAcq())));
 		
-		// setCoutTotal(prototype.getCoutTtcPrototype().multiply(getPrototype().getQteSouscrPrototype()));
+		setResteAPayerFact(contrat.getFacture().getMontantTtcFact().subtract(montantdejapaye));
+		//setReste(resteAPayerFact.subtract(montantFact));
+		System.out.println("++++++++++++++++++++++++++++++++++montant a payer avant++++++++++++"+montantdejapaye);
+		System.out.println(coutTotal);
+		System.out.println(resteAPayerFact);
+		
+		
+		
+		
 	}
 	
 	public void enregistrer() {
 		try {
+			
+			
+			
+			if (facture.getEtatFact().startsWith("SOL")) {
+				RequestContext.getCurrentInstance().execute("paie_deja_ok.show();");
+				vider();
+			}
+			else {
+				
+			
+				
+		facture.getEtatFact().startsWith("NON");
 			enregistrerfacture();
 		enregistrerversement();
 		
-		setEtatAnnuler(true);
+		
+			
+		
 		setEtatBouton(true);
 		setEtatimprimer(false);
 		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		sessionMap.clear();
 		//setFacture(new Facture());  vider();		
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success", "Enregistrement effectué"));
-		
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Echec ", "Echec d'enregistrement !"));
 	         e.printStackTrace();	// TODO: handle exception
@@ -246,28 +285,14 @@ public class Managedversement implements Serializable {
 	
 	public void enregistrerfacture(){
 		try{
-		//facture.setCodeFact(getIdGenerateur().getIdfacture());
-	    facture.setContrat(selectcontrat);
-		facture.setUtilisateur(getManagedConnexion().getUtilisateur());
-
-		//montantpaye
-		facture.setApportInitial(montantFact);
-	    facture.setMontantTtcFact(coutTotal);
-        facture.setRemiseFact(new BigDecimal(0));
-		facture.setDateFact(Calendar.getInstance().getTime());
-		
+			if (reste==BigDecimal.ZERO){
+				facture.setEtatFact("SOLDEE");}
+			else {
+			facture.setEtatFact("NON SOLDEE");	
+			}
+				
 		getObjectService().updateObject(facture);
-	   
-		
-		
-		//Maison maison= contrat.getMaison().getCoutTotalMais();
-		//test
-		//contrat.setCoutMtRestant(resteAPayerFact);
-		//contrat.setCoutTotalSup(resteAPayerFact);
-	//	getObjectService().updateObject(contrat);
-		//montanttotal= getContrat().getMaison().getCoutTotalMais();
-		
-		
+	 
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			//logger.error("Erreur lors de l'enregistrement ", e);
@@ -277,10 +302,29 @@ public class Managedversement implements Serializable {
 	}
 	}
 	
+	
+	//impotan
+/*	public void enregistreretatfact(){
+		BigDecimal montantRegle = new BigDecimal(0);
+		Facture facture2 = (Facture) getObjectService().getObjectById(facture2.getCodeFact(), "Facture");
+		for(Versement versement : facture2.getVersements()){
+			
+			montantRegle = montantRegle.add(versement.getMontantVers());
+		}
+		if (facture2.getMontantTtcFact().compareTo(montantRegle) == 0){
+			facture2.setEtatFact("SOLDEE");
+			//Mis à jours
+			getObjectService().updateObject(facture);
+			getFacture().setEtatFact("SOLDEE");
+		}
+	}
+	*/
+	
 	public void miseajr() {
 		montantFact= new BigDecimal(0);
+		reste= new BigDecimal(0);
 		montantFact = getVersement().getMontantVers();
-		
+		setReste(resteAPayerFact.subtract(montantFact));
 //		setMontanttotal(getContrat().getMaison().getCoutTotalMais());
 //		setMontantProjet(getContrat().getMaison().getCoutTotalMais().add(getContrat().getCoutTotalSup()));
 		
@@ -352,7 +396,8 @@ public void update() {
 		setEtatBouton(true);
 		setMontantFact(new BigDecimal(0));
 		setResteAPayerFact(new BigDecimal(0));
-		
+		setReste(new BigDecimal(0));
+		setMontantdejapaye(new BigDecimal(0));
 		setRemiseFact(new BigDecimal(0));
 	}
 	
@@ -789,6 +834,26 @@ public void desactiver() {
 
 	public void setCoutTotal(BigDecimal coutTotal) {
 		this.coutTotal = coutTotal;
+	}
+
+
+	public BigDecimal getMontantdejapaye() {
+		return montantdejapaye;
+	}
+
+
+	public void setMontantdejapaye(BigDecimal montantdejapaye) {
+		this.montantdejapaye = montantdejapaye;
+	}
+
+
+	public RequeteUtilisateur getRequeteUtilisateur() {
+		return requeteUtilisateur;
+	}
+
+
+	public void setRequeteUtilisateur(RequeteUtilisateur requeteUtilisateur) {
+		this.requeteUtilisateur = requeteUtilisateur;
 	}
 
 

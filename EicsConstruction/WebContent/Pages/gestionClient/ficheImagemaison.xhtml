@@ -64,8 +64,10 @@
 						<p:commandButton id="buttonadd" value="Enregistrer"
 							icon="ui-icon-disk"
 							actionListener="#{managedimagemaison.enregistrer}" update=":frm"
-							style="width:110px;height:25px;font-size:13px;border-radius:10px;" />
-
+							style="width:110px;height:25px;font-size:13px;border-radius:10px;" >
+<p:confirm header="Confirmation"  message="Confirmez-vous cet enregistrement ? "   icon="ui-icon-alert" /></p:commandButton>
+							
+										
 						<p:commandButton id="buttonupdate" value="Annuler"
 							icon="ui-icon-arrowrefresh-1-n"
 							actionListener="#{managedimagemaison.vider}" update="frm"
@@ -81,7 +83,12 @@
 
 
 
-
+<p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   height="30" width="250" >  
+				        
+				        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+				        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>   
+				            
+				    </p:confirmDialog> 
 
 
 			</p:panel>				

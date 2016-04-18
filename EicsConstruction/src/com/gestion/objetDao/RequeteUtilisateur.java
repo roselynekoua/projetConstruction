@@ -1,5 +1,6 @@
 package com.gestion.objetDao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gestion.model.Contrat;
 import com.gestion.model.Facture;
 import com.gestion.model.Utilisateur;
+import com.gestion.model.Versement;
 
 
 
@@ -249,7 +251,8 @@ public class RequeteUtilisateur {
 				public List<Prescrire> listemedocprecristot() throws HibernateException{
 				
 
-					String myQuery = "Select distinct m.dsg_med from prescrire p,medicament m where p.num_med= m.num_med ";
+					String myQuery = "SELECT SUM( V.MONTANT_VERS ) AS qtemontant FROM versement V, facture F WHERE V.CODE_FACT = F.CODE_FACT
+                   AND V.CODE_FACT = "codfact001" ";
 					
 					
 					List presr = getSessionFactory().getCurrentSession().createSQLQuery(myQuery).addEntity(Prescrire.class).list();
@@ -315,6 +318,30 @@ return pati;
 			return listecontr;
 		}
 		
+		
+		
+			
+		@Transactional
+		public BigDecimal sommevers(String code){
+	    	BigDecimal X = BigDecimal.ZERO;
+	    	String query = "SELECT SUM( V.MONTANT_VERS ) FROM versement V, facture F WHERE V.CODE_FACT = F.CODE_FACT AND V.CODE_FACT='"+code+"'"; 
+	    	//try {
+				X=(BigDecimal)getSessionFactory().getCurrentSession().createSQLQuery(query).uniqueResult();
+				if(X==null) {
+					X=BigDecimal.ZERO;
+				
+				System.out.println("++++++++++++++++++++++++++++++++++somme++++++++++++"+X);
+				return X;
+		}
+		else{
+		return X;
+		}}
+			/*} catch (HibernateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+	    	//return X;
+	    //}
 		//recuperer la liste des factures a patir du client
 				@Transactional
 				public List<Facture> recuplistfacture(String codeclt) throws HibernateException{

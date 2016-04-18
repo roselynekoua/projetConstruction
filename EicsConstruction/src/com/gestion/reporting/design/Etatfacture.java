@@ -489,22 +489,7 @@ private void crercontenu(Document document) throws DocumentException {
 				tabSous.addCell(cell1);
 				
 				
-				cell = new PdfPCell(new Phrase("Montant payé:",  normalTitle));
-				//cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				cell.setBorder(Rectangle.NO_BORDER);
-				tabSous.addCell(cell);
 				
-				
-
-				
-		
-				
-				
-				cell1=new PdfPCell(new Phrase(managedversement.getVersement().getMontantVers().toString(),smallText));
-				//cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-				cell1.setBorder(Rectangle.NO_BORDER);
-				cell1.setColspan(1);
-				tabSous.addCell(cell1);
 				
 				
 				
@@ -516,7 +501,7 @@ private void crercontenu(Document document) throws DocumentException {
 				
 				
 				
-				cell1=new PdfPCell(new Phrase(" " +"managedversement.getMontanttotal().subtract(managedversement.getContrat().getCoutMtRestant()).toString()",smallText));
+				cell1=new PdfPCell(new Phrase(managedversement.getMontantdejapaye().toString(),smallText));
 				//cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell1.setBorder(Rectangle.NO_BORDER);
 				cell1.setColspan(1);
@@ -525,7 +510,7 @@ private void crercontenu(Document document) throws DocumentException {
 				
 				
 				
-				cell = new PdfPCell(new Phrase("Montant tarif Projet:",  normalTitle));
+				cell = new PdfPCell(new Phrase("Montant tarif Prototype:",  normalTitle));
 				//cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setBorder(Rectangle.NO_BORDER);
 				tabSous.addCell(cell);
@@ -548,7 +533,7 @@ private void crercontenu(Document document) throws DocumentException {
 
 
 
-				cell1=new PdfPCell(new Phrase(managedversement.getMontantProjet().toString(), smallTextGras1));//cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell1=new PdfPCell(new Phrase(managedversement.getFacture().getMontantTtcFact().toString(), smallTextGras1));//cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 				//cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell1.setBorder(Rectangle.NO_BORDER);
 				cell1.setColspan(1);
@@ -561,13 +546,25 @@ private void crercontenu(Document document) throws DocumentException {
 				
 				
 				
-				cell1=new PdfPCell(new Phrase("managedversement.getContrat().getCoutMtRestant().toString()",smallText));
+				cell1=new PdfPCell(new Phrase(managedversement.getReste().toString(),smallText));
 				//cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell1.setBorder(Rectangle.NO_BORDER);
 				cell1.setColspan(1);
 				tabSous.addCell(cell1);
 
+				cell = new PdfPCell(new Phrase("MONTANT RECU:",  normalTitle));
+				//cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setBorder(Rectangle.NO_BORDER);
+				tabSous.addCell(cell);
 				
+				
+
+				
+				cell1=new PdfPCell(new Phrase(managedversement.getVersement().getMontantVers().toString(),smallText));
+				//cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell1.setBorder(Rectangle.NO_BORDER);
+				cell1.setColspan(1);
+				tabSous.addCell(cell1);
 
 				addEmptyLine(saut, 2);
 				document.add(sautLigne(2));

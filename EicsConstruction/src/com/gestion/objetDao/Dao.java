@@ -188,8 +188,7 @@ public class Dao implements IDao {
 				+ "%'";
 
 		try {
-			list = getSessionFactory().getCurrentSession().createQuery(sql)
-					.setMaxResults(10).list();
+			list = getSessionFactory().getCurrentSession().createQuery(sql).list();
 		} catch (Exception e) {
 			System.out.println(e);
 		}

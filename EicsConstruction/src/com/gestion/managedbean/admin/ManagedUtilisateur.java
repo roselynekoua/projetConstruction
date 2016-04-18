@@ -1,5 +1,6 @@
 package com.gestion.managedbean.admin;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -65,6 +67,7 @@ public class ManagedUtilisateur implements Serializable {
 	 private String selectedpro; 
 	 private List<SelectItem> elementadm; 
 	 private String selectedadm; 
+	 private String photo; 
 	 
 	 private List<Integer> selectedActive;
 	 
@@ -600,19 +603,27 @@ public void delete() {
 		this.monProfil = monProfil;
 	}
 
+	
+	
+	
 	public List<Utilisateur> getListeUser() {
 		listeUser.clear();
 	
-		listeUser= new ArrayList<Utilisateur>();
-		List<Object> listObject = getObjectService().getObjects("Utilisateur");
-		for (Iterator it = listObject.iterator(); it.hasNext();) {
-			Utilisateur utilisateur = (Utilisateur) it.next();
+	//	listeUser= new ArrayList<Utilisateur>();
+		listeUser = getObjectService().getObjects("Utilisateur");
+		
+		
+		/*for (Iterator it = listObject.iterator(); it.hasNext();) {*/
+		/*for(Utilisateur util: listObject  ){
+		
 			try {
 				listeUser.add(utilisateur);
+				
+				//  photo= "c:/Users/rosyj3a/Dossierphoto/"+ utilisateur.getPhotoUt();
 			} catch (Exception e) {
 			}
 		
-	}
+	}*/
 		return listeUser;
 	}
 
@@ -766,6 +777,17 @@ public void delete() {
 
 	public List<SelectItem> getElementpro() {
 		return elementpro;
+	}
+
+	public String getPhoto() {
+		
+		
+		photo= "c:/Users/rosyj3a/Dossierphoto/"+ utilisateur.getPhotoUt();
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	

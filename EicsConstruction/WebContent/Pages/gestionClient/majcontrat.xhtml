@@ -164,7 +164,11 @@
 				<h:panelGrid columns="4" cellpadding="10" style="margin-left:80px">  
 				
 								<p:commandButton value="Modifier" id="buttonadd"
-						actionListener="#{managedclientmajc.update}" update="frm,:frm:grid,:frm:buttonadd,:frm:buttonupdate" disabled="#{managedclientmajc.etatBouton}"  process="@this"  ajax="false" icon="ui-icon-check" style="width:170px;height:40px ;font-size:13px;border-radius:10px;" />
+						actionListener="#{managedclientmajc.update}" update="frm,:frm:grid,:frm:buttonadd,:frm:buttonupdate" disabled="#{managedclientmajc.etatBouton}"  process="@this"  ajax="false" icon="ui-icon-check" style="width:170px;height:40px ;font-size:13px;border-radius:10px;" >
+					<p:confirm header="Confirmation"  message="Confirmez-vous  ? "   icon="ui-icon-alert" /></p:commandButton>
+	
+					
+					
 					<p:commandButton value="Reset" id="buttonupdate"
 						actionListener="#{managedclientmajc.vider}" update="frm,:frm:buttonadd,:frm:buttonupdate,:frm:buttonrep"  disabled="#{managedclientmajc.etatAnnuler}"  icon="ui-icon-refresh"  style="width:170px;height:40px ;font-size:13px;border-radius:10px;"/>
 						
@@ -175,6 +179,13 @@
 				</h:panelGrid>
 			</fieldset>
 			
+			
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   height="30" width="250" >  
+				        
+				        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+				        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>   
+				            
+				    </p:confirmDialog> 
 	</p:panel>  
 			<br />
 		</h:form>

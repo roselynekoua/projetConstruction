@@ -43,7 +43,7 @@ public class Managedtypemaison implements Serializable {
 			type.setCodeTypmaison(getIdGenerateur().gettypemaison());
 			
 		getObjectService().addObject(type);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success", "Enregistrement effectué"));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Succes", "Enregistrement effectué"));
 		
 		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		sessionMap.clear();

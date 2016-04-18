@@ -70,8 +70,11 @@ public class Listeclientdesign implements Serializable {
 	// "https://www.certification.tn/cgi-bin/pub/crl/cacrl.crl";
 	// URL myurl = new URL(httpsURL);
 	public static final String RESOURCE = "http://localhost:8080/EicsConstruction/resources/images/logoeics.png";
-	public static final String RESOURCE3 = "http://localhost:8080/EicsConstruction/resources/images/";
-	public static final String RESOURCE2 = "C:/Users/rosyj3a/Dossierphoto/";
+	public static final String RESOURCE3 = "http://localhost:8080/EicsConstruction/resources/images/4.jpg";
+	public static final String RESOURCE2 = "C:\\Users\\rosyj3a\\Dossierphoto\\";
+	
+	/*if ((new File("C:\\Etats\\EICSconstruction\\Listeclients\\"
+			+ nomFichier + "")).exists()) {*/
 	// Pour la mise en forme
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 28,
 			Font.BOLD);
@@ -253,10 +256,17 @@ listeclient = getManagedclient().getListeclient();
 					smallText));
 			tabSous.addCell(new Phrase(sdf.format(listeclient.get(i)
 					.getDatecreaClt()), smallText));
-			tabSous.addCell(new Phrase(listeclient.get(i)
-					.getEmailClt(), smallText));
+			tabSous.addCell(new Phrase(listeclient.get(i).getEmailClt(), smallText));
 			// Ajout de logo
-			Image logo2 = Image.getInstance(new URL(RESOURCE3+listeclient.get(i).getPhotoClt()));
+		//Image logo2 = Image.getInstance(new URL(RESOURCE2+listeclient.get(i).getPhotoClt()));
+			
+			/* PdfPTable table = new PdfPTable(1);
+		      table.addCell(new PdfPCell(Image.getInstance("c:/Users/rosyj3a/Dossierphoto/photoclt4.jpg")));
+		      PdfPCell c1 = new PdfPCell();
+		      table.addCell(c1);
+		      tabSous.addCell(table);*/
+			
+			Image logo2 = Image.getInstance("c:/Users/rosyj3a/Dossierphoto/"+getListeclient().get(i).getPhotoClt());
 			logo2.scalePercent(100f);
 			 tabSous.addCell(logo2);
 			//tabSous.addCell(new URL(RESOURCE2+listeclient.get(i).getPhotoClt());

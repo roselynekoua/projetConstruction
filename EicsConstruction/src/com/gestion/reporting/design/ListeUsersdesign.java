@@ -69,7 +69,7 @@ public class ListeUsersdesign implements Serializable {
 	// "https://www.certification.tn/cgi-bin/pub/crl/cacrl.crl";
 	// URL myurl = new URL(httpsURL);
 	public static final String RESOURCE = "http://localhost:8080/EicsConstruction/resources/images/logoeics.png";
-
+	public static final String RESOURCE2 = "c:/Users/rosyj3a/Dossierphoto/";
 	// Pour la mise en forme
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 28,
 			Font.BOLD);
@@ -200,11 +200,11 @@ public class ListeUsersdesign implements Serializable {
 		document.add(titreDocument);
 	}
 
-	private void crercontenu(Document document) throws DocumentException {
+	private void crercontenu(Document document) throws DocumentException, MalformedURLException, IOException {
 		// Info
 
-		PdfPTable tabSous = new PdfPTable(10);
-		tabSous.setWidths(new int[] { 28, 35, 30, 30, 30, 35, 35, 35, 42, 35 });
+		PdfPTable tabSous = new PdfPTable(11);
+		tabSous.setWidths(new int[] { 28, 35, 30, 30, 30, 35, 35, 35, 42, 35,40 });
 
 		// tabSous.getDefaultCell().setBorder(Cell.NO_BORDER);
 		PdfPCell cell1;
@@ -231,7 +231,7 @@ public class ListeUsersdesign implements Serializable {
 		// tabSous.setHorizontalAlignment(Element.ALIGN_CENTER);
 		tabSous.addCell(new Phrase("Mail ", normalTitle));
 		tabSous.addCell(new Phrase("Login ", normalTitle));
-
+		tabSous.addCell(new Phrase("Photo  ", normalTitle));
 		listeutilisateur = getManagedUtilisateur().getListeUser();
 
 		// 2em ligne
@@ -256,6 +256,11 @@ public class ListeUsersdesign implements Serializable {
 			tabSous.addCell(new Phrase(listeutilisateur.get(i)
 					.getLoginUtilisateur(), smallText));
 
+			
+			Image logo2 = Image.getInstance(RESOURCE2+getListeutilisateur().get(i).getPhotoUt());
+			logo2.scalePercent(100f);
+			
+			 tabSous.addCell(logo2);
 		}
 		document.add(tabSous);
 

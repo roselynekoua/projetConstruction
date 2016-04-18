@@ -42,7 +42,8 @@ public class ManagedSexe implements Serializable {
 		
 		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		sessionMap.clear();
-		monSexe = new Sexe(); 
+		//monSexe = new Sexe(); 
+		vider();
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			//logger.error("Erreur lors de l'enregistrement ", e);
@@ -67,7 +68,8 @@ public void update() {
 			FacesContext.getCurrentInstance().addMessage(
 					null,new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effectuée dans la base",
 							"SUCCES"));
-			monSexe = new Sexe();
+			//monSexe = new Sexe();
+			vider();
 			desactiver();
 			
 			} catch (NullPointerException e) {
@@ -83,7 +85,8 @@ public void update() {
 		try {
 			this.listeSexe.remove(monSexe);
 			objectService.deleteObject(monSexe);
-			monSexe = new Sexe();
+			//monSexe = new Sexe();
+			vider();
 			FacesContext.getCurrentInstance().addMessage(
 					null,new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"  Suppression effectuée dans la base de donnée", "SUCCES"));

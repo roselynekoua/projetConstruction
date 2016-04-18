@@ -12,9 +12,10 @@
 
 <ui:composition template="/template/templateparametrage.xhtml">
 	<ui:define name="content">
+	<h:form id="frm">
 	<p:panel header="Profil Utilisateur" styleClass="tableMarge">
 	<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
-				<h:form id="frm">
+				
 					<fieldset id="Profilfiel" class="fieldsetpara">
 					<br />
 						<legend>Profil </legend>
@@ -41,7 +42,9 @@
 
 						<p:commandButton id="buttonadd" value="Ajouter" disabled="#{managedProfil.etatBouton}" icon="ui-icon-check"  update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px;font-size:13px;border-radius:10px;"
 							
-							actionListener="#{managedProfil.addProfil}" />
+							actionListener="#{managedProfil.addProfil}" >
+							 <p:confirm header="Confirmation"  message="Confirmez-vous cet enregistrement ? "  icon="ui-icon-alert" /></p:commandButton>
+						
 						
 				<p:commandButton id="buttonupdate" value="Annuler" disabled="#{managedProfil.etatAnnuler}"  icon="ui-icon-arrowrefresh-1-n"  update="frm,:frm:buttonadd,:frm:buttonupdate" style="width:110px;height:25px;font-size:13px;border-radius:10px;"
 							
@@ -50,9 +53,14 @@
 						<h:outputText value="(*) champ obligatoire" style="color:red" />
 
 					</fieldset>
+<p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   height="30" width="250" >  
+				        
+				        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+				        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>   
+				            
+				    </p:confirmDialog> 
 
-
-			</h:form></p:panel>
+			</p:panel></h:form>
 	</ui:define>
 </ui:composition>
 </html>
