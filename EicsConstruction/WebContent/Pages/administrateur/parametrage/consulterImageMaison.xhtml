@@ -1,0 +1,126 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateparametrage.xhtml">
+	<ui:define name="content">
+
+		<h:form id="frm">
+			<p:messages id="growl" showDetail="false" autoUpdate="true"
+				closable="true" />
+
+
+			<p:panel header="Affichage des Images" styleClass="tableMarge">
+				<fieldset class="fieldsetpara" id="chbat">
+					<br />
+<h:graphicImage   name="/images/logoeics.png" styleClass="imagePays" style="width:280px"/>	
+
+
+					<legend>Afficher image</legend>
+
+					<h:panelGrid columns="6">
+
+
+<h:outputText value=" Maison " style="margin-left:20px" />
+						<p:selectOneMenu id="prto" value="#{consltmaisonMB.maison}"
+									converter="#{entityConverter}"
+									style="margin-left: 20px; width: 120px">
+									<f:selectItem itemLabel="Sélectionnez" itemValue="" />
+									<f:selectItems value="#{consltmaisonMB.listemaison}" var="tata"
+										itemLabel="#{tata.dsgMais}" itemValue="#{tata}" />
+<p:ajax  event="change"   listener="#{consltmaisonMB.chargerlisteimage}"
+ update="loc,sup,:frm:tof" />
+								</p:selectOneMenu>
+								
+								<h:outputText value="Type maison " style="margin-left:20px" />
+						<p:inputText id="loc" value="#{consltmaisonMB.maison.typeMaison.libelleTypmaison}"
+							style="margin-left:15px" />
+
+						<h:outputText  value=" Utilisateur" style="margin-left:20px" />
+						<p:inputText id="sup"  value="#{consltmaisonMB.maison.utilisateur.nomUtilisateur}  #{consltmaisonMB.maison.utilisateur.prenomUtilisateur}"
+							style="margin-left:15px" />
+
+</h:panelGrid>
+
+					<br />	<br />
+					<p:panel >
+					
+					<br />	<br />
+					
+					  <p:dataGrid var="tof" value="#{consltmaisonMB.listeimagemaison}" columns="3" 
+        rows="10" paginator="true" id="tof" emptyMessage="Aucune donnée"
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+        rowsPerPageTemplate="5,10">
+        
+        
+        <f:facet name="header">
+					           		<span style="color:black;font-size: 2em;font-weight: bold;line-height:20px">&nbsp;Liste des photos</span>
+					        </f:facet>
+					 
+					        <p:panel header="#{tof.codeImage}"  style="text-align:center ;">
+					            <h:panelGrid columns="1">
+       
+					
+					
+				<p:graphicImage  value="/resources/images/#{tof.libelleImage}" styleClass="imagePays" style="width:280px"/>	
+					</h:panelGrid></p:panel>
+					</p:dataGrid>
+					
+					
+					
+					            
+					         
+</p:panel>
+
+
+
+
+					
+
+					<br />
+					<h:panelGrid columns="3">
+						
+						<p:commandButton id="buttonupdate" value="Reinitialiser"
+							icon="ui-icon-arrowrefresh-1-n"
+							actionListener="#{consltmaisonMB.vider}" update="frm"
+							style="width:110px;height:25px ;font-size:13px;border-radius:10px;" >
+	
+					<p:confirm header="Confirmation"  message="Confirmez-vous ? "   icon="ui-icon-alert" /></p:commandButton>
+					
+						<h:outputText value="(*) champ obligatoire" style="color:red" />
+					</h:panelGrid>
+
+				</fieldset>
+
+				<br></br>
+
+
+
+
+						
+<br />
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   height="30" width="250" >  
+				        
+				        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+				        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>   
+				            
+				    </p:confirmDialog> 
+				<br />
+					
+
+
+			</p:panel>
+
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

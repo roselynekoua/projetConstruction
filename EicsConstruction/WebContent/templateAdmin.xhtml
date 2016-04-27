@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>SIGMiC Parametrage</title>
+	<h:outputStylesheet library="css" name="style.css" />
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=false"
+		type="text/javascript"></script>
+
+	<link rel="shortcut icon" type="image/x-icon" href="../../resources/images/favicon.ico" />
+</h:head>
+
+<h:body>
+	<p:layout fullPage="true">
+		<!-- Le Header de la page -->
+
+		<p:layoutUnit id="top" position="north" size="24%">
+
+			<ui:insert name="top">
+			<div align="center" style="width:100%;">
+					<p:menubar>
+					
+    	  <p:menuitem value="ACCUEIL"  icon="ui-icon-home" /> 
+    	  
+         <p:submenu label="COMPTE UTILISATEUR" icon="ui-icon-pencil">
+                <p:menuitem value="Utilisateurs"   />
+                <p:menuitem value="Profils"  />     
+            	<p:menuitem value="Fonction"  />
+        </p:submenu>
+        
+         <p:submenu label="IMPUTATIONS" >
+                 <p:menuitem value="Budget" />
+                 <p:menuitem value="Destination"  />
+                 <p:menuitem value="Moyens de Transport"/>
+                 <p:menuitem value="Nature Mission" />
+                 <p:menuitem value="Instruction"  />     
+        </p:submenu>
+        
+           <p:submenu label="PARTICIPANTS" >
+                <p:menuitem value="Profession" />    
+            	<p:menuitem value="Type de Poste"  />
+      	  </p:submenu>
+      	  
+      	     <p:submenu label="DOSSIERS" >
+      	      <p:menuitem value="Nature Document" /> 
+        </p:submenu>
+   	 </p:menubar>
+   		 </div>
+   		 <div align="center" style="width:100%;">
+				  <p:panelGrid style="width:100%;">
+								  <f:facet name="header">
+				        <p:row>
+				            <p:column colspan="10" styleClass="columnLoginHeader" >Acteur</p:column>
+				        </p:row>
+				 
+				    </f:facet>
+							<p:row>
+						        <p:column styleClass="columnLogin1">Code: </p:column>
+						        <p:column styleClass="columnLogin2"><p:inputText value="" readonly="true" /></p:column>
+						 
+						        <p:column styleClass="columnLogin1">Nom: </p:column>
+						        <p:column styleClass="columnLogin2"><p:inputText value="" readonly="true"  style="width:90%;"/></p:column>
+						 
+						 		<p:column styleClass="columnLogin1">Date: </p:column>
+						        <p:column styleClass="columnLogin2"><p:inputText value="" readonly="true" /></p:column>
+						        
+						        <p:column styleClass="columnLogin1">Pays: </p:column>
+						        <p:column styleClass="columnLogin2"><p:inputText value="" readonly="true" style="width:90%;"/></p:column>
+						        
+						        <p:column styleClass="columnLogin1">Fonction: </p:column>
+						        <p:column styleClass="columnLogin2"><p:inputText value="" readonly="true"  style="width:90%;"/></p:column>
+						 
+						    </p:row>	
+
+				</p:panelGrid>
+	 	 </div>
+	 	 
+	 	 <div align="right">
+	 	 <h:graphicImage name="images/ci300_logo.png" style="margin-right:20px; width:80px;height:60px;"/>
+	 	 </div>
+	 	 
+	 	
+		
+
+			</ui:insert>
+		</p:layoutUnit>
+		
+		
+					<p:layoutUnit id="content" position="center" size="70%">
+			<ui:insert name="content">
+
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit id="bottom" position="south" size="6%">
+			<ui:insert name="bottom">
+
+				<p:panelGrid style="width:100%;">
+				<f:facet name="footer">
+				<p:row>
+						        <p:column styleClass="columnFooter1"><p:columnGroup><h:outputLink value="http://www.sndi.ci/" hreflang=""
+						style="text-decoration: none;font-size: 13px;margin-left: 5%;"
+						target="_bank">
+						<h:outputText value="SNDI, " style="color:red;" />
+						<h:outputText value="Societé Nationale de Developpement Informatique"
+							style="font-style: italic;" />
+					</h:outputLink></p:columnGroup></p:column>
+						        <p:column ><h:outputText value="Copyright :  SNDI 2015" style="float: right;font-size: 12px;" /></p:column>
+						 
+						        <p:column style="width:45%;"></p:column>
+						        
+						        <p:column>
+						        <p:columnGroup><div align="center">
+	<p:ajaxStatus styleClass="ajaxStatut">  
+	<f:facet name="prestart">
+	<h:outputText value="Starting..." />
+	</f:facet>
+	
+    <f:facet name="start">  
+        <h:graphicImage value="../../resources/images/loader16.gif"/>  
+    </f:facet>  
+      
+    <f:facet name="complete">  
+        <h:outputText value="" />  
+    </f:facet>  
+	</p:ajaxStatus>  
+		
+			
+		</div></p:columnGroup>
+						        </p:column>
+						        
+						        <p:column ><p:columnGroup><h:outputText value="SIGMiC - Session ouverte	"
+				style="font-size:12px;font-family:Arial" />
+				
+				</p:columnGroup></p:column>
+						       		 
+			  </p:row>	
+		</f:facet>
+		</p:panelGrid>
+
+			</ui:insert>
+		</p:layoutUnit>
+
+
+	</p:layout>
+
+	<script type="text/javascript">
+		$("a").click(
+				dlg1.show();
+				function() {
+					var th = $(this);
+					var tag = $(this).parent().parent().parent().parent();
+					tag.children().children().children().children("a").css(
+							"text-decoration", "none");
+					th.css("text-decoration", "overline");
+
+				});
+	</script>
+
+
+</h:body>
+
+
+
+</html>
