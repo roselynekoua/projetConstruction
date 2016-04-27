@@ -108,7 +108,7 @@ public class Maison implements java.io.Serializable {
 		this.dsgMais = dsgMais;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "maison")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "maison")
 	public Set<Contrat> getContrats() {
 		return this.contrats;
 	}
@@ -117,7 +117,7 @@ public class Maison implements java.io.Serializable {
 		this.contrats = contrats;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "maison")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "maison")
 	public Set<Image> getImages() {
 		return this.images;
 	}

@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gestion.model.Batiment;
+import com.gestion.model.Contrat;
 import com.gestion.model.Image;
 import com.gestion.model.PrototypeMaison;
 import com.gestion.model.Sexe;
@@ -50,20 +51,29 @@ private PrototypeMaison prototype= new PrototypeMaison();
     private boolean etatAnnuler=true;
     private int i;
     private UploadedFile file;
+    private File repectoire;
+    private String lib;
+    private List<String> listefile;
 
-
-   	private String destination = "C:/Users/rosyj3a/Dossierphoto/PhotoPrototype";
+   	private String destination = "C:/PhotoPrototype";
 
    	public void upload(FileUploadEvent event) {
-   		FacesMessage msg = new FacesMessage("Fichier telechargé! ");
    		
-   		for( i= 0;i<10;i++)  {
-   		image.setLibelleImage(event.getFile().getFileName());}
-
-		image.setCodeImage(getIdGenerateur().getIdimage());
-		image.setPrototypeMaison(prototype);
+   		
+   	  repectoire = new File("C:/Dossierphoto/PhotoPrototype");
+   	if(!repectoire.exists())  {
+		repectoire.mkdirs();
+   	}
+   		FacesMessage msg = new FacesMessage("Fichier telechargé! ");
+   		//for( i= 0;i<4;i++)  {
+   			
+   		lib =event.getFile().getFileName();
+   		//listefile.add(lib);
+   		//i++;
+   		//}
+   		
    		FacesContext.getCurrentInstance().addMessage(null, msg);
-   		// Do what you want with the file
+   		
    		try {
    			copyFile(event.getFile().getFileName(), event.getFile()
    					.getInputstream());
@@ -77,8 +87,7 @@ private PrototypeMaison prototype= new PrototypeMaison();
    		try {
 
    			// write the inputStream to a FileOutputStream
-   			OutputStream out = new FileOutputStream(new File(destination
-   					+ fileName));
+   			OutputStream out = new FileOutputStream(new File(repectoire	+ "/" + fileName));
 
    			int read = 0;
    			byte[] bytes = new byte[1024];
@@ -106,11 +115,21 @@ private PrototypeMaison prototype= new PrototypeMaison();
     
 	public void enregistrer(){
 		try{
+			//for (i= 0;i<listefile.size();i++) {
 			
-			/*image.setCodeImage(getIdGenerateur().getIdimage());
-			image.setPrototypeMaison(prototype);
-		*/
-		getObjectService().addObject(image);
+		   		
+				image.setLibelleImage(lib);
+		   		image.setCodeImage(getIdGenerateur().getIdimage());
+				
+				
+				image.setPrototypeMaison(prototype);
+				//image.setCodeImage("");
+				getObjectService().addObject(image);
+				//i++;
+				//}
+			//
+			
+		
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Succès d'enregistrement", "Enregistrement effectué"));
 		
 		Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -279,6 +298,54 @@ public void update() {
 
 	public void setListeprototype(List<PrototypeMaison> listeprototype) {
 		this.listeprototype = listeprototype;
+	}
+
+	public File getRepectoire() {
+		return repectoire;
+	}
+
+	public void setRepectoire(File repectoire) {
+		this.repectoire = repectoire;
+	}
+
+	public int getI() {
+		return i;
+	}
+
+	public void setI(int i) {
+		this.i = i;
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
+
+	public String getLib() {
+		return lib;
+	}
+
+	public void setLib(String lib) {
+		this.lib = lib;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	public List<String> getListefile() {
+		return listefile;
+	}
+
+	public void setListefile(List<String> listefile) {
+		this.listefile = listefile;
 	}
 
 

@@ -47,7 +47,7 @@ public class Image implements java.io.Serializable {
 		this.codeImage = codeImage;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CODE_MAIS")
 	public Maison getMaison() {
 		return this.maison;

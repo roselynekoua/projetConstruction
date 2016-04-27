@@ -50,13 +50,13 @@ public class Managedimage implements Serializable {
     private boolean etatAnnuler=true;
     private int i;
     private UploadedFile file;
-    private List<Image> listeimagemaison = new ArrayList<Image>();
+    private ArrayList<Image> listeimagemaison = new ArrayList<Image>();
 
     /*private List<Image> paysdata = new ArrayList<Pays>();
     private List<Pays> paysAfriquedata = new ArrayList<Pays>();
     private List<Pays> paysEuropedata = new ArrayList<Pays>();*/
     
-   	private String destination = "C:/Users/rosyj3a/Dossierphoto/PhotoPrototype/PROTO";
+   	private String destination = "C:/Dossierphoto/PROTO";
 
    	public void upload(FileUploadEvent event) {
    		FacesMessage msg = new FacesMessage("Fichier telechargé! ");
@@ -102,9 +102,28 @@ public class Managedimage implements Serializable {
    	}
     
     
+   	public void chargerlisteimage(){
+   	   	//if(listeimagemaison.isEmpty()){
+
+	   		listeimagemaison.clear();
+	   //	listeimagemaison=(ArrayList<Image>) prototype.getImages();
+	
+	   	//}
+   		for(Image img:prototype.getImages()){
+   			
+			
+			listeimagemaison.add(img);
+			 System.out.println("++++++++++++++++********************fichier ok!");
+	}
+   	}
+   	    
+   	
+   	
     
     public void chargerimage(){
    	if(listeimagemaison.isEmpty()){
+   		
+   		prototype.getImages();
 		for(PrototypeMaison pa:listeprototype){
 		
 			for(Image img:listeimagemaison){
@@ -193,6 +212,7 @@ public void update() {
 		 image = new Image();
 		 prototype = new PrototypeMaison();
 		setEtatBouton(true);
+		listeimagemaison.clear();
 	}
 	
   public void desactiver() {
@@ -298,27 +318,15 @@ public void update() {
 		this.listeimageproto = listeimageproto;
 	}
 
-	public List<Image> getListeimagemaison() {
-		
-		
-		/*if(listeimagemaison.isEmpty()){
-			for(PrototypeMaison pa:listeprototype){
-			
-				for(Image img:listeimagemaison){
-					
-					listeimagemaison.add(img);
-			}
-				
-					
-				}
-			}*/
+	public ArrayList<Image> getListeimagemaison() {
 		return listeimagemaison;
 	}
 
-	public void setListeimagemaison(List<Image> listeimagemaison) {
+	public void setListeimagemaison(ArrayList<Image> listeimagemaison) {
 		this.listeimagemaison = listeimagemaison;
 	}
 
+	
 
 	
 

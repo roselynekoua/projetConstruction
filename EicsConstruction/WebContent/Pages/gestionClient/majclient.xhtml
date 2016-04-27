@@ -62,7 +62,7 @@
 						rowsPerPageTemplate="5"
 									 id="tab">
 									<p:ajax event="rowSelect"
-										listener="#{managedclientmaj.onRowSelectclt}" update=":frm:grid,:frm:infosupl,:frm:buttonsup,:frm:buttonadd,:frm:buttonupdate"/>
+										listener="#{managedclientmaj.onRowSelectclt}" update=":frm:grid,:frm:infosupl,:frm:pho,:frm:buttonsup,:frm:buttonadd,:frm:buttonupdate"/>
 								
 										
 									<p:column headerText="Code client">
@@ -188,6 +188,24 @@
 						  
 					
 			</h:panelGrid>
+			
+			<h:panelGrid columns="4" id="pho">
+<h:outputText value=" Photo enregistrée" style="margin-left:20px" />
+					<p:inputText value="#{managedclientmaj.client.photoClt}" style="margin-left:15px" />
+
+
+								<h:outputText value="Changer photo client" style="margin-left:15px" />
+								<p:fileUpload fileUploadListener="#{managedclientmaj.upload}"
+									messageTemplate="telecharger une seule photo" required="true"
+									mode="advanced" dragDropSupport="true"
+									fileLimitMessage="Vous pouvez telecharger une seule photo!"
+									multiple="false" sizeLimit="1000000" fileLimit="1"
+									update="messages" uploadLabel="telecharger" label="Parcourir"
+									cancelLabel="Annuler"
+									allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|docx)$/">
+
+								</p:fileUpload></h:panelGrid>
+			
 			</fieldset>
 			
 			</fieldset>	
@@ -200,8 +218,8 @@
 				       
 				<h:panelGrid columns="4" cellpadding="10" style="margin-left:80px">  
 				
-								<p:commandButton value="Modifier" id="buttonadd"
-						actionListener="#{managedclientmaj.update}" update="frm,:frm:grid," disabled="#{managedclientmaj.etatBouton}"  process="@this"  ajax="false" icon="ui-icon-check" style="width:170px;height:40px ;font-size:13px;border-radius:10px;" >
+								<p:commandButton value="Modifier" id="buttonadd" 
+						actionListener="#{managedclientmaj.update}" update="frm,:frm:grid,"   disabled="#{managedclientmaj.etatBouton}"  process="@this"  ajax="false" icon="ui-icon-check" style="width:170px;height:40px ;font-size:13px;border-radius:10px;" >
 					
 					<p:confirm header="Confirmation"  message="Confirmez-vous  ? "   icon="ui-icon-alert" /></p:commandButton>
 	
@@ -217,7 +235,7 @@
 				</h:panelGrid>
 			</fieldset>
 			
-			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode"   height="30" width="250" >  
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode"    height="30" width="250" >  
 				        
 				        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
 				        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>   

@@ -139,12 +139,17 @@ public class Managedclient implements Serializable {
 	private String filtre;
 	private UploadedFile file;
 
-	// private String
-	// destination="C:/Users/Richard/printing~subversion/fileupload/web/Uploaded";
+	private File repectoire;
 
-	private String destination = "C:/Users/rosyj3a/Dossierphoto/photoclt";
+	private String destination = "C:/Dossierphoto/Clients";
 
 	public void upload(FileUploadEvent event) {
+		
+		
+		repectoire = new File("C:/Dossierphoto/Clients");
+		if(!repectoire.exists())  {
+			repectoire.mkdirs();
+	   	}
 		FacesMessage msg = new FacesMessage("Fichier telechargé! ");
 		// client.setPhotoClt(event.getFile().getContentType());
 		client.setPhotoClt(event.getFile().getFileName());
@@ -163,8 +168,7 @@ public class Managedclient implements Serializable {
 		try {
 
 			// write the inputStream to a FileOutputStream
-			OutputStream out = new FileOutputStream(new File(destination
-					+ fileName));
+			OutputStream out = new FileOutputStream(new File(repectoire + "/" + fileName));
 
 			int read = 0;
 			byte[] bytes = new byte[1024];
@@ -1256,6 +1260,14 @@ prototype= new PrototypeMaison();
 
 	public void setMontantdejapaye(BigDecimal montantdejapaye) {
 		this.montantdejapaye = montantdejapaye;
+	}
+
+	public File getRepectoire() {
+		return repectoire;
+	}
+
+	public void setRepectoire(File repectoire) {
+		this.repectoire = repectoire;
 	}
 
 }

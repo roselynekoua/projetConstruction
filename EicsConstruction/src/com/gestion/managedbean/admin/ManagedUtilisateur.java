@@ -90,18 +90,30 @@ public class ManagedUtilisateur implements Serializable {
 	private java.util.Date dateCreationMotPasse;
 	private java.lang.Integer activite;
 	
+	
+	
+	
+	
+	
 
-	
-	
-	
 	private UploadedFile file;
-	 
-	//private String destination="C:/Users/Richard/printing~subversion/fileupload/web/Uploaded";
+	private File repectoire;
+	
 
-	     private String destination ="C:/Users/rosyj3a/Dossierphoto/photouser";
+	     private String destination ="C:/Users/rosyj3a/Dossierphoto/USER/";
 
+	     
+	    
+			
 	      public void upload(FileUploadEvent event) {  
-	    	 utilisateur.setPhotoUt( event.getFile().getFileName());
+	    	  
+	    	  repectoire = new File("C:/Dossierphoto/Utilisateurs");
+	    		if(!repectoire.exists())  {
+	    			repectoire.mkdirs();
+	    	   	}
+	    		
+
+	    	 utilisateur.setPhotoUt(event.getFile().getFileName());
 	    	
 	          FacesMessage msg = new FacesMessage("Fichier télechargé! ", event.getFile().getFileName()+ " est telechargé.");  
 	          
@@ -121,7 +133,7 @@ public class ManagedUtilisateur implements Serializable {
 
 
 	                  // write the inputStream to a FileOutputStream
-	                  OutputStream out = new FileOutputStream(new File(destination + fileName));
+	                  OutputStream out = new FileOutputStream(new File(repectoire + "/" + fileName));
 
 	                  int read = 0;
 	                  byte[] bytes = new byte[1024];
@@ -296,18 +308,44 @@ public void desactiver() {
 		setEtatBouton(false);
 	}
 	
+public void verifiercombo() {
+	if(selectedProfil.equalsIgnoreCase("choisir") )
+	{
+		
+            FacesContext.getCurrentInstance().addMessage( null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Selectionner chp obligatoire",
+                          "Selectionner chp obligatoire"));
+
+	}
+	if( (selectedsexe.equalsIgnoreCase("Choisir ") ))
+	{
+		
+            FacesContext.getCurrentInstance().addMessage( null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                           "Selectionner chp obligatoire",
+                          "Selectionner chp obligatoire"));
+
+	}
+	
+	}
+	
+	
 	public void addUtilisateur() {//Repriz by ALekerand
 		try{
 		//vérifier que l' Login n'est pas déjà en Base
 		System.out.println("Etat:"+verifierLogin());
-		if(selectedProfil.equalsIgnoreCase(" ") )
+		if(selectedProfil.equals(" ") )
 		{
 			
 	            FacesContext.getCurrentInstance().addMessage( null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-	                           "Selectionner un profil",
-	                          "Selectionner un profil"));
+	                           "Selectionner chp obligatoire",
+	                          "Selectionner chp obligatoire"));
 	
 		}
+		
+		
+		
+		
+		
 		else
 		{
 		if (verifierLogin()==false){
@@ -377,6 +415,7 @@ public void desactiver() {
 	public void recuperernat(){
 		
 	setNationalite((Nationalite) getObjectService().getObjectById(selectednat, "Nationalite"));
+	//verifiercombo();
 
 }
 	
@@ -790,7 +829,13 @@ public void delete() {
 		this.photo = photo;
 	}
 
-	
+	public File getRepectoire() {
+		return repectoire;
+	}
+
+	public void setRepectoire(File repectoire) {
+		this.repectoire = repectoire;
+	}
 	
 
 	

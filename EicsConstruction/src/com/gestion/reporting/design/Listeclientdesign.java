@@ -66,12 +66,9 @@ public class Listeclientdesign implements Serializable {
 	private String nomFichier;
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
-	// String httpsURL =
-	// "https://www.certification.tn/cgi-bin/pub/crl/cacrl.crl";
-	// URL myurl = new URL(httpsURL);
+	
 	public static final String RESOURCE = "http://localhost:8080/EicsConstruction/resources/images/logoeics.png";
-	public static final String RESOURCE3 = "http://localhost:8080/EicsConstruction/resources/images/4.jpg";
-	public static final String RESOURCE2 = "C:\\Users\\rosyj3a\\Dossierphoto\\";
+	public static final String RESOURCE2 = "c:/Dossierphoto/Clients/";
 	
 	/*if ((new File("C:\\Etats\\EICSconstruction\\Listeclients\\"
 			+ nomFichier + "")).exists()) {*/
@@ -257,18 +254,21 @@ listeclient = getManagedclient().getListeclient();
 			tabSous.addCell(new Phrase(sdf.format(listeclient.get(i)
 					.getDatecreaClt()), smallText));
 			tabSous.addCell(new Phrase(listeclient.get(i).getEmailClt(), smallText));
-			// Ajout de logo
-		//Image logo2 = Image.getInstance(new URL(RESOURCE2+listeclient.get(i).getPhotoClt()));
+			Image logo2 = Image.getInstance(RESOURCE2 +getListeclient().get(i).getPhotoClt());
 			
-			/* PdfPTable table = new PdfPTable(1);
-		      table.addCell(new PdfPCell(Image.getInstance("c:/Users/rosyj3a/Dossierphoto/photoclt4.jpg")));
-		      PdfPCell c1 = new PdfPCell();
-		      table.addCell(c1);
-		      tabSous.addCell(table);*/
-			
-			Image logo2 = Image.getInstance("c:/Users/rosyj3a/Dossierphoto/"+getListeclient().get(i).getPhotoClt());
 			logo2.scalePercent(100f);
-			 tabSous.addCell(logo2);
+			tabSous.addCell(logo2);
+			
+			/*if(getListeclient().get(i).getPhotoClt()!=null){
+				Image logo2 = Image.getInstance(RESOURCE2 +getListeclient().get(i).getPhotoClt());
+				
+				logo2.scalePercent(100f);
+				tabSous.addCell(logo2);
+				}else{
+					Image logo2 = Image.getInstance("");
+					tabSous.addCell(logo2);
+				}*/
+			
 			//tabSous.addCell(new URL(RESOURCE2+listeclient.get(i).getPhotoClt());
 			//tabSous.addCell(new Phrase(RESOURCE2+listeclient.get(i).getPhotoClt(), smallText));
 			/* Image logo = Image.getInstance(new String(RESOURCE2));

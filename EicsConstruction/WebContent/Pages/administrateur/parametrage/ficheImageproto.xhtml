@@ -11,7 +11,7 @@
 <ui:composition template="/template/templateparametrage.xhtml">
 	<ui:define name="content">
 
-		<h:form id="frm">
+		<h:form id="frm"  enctype="multipart/form-data">
 			<p:messages id="growl" showDetail="false" autoUpdate="true"
 				closable="true" />
 
@@ -26,9 +26,6 @@
 
 					<h:panelGrid columns="4">
 
-						<h:outputText value=" Désignation photo" style="margin-left:20px" />
-						<p:inputText value="#{managedimageproto.image.libelleImage}"
-							style="margin-left:15px" />
 
 <h:outputText value=" Prototype " style="margin-left:20px" />
 						<p:selectOneMenu id="prto" value="#{managedimageproto.prototype}"
@@ -45,8 +42,10 @@
 						<p:fileUpload fileUploadListener="#{managedimageproto.upload}"
 							messageTemplate="telecharger une seule photo" required="true"
 							mode="advanced" dragDropSupport="true"
+							invalidSizeMessage="JournalDev: Taille invalide"
+                                invalidFileMessage="JournalDev: le Type du fichier invalide"
 							fileLimitMessage="Vous pouvez telecharger une seule photo!"
-							multiple="false" sizeLimit="1000000" fileLimit="1"
+							multiple="false" sizeLimit="1000000" fileLimit="3"
 							update="growl" uploadLabel="telecharger" label="Parcourir"
 							cancelLabel="Annuler"
 							allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|docx)$/">

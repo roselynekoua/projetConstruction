@@ -55,7 +55,7 @@
     </init-param>
    <init-param>
         <param-name>uploadDirectory</param-name>
-        <param-value>C:\Users\rosyj3a\Dossierphoto\photo</param-value>
+        <param-value>C:\Dossierphoto\phototemp</param-value>
     </init-param>
   </filter>
   <filter>

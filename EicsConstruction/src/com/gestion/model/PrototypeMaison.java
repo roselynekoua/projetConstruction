@@ -125,7 +125,7 @@ public class PrototypeMaison implements java.io.Serializable {
 		this.contrats = contrats;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "prototypeMaison")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "prototypeMaison")
 	public Set<Image> getImages() {
 		return this.images;
 	}

@@ -69,7 +69,7 @@ public class ListeUsersdesign implements Serializable {
 	// "https://www.certification.tn/cgi-bin/pub/crl/cacrl.crl";
 	// URL myurl = new URL(httpsURL);
 	public static final String RESOURCE = "http://localhost:8080/EicsConstruction/resources/images/logoeics.png";
-	public static final String RESOURCE2 = "c:/Users/rosyj3a/Dossierphoto/";
+	public static final String RESOURCE2 = "c:/Dossierphoto/Utilisateurs/";
 	// Pour la mise en forme
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 28,
 			Font.BOLD);
@@ -257,7 +257,7 @@ public class ListeUsersdesign implements Serializable {
 					.getLoginUtilisateur(), smallText));
 
 			
-			Image logo2 = Image.getInstance(RESOURCE2+getListeutilisateur().get(i).getPhotoUt());
+			Image logo2 = Image.getInstance(RESOURCE2 +getListeutilisateur().get(i).getPhotoUt());
 			logo2.scalePercent(100f);
 			
 			 tabSous.addCell(logo2);
