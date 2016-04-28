@@ -14,6 +14,8 @@
 	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
 			
 			
+			<p:graphicImage library="images"  name="favicon.ico"></p:graphicImage>
+			
 					<p:panel header="Liste des Utilisateurs"  styleClass="">
 					
 					<br />
@@ -22,6 +24,9 @@
       <br></br>
 <fieldset id="resulat" class="fieldset" >
 							<legend>Recapitulatif des enregistrements</legend>
+							
+							
+							
 							<p:dataTable  value="#{managedUtilisateur.listeUser}" 
 								var="per" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 								scrollable="true" rowsPerPageTemplate="5,10"   paginator="true" rows="10" scrollHeight="300" scrollWidth="1250"  style="height:400px;margin-bottom:20px">
@@ -123,7 +128,8 @@
 									<f:facet name="header">
 										<h:outputText value="Photo Utilisateur " />
 									</f:facet>
-									<h:outputText value="#{managedUtilisateur.photo}" />
+									<!-- <h:outputText value="#{managedUtilisateur.photo}" /> -->
+									<p:graphicImage library="images"  name="favicon.ico"></p:graphicImage>
 								</p:column>
    
  </p:dataTable>  
