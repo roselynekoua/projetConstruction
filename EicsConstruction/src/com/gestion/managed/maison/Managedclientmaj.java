@@ -190,7 +190,7 @@ public class Managedclientmaj implements Serializable {
 		
 		client.setPhotoClt(event.getFile().getFileName());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
-		objectService.updateObject(client);
+		//objectService.updateObject(client);
 		// Do what you want with the file
 		try {
 			copyFile(event.getFile().getFileName(), event.getFile()

@@ -22,24 +22,32 @@
 				<br />
 
 				<br />
-				
-				<fieldset class="fieldset">
-					<legend>Recherche</legend>
-					<h:panelGrid id="grid_rech" columns="4">
-						<p:outputLabel for="rech_quit" value="N° facture" />
-						<p:inputText id="rech_quit" value="#{managedversement.critere}" required="true"  requiredMessage="Indiquez la facture"  style="width:170px"/>
-						<p:commandButton value="Consulter" id="withIcon" actionListener="#{managedversement.consulterfacture}" icon="ui-icon-search" update="form" process="grid_rech" />
-						<h:outputText value="#{managedversement.facture.etatFact}" style="color:#0125DE; font-size:18px; margin-left: 575px; margin-right: 0%;"/>
+				<fieldset style="height: 50px; border-radius: 10px;"
+					class="fieldset">
+					<legend>Champs de recherche</legend>
+
+					<h:panelGrid columns="4">
+						<h:outputText value="Entrez le code du contrat :" />
+
+						<p:selectOneMenu value="#{managedversement.typeFiltre}"
+							style="width:100px">
+
+							<f:selectItem itemLabel="CODE CONTRAT " itemValue="codeContrat" />
+							<f:selectItem itemLabel="CODE FACTURE " itemValue="codeFact" />
+<f:selectItem itemLabel="CODE CLIENT " itemValue="numClt" />
+
+						</p:selectOneMenu>
+						<p:inputText value="#{managedversement.filtre}"
+							style="height:14px !important" />
+
+						<p:commandButton action="#{managedversement.filtrer}" update="tab"
+							icon="ui-icon-search" style="height:24px !important" />
 					</h:panelGrid>
+
+
+
 				</fieldset>
-				
-				
-				
-				
-				
-				
-				
-						
+
 
 
 				<br></br>

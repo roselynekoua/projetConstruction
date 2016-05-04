@@ -14,13 +14,14 @@
 	<p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
 			
 			
-			<p:graphicImage library="images"  name="favicon.ico"></p:graphicImage>
+			
 			
 					<p:panel header="Liste des Utilisateurs"  styleClass="">
 					
 					<br />
 					
-		
+		<h:commandButton value="Voir photo pour l'utilisateur" action="#{managedUtilisateur.showImage}" />
+    	
       <br></br>
 <fieldset id="resulat" class="fieldset" >
 							<legend>Recapitulatif des enregistrements</legend>
@@ -29,9 +30,14 @@
 							
 							<p:dataTable  value="#{managedUtilisateur.listeUser}" 
 								var="per" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-								scrollable="true" rowsPerPageTemplate="5,10"   paginator="true" rows="10" scrollHeight="300" scrollWidth="1250"  style="height:400px;margin-bottom:20px">
+								scrollable="true" rowsPerPageTemplate="5,10"   paginator="true" rows="10" scrollHeight="300" scrollWidth="1250"  style="height:400px;margin-bottom:20px"
 								
+								selectionMode="single" rowKey="#{per.codeUtilisateur}"
+									selection="#{managedUtilisateur.utilisateurselected}" id="data"    
+								>
 								
+								<p:ajax event="rowSelect"
+										listener="#{managedUtilisateur.onRowSelect}"   oncomplete="Dialog.show()" />
 								<p:column style="width:100px">
 									<f:facet name="header">
 										<h:outputText value="Numero Utilisateur" />
@@ -124,13 +130,7 @@
 									<h:outputText value="#{per.profil.libelleProfil}" />
 								</p:column>
 								
-								<p:column style="width:150px">
-									<f:facet name="header">
-										<h:outputText value="Photo Utilisateur " />
-									</f:facet>
-									<!-- <h:outputText value="#{managedUtilisateur.photo}" /> -->
-									<p:graphicImage library="images"  name="favicon.ico"></p:graphicImage>
-								</p:column>
+								
    
  </p:dataTable>  
  <h:panelGrid  columns="2">
@@ -146,8 +146,35 @@
  
  </fieldset>  
       
-      </p:panel>												
-     </h:form>
+      </p:panel>	
+      
+      
+       </h:form>
+      
+       <h:form>
+      <!-- Dialog pour le changement de La photo -->
+	 	<p:dialog header="Details" widgetVar="Dialog" resizable="false" id="garDlg" showEffect="fade"  modal="true" appendTo="@(body)"> <fieldset>
+              <legend>Details</legend>
+              <h:panelGrid id="display" columns="4" cellpadding="2" style="margin:0 auto;">
+              
+              <p:outputLabel for="ph" value="Nom et prenoms Utilisateur "/>
+	 			<p:inputText id="ph" value="#{managedUtilisateur.utilisateur.nomUtilisateur}  #{managedUtilisateur.utilisateur.prenomUtilisateur}" > </p:inputText>
+              	 <p:outputLabel for="login_input" value="Photo Utilisateur "/>
+	 			<p:inputText id="login_input" value="#{managedUtilisateur.utilisateur.photoUt}" > </p:inputText>
+	 			
+	 			
+	 			 <p:outputLabel for="photo" value="Photo Utilisateur vrai "/>
+	 			<h:graphicImage id="photo" value="#{managedUtilisateur.imagefile}" /> 
+	 			
+	 			
+	 			<h:commandButton value="Voir photo pour l'utilisateur" actionListener="#{managedUtilisateur.showImage}" />
+	 			 </h:panelGrid>          
+              </fieldset>
+    </p:dialog>  </h:form> 											
+    
+
+
+
 
 	</ui:define>
 </ui:composition>

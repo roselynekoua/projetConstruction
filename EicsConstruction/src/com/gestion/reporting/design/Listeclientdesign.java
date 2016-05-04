@@ -69,7 +69,7 @@ public class Listeclientdesign implements Serializable {
 	
 	public static final String RESOURCE = "http://localhost:8080/EicsConstruction/resources/images/logoeics.png";
 	public static final String RESOURCE2 = "c:/Dossierphoto/Clients/";
-	
+	public static final String RESOURCEvide = "http://localhost:8080/EicsConstruction/resources/images/user.jpg";
 	/*if ((new File("C:\\Etats\\EICSconstruction\\Listeclients\\"
 			+ nomFichier + "")).exists()) {*/
 	// Pour la mise en forme
@@ -254,11 +254,26 @@ listeclient = getManagedclient().getListeclient();
 			tabSous.addCell(new Phrase(sdf.format(listeclient.get(i)
 					.getDatecreaClt()), smallText));
 			tabSous.addCell(new Phrase(listeclient.get(i).getEmailClt(), smallText));
+			
+			try {
+				
+			if(getListeclient().get(i).getPhotoClt()!=null){
+			//System.out.println("***************************image nonnull");
 			Image logo2 = Image.getInstance(RESOURCE2 +getListeclient().get(i).getPhotoClt());
 			
 			logo2.scalePercent(100f);
 			tabSous.addCell(logo2);
+			}
+		
+	
 			
+			
+			} catch (FileNotFoundException e) {
+				
+					//System.out.println("***************************image  null");
+					 Image logo2 = Image.getInstance(new URL(RESOURCEvide));
+					tabSous.addCell(logo2);
+			}
 			/*if(getListeclient().get(i).getPhotoClt()!=null){
 				Image logo2 = Image.getInstance(RESOURCE2 +getListeclient().get(i).getPhotoClt());
 				

@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.net.URL;
+
 import com.gestion.managedbean.admin.ManagedUtilisateur;
 import com.gestion.model.Utilisateur;
 import com.gestion.objetService.ObjectService;
@@ -69,6 +71,7 @@ public class ListeUsersdesign implements Serializable {
 	// "https://www.certification.tn/cgi-bin/pub/crl/cacrl.crl";
 	// URL myurl = new URL(httpsURL);
 	public static final String RESOURCE = "http://localhost:8080/EicsConstruction/resources/images/logoeics.png";
+	public static final String RESOURCEvide = "http://localhost:8080/EicsConstruction/resources/images/user.jpg";
 	public static final String RESOURCE2 = "c:/Dossierphoto/Utilisateurs/";
 	// Pour la mise en forme
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 28,
@@ -255,12 +258,30 @@ public class ListeUsersdesign implements Serializable {
 					.getMailUtilisateur(), smallText));
 			tabSous.addCell(new Phrase(listeutilisateur.get(i)
 					.getLoginUtilisateur(), smallText));
-
 			
+			
+			
+			
+			
+			
+			
+			try {
+			if(getListeutilisateur().get(i).getPhotoUt()!=null){
+				//System.out.println("***************************image non null");
 			Image logo2 = Image.getInstance(RESOURCE2 +getListeutilisateur().get(i).getPhotoUt());
 			logo2.scalePercent(100f);
 			
-			 tabSous.addCell(logo2);
+			 tabSous.addCell(logo2);}
+			
+			} catch (FileNotFoundException e) {
+				
+				//System.out.println("***************************image  null");
+				 Image logo2 = Image.getInstance(new URL(RESOURCEvide));
+				tabSous.addCell(logo2);
+		}
+			
+			
+			
 		}
 		document.add(tabSous);
 

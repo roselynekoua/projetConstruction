@@ -38,6 +38,7 @@ import com.gestion.objetDao.RequeteUtilisateur;
 import com.gestion.objetService.ObjectService;
 import com.gestion.utilitaires.IdGenerateur;
 
+
 @Component
 public class Managedversement implements Serializable {
 	
@@ -57,7 +58,8 @@ public class Managedversement implements Serializable {
 	private static Logger logger = Logger.getLogger(Managedversement.class);
 	
 	
-	
+	private String critere;
+	private String etatfacture;
 	private Client client= new Client();
 	private Contrat contrat= new Contrat();
 	private Versement versement = new Versement();
@@ -74,7 +76,7 @@ public class Managedversement implements Serializable {
 	private Contrat selectcontrat= new Contrat();
 	private String typeFiltre;
 	private String filtre;
-	private Facture facture= new Facture();
+	private Facture facture;
 	private BigDecimal montantFact = new BigDecimal(0);
 	private BigDecimal resteAPayerFact = new BigDecimal(0);
 	private BigDecimal montantdejapaye = new BigDecimal(0);
@@ -93,10 +95,15 @@ public class Managedversement implements Serializable {
 	private String typeVers;
 	private SelectOneMenu modeOneMenu;
 	private Date date=Calendar.getInstance().getTime();
-	 private String destination ="C:/Users/rosyj3a/Dossierphoto/photocheque";
-	
+	 private String destination ="C:/Dossierphoto/photocheque";
+	 private File repertoire;
 	
 	 public void upload(FileUploadEvent event) {  
+		 
+		 repertoire = new File("C:/Dossierphoto/photocheque");
+			if(!repertoire.exists())  {
+				repertoire.mkdirs();
+		   	}
     	 versement.setNchequeVers( event.getFile().getFileName());
     	
           FacesMessage msg = new FacesMessage("Fichier télechargé! ", event.getFile().getFileName()+ " est telechargé.");  
@@ -118,7 +125,7 @@ public class Managedversement implements Serializable {
 
 
               // write the inputStream to a FileOutputStream
-              OutputStream out = new FileOutputStream(new File(destination + fileName));
+              OutputStream out = new FileOutputStream(new File(repertoire + "/" + fileName));
 
               int read = 0;
               byte[] bytes = new byte[1024];
@@ -154,7 +161,7 @@ public class Managedversement implements Serializable {
 		try{
 			
 		versement.setCodeVers(getIdGenerateur().getIdversement());
-	versement.setFacture(facture);;
+	versement.setFacture(facture);
 		versement.setUtilisateur(getManagedConnexion().getUtilisateur());
 		versement.setTypeVers(typeVers);
 		versement.setDateVers(date);
@@ -178,12 +185,14 @@ public class Managedversement implements Serializable {
 	
 	 public void onRowSelect(SelectEvent event) {
 			
+			try {
+				
 			
 			
 			 setContrat(selectcontrat);
 			 setClient(getSelectcontrat().getClient());
-			//setFacture(getSelectcontrat().getFacture());
-				setFacture(getContrat().getFacture());
+			setFacture(getSelectcontrat().getFacture());
+				//setFacture(getContrat().getFacture());
 				
 				if (getContrat().getFacture().getEtatFact().startsWith("SOL")) {
 					RequestContext.getCurrentInstance().execute("paie_deja_ok.show();");
@@ -191,7 +200,9 @@ public class Managedversement implements Serializable {
 				}
 			calculer();
 	//FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"Une erreur s'est produite lors de traitement","ERREUR"));
-			
+			} catch (NullPointerException e) {
+				System.out.println("try catch pour facture");//clean
+			}
 			}
 	 
 	public void filtrer() {
@@ -235,9 +246,9 @@ public class Managedversement implements Serializable {
 		setMontantdejapaye(getRequeteUtilisateur().sommevers(getFacture().getCodeFact()));
 		
 		System.out.println("++++++++++++++++++++++++++++++++++montant deja paye++++++++++++"+montantdejapaye);
-		setCoutTotal(selectcontrat.getPrototypeMaison().getCoutTtcPrototype().multiply(new BigDecimal(selectcontrat.getQteAcq())));
+		setCoutTotal(contrat.getPrototypeMaison().getCoutTtcPrototype().multiply(new BigDecimal(contrat.getQteAcq())));
 		
-		setResteAPayerFact(contrat.getFacture().getMontantTtcFact().subtract(montantdejapaye));
+		setResteAPayerFact(getFacture().getMontantTtcFact().subtract(montantdejapaye));
 		//setReste(resteAPayerFact.subtract(montantFact));
 		System.out.println("++++++++++++++++++++++++++++++++++montant a payer avant++++++++++++"+montantdejapaye);
 		System.out.println(coutTotal);
@@ -259,9 +270,7 @@ public class Managedversement implements Serializable {
 			}
 			else {
 				
-			
-				
-		facture.getEtatFact().startsWith("NON");
+			if(facture.getEtatFact().startsWith("NON")){
 			enregistrerfacture();
 		enregistrerversement();
 		
@@ -274,7 +283,7 @@ public class Managedversement implements Serializable {
 		sessionMap.clear();
 		//setFacture(new Facture());  vider();		
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Success", "Enregistrement effectué"));
-			}
+			}}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Echec ", "Echec d'enregistrement !"));
 	         e.printStackTrace();	// TODO: handle exception
@@ -319,6 +328,59 @@ public class Managedversement implements Serializable {
 		}
 	}
 	*/
+	
+	@SuppressWarnings("unchecked")
+	public void consulterfacture() {
+		setMontantFact(null);
+			setEtatfacture("");
+			facture= new Facture();
+			
+				//Rechercher la facture
+				setFacture((Facture) getObjectService().getObjectById(getCritere().trim(), "Facture"));
+				if ((facture==null)){ //Cas infructueux
+					vider();
+					
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Facture inexistante.", ""));
+				}else{ // Cas fructueux
+					
+					
+					facture= new Facture();
+					// Recuperer l	
+					
+					//Recuperer le  Contrat
+					contrat = new Contrat();
+					setContrat(facture.getContrat());
+					
+					//Recuperer le client
+					client = new Client();
+					setClient(contrat.getClient());
+					
+
+					if (getFacture().getEtatFact().startsWith("SOL")) {
+						RequestContext.getCurrentInstance().execute("paie_deja_ok.show();");
+						
+					}	
+					
+					
+					calculer();}
+					
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public void miseajr() {
 		montantFact= new BigDecimal(0);
@@ -854,6 +916,26 @@ public void desactiver() {
 
 	public void setRequeteUtilisateur(RequeteUtilisateur requeteUtilisateur) {
 		this.requeteUtilisateur = requeteUtilisateur;
+	}
+
+
+	public String getCritere() {
+		return critere;
+	}
+
+
+	public void setCritere(String critere) {
+		this.critere = critere;
+	}
+
+
+	public String getEtatfacture() {
+		return etatfacture;
+	}
+
+
+	public void setEtatfacture(String etatfacture) {
+		this.etatfacture = etatfacture;
 	}
 
 

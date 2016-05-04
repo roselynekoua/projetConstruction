@@ -29,7 +29,7 @@
 
 <h:outputText value=" Maison " style="margin-left:20px" />
 						<p:selectOneMenu id="prto" value="#{consltmaisonMB.maison}"
-									converter="#{entityConverter}"
+									converter="#{entityConverter}"  filter="true" filterMatchMode="startsWith"
 									style="margin-left: 20px; width: 120px">
 									<f:selectItem itemLabel="Sélectionnez" itemValue="" />
 									<f:selectItems value="#{consltmaisonMB.listemaison}" var="tata"

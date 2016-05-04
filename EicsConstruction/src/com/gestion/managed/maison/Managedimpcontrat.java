@@ -65,10 +65,10 @@ private PrototypeMaison prototype= new PrototypeMaison();
 
 	private Nationalite nationalite = new Nationalite();
 	private Maison maison = new Maison();
-	private Contrat contrat = new Contrat();
+	private Contrat contrat= new Contrat();
 
-	private Client clientrech = new Client();
-	private Contrat contratrech = new Contrat();
+	private Client clientrech ;
+	private Contrat contratrech ;
 	private Client clientselected = new Client();
 	private Contrat contratselected = new Contrat();
 
@@ -409,11 +409,13 @@ private PrototypeMaison prototype= new PrototypeMaison();
 	}
 
 	public void Rechercheclient() {
+		Client clientrech2= new Client();
+		//contrat= new Contrat();
 		//listecontratrech.clear();
-		setClientrech((Client) getObjectService().getObjectById(critere,
+		clientrech2=((Client) getObjectService().getObjectById(critere,
 				"Client"));
 
-		if (getClientrech() == null) {
+		if (clientrech2 == null) {
 			System.out.println("client Inexistant");
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -424,7 +426,7 @@ private PrototypeMaison prototype= new PrototypeMaison();
 		}
 
 		else {
-			for (Contrat contr : getClientrech().getContrats()) {
+			for (Contrat contr : clientrech2.getContrats()) {
 				getListecontratrech().add(contr);
 				setContrat(contr);
 			}
@@ -436,6 +438,9 @@ private PrototypeMaison prototype= new PrototypeMaison();
 	
 	
 	public void Recherchecontrat() {
+		//client= new Client();
+		//contrat= new Contrat();
+		//contratrech= new Contrat();
 		//listecontratrech.clear();
 		setContratrech((Contrat) getObjectService().getObjectById(critere,
 				"Contrat"));
@@ -451,15 +456,19 @@ private PrototypeMaison prototype= new PrototypeMaison();
 
 		} else {
 			listecontratrech.add(contratrech);
+			//setContrat(contratrech);
 			System.out.println("Contrat esisstan");
 		}
 	}
 
 	public void recherche() {
 		getListecontratrech().clear();
-     
+		client= new Client();
+	contrat= new Contrat();
+	contratrech= new Contrat();
 		switch (option) {
 		case "1": // recherche par le num contrat
+			
 			Recherchecontrat();
 		
 
@@ -480,6 +489,8 @@ private PrototypeMaison prototype= new PrototypeMaison();
 	}
 
 	public void onRowSelect(SelectEvent event) {
+		//client= new Client();
+		//contrat= new Contrat();
 		getListecontratrech().clear();
 		setContratselected(((Contrat) event.getObject()));
 		setContrat(contratselected);

@@ -2,6 +2,7 @@ package com.gestion.managedbean.admin;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,8 +16,11 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletResponse;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +51,7 @@ public class ManagedUtilisateur implements Serializable {
    private boolean etatBouton=true;
    private boolean etatAnnuler=true;
 	private Utilisateur utilisateur = new Utilisateur();
+	private Utilisateur utilisateurselected = new Utilisateur();
 	private Sexe sexe = new Sexe();
 	
 	private Nationalite nationalite = new Nationalite();
@@ -98,13 +103,58 @@ public class ManagedUtilisateur implements Serializable {
 
 	private UploadedFile file;
 	private File repectoire;
-	
-
-	     private String destination ="C:/Users/rosyj3a/Dossierphoto/USER/";
+	private String imagefile;
+	private String imagefile2;
+	     private String destination ="c:/Dossierphoto/Utilisateurs/";
 
 	     
 	    
-			
+	     public void action() {
+	    	//  repectoire = "C:/Dossierphoto/Utilisateurs";
+	    	 setImagefile(destination +getUtilisateurselected().getPhotoUt());
+	    	// setImagefile2("c:/Dossierphoto/Utilisateurs/2.jpg");
+	    	 System.out.println("methode pr recup image, I/O error");
+	     }
+	     
+	     public void showImage() {
+	    	 //setImagefile(destination +getUtilisateurselected().getPhotoUt());
+	     	action();
+	         try {
+	             // Get image file.
+	             FileInputStream in = new FileInputStream(getImagefile());
+
+	             // Get image contents.
+	             int length = in.available();
+	             byte[] bytes = new byte[length];
+	             in.read(bytes);
+	             in.close();
+
+	             // Get response.
+	             FacesContext context = FacesContext.getCurrentInstance();
+	             HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+	             
+	             // Write image contents to response.
+	             response.setContentType("image/jpeg,image/png,image/jpg");
+	             response.setContentLength(length);
+	             response.getOutputStream().write(bytes);
+	             context.responseComplete();
+	         } catch (IOException e) {
+	             System.out.println("Showing image failed, I/O error");
+	         }
+	     }
+	     
+	     
+	     public void onRowSelect(SelectEvent event) {
+	    	 getListeUser().clear();
+	 		setUtilisateur(utilisateurselected);
+	 		showImage();
+	 		// setImagefile(repectoire + "/" +getUtilisateurselected().getPhotoUt());
+	 		System.out.println("++++++++++++++++++++++++++++++++utlisateu delectioneeeee"+getUtilisateur().getNomUtilisateur());
+	 		//RequestContext.getCurrentInstance().execute("Dialog.show();");
+	 	}
+
+	     
+	     
 	      public void upload(FileUploadEvent event) {  
 	    	  
 	    	  repectoire = new File("C:/Dossierphoto/Utilisateurs");
@@ -152,6 +202,14 @@ public class ManagedUtilisateur implements Serializable {
 	                  }
 	      }
 	      
+	      
+	      public String getImagefile() {
+	          return imagefile;
+	      }
+
+	      public void setImagefile(String imagefile) {
+	          this.imagefile = imagefile;
+	      }
 	/**
 	 * Return the unique identifier of this class
 	 * 
@@ -820,8 +878,8 @@ public void delete() {
 
 	public String getPhoto() {
 		
-		
-		photo= "c:/Users/rosyj3a/Dossierphoto/"+ utilisateur.getPhotoUt();
+		setImagefile(repectoire + "/" + utilisateur.getPhotoUt());
+		//photo= "c:/Users/rosyj3a/Dossierphoto/"+ utilisateur.getPhotoUt();
 		return photo;
 	}
 
@@ -835,6 +893,22 @@ public void delete() {
 
 	public void setRepectoire(File repectoire) {
 		this.repectoire = repectoire;
+	}
+
+	public Utilisateur getUtilisateurselected() {
+		return utilisateurselected;
+	}
+
+	public void setUtilisateurselected(Utilisateur utilisateurselected) {
+		this.utilisateurselected = utilisateurselected;
+	}
+
+	public String getImagefile2() {
+		return imagefile2;
+	}
+
+	public void setImagefile2(String imagefile2) {
+		this.imagefile2 = imagefile2;
 	}
 	
 
